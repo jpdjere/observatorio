@@ -1,0 +1,26 @@
+
+<div>
+	<div>
+
+		<center>
+		<table class="table-bordered table-condensed" width="100%">	
+			<tr class="stag-book"><th>Encuesta N°</th><th>Encuesta</th><th>Fecha</th><th>Link</th><th>Medio</th></tr>
+			<tr class="stag-book" ng-repeat="datos in store.encuestas">
+					<td>{{datos.nro}}</td>
+					<td>{{datos.enc}}</td>
+					<td>{{datos.fecha}}</td>
+					<td><a ng-href="{{datos.link}}">{{datos.link}}</a></td>
+					<td>{{datos.medio}}</td>
+						
+			</tr>
+		</table>
+		</center>
+
+	</div>
+</div>
+
+
+
+
+
+

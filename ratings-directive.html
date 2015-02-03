@@ -1,0 +1,25 @@
+
+<div>
+	<div>
+
+		<center>
+		<table class="table-bordered table-condensed" width="100%">	
+			<tr class="stag-book"><th>Encuestadora</th><th>Error Promedio</th><th>Error Promedio Ajustado</th><th>Rating</th><th>Encuestas promediadas</th></tr>
+			<tr class="stag-book negrita" ng-repeat="datos in store.ratings">
+					<td>{{datos.enc}}</td>
+					<td>{{datos.errprom | number:2}}</td>
+					<td>{{datos.errpromaj | number:2}}</td>
+					<td>{{datos.rating | number:2}}</td>
+					<td ng-class="{'fondoverde': datos.encuestasprom >= 5}">{{datos.encuestasprom}}</td>		
+			</tr>
+		</table>
+		</center>
+
+	</div>
+</div>
+
+
+
+
+
+

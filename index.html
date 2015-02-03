@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html ng-app="store">
+<head>
+	<title>Observatorio de Encuestas</title>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" type="text/css" href="bootstrap-3.2.0-dist\css\bootstrap.min.css" />
+	
+</head>
+
+<body ng-controller="StoreController as store" >
+
+<div class="wrapper">
+	<svg id="svgtitulo"></svg>
+
+	
+	<div style="align:center" id="cuerpo" ng-controller="TabsController as tab">
+
+ 		<div class="navWrapper">
+			<center> 
+			  <ul class="nav nav-pills stag">
+			    <li ng-class="{ active:tab.isSet(1) }">
+			      <a href ng-click="tab.setTab(1)">Frentes</a>
+			    </li>	    
+			    <li ng-class="{ active:tab.isSet(2) }">
+			      <a href ng-click="tab.setTab(2)">Candidatos</a>
+			    </li>
+			    <li ng-class="{ active:tab.isSet(3) }">
+			      <a href ng-click="tab.setTab(3)">Diferencias</a>
+			    </li>
+			    <li ng-class="{ active:tab.isSet(4) }">
+			      <a href ng-click="tab.setTab(4)">Ratings</a>
+			    </li>	    
+			    <li ng-class="{ active:tab.isSet(5) }">
+			      <a href ng-click="tab.setTab(5)">Encuestas</a>
+			    </li>
+			  </ul>
+			</center>
+		</div>
+
+		<div class="cuerpo">
+
+		  <div ng-show="tab.isSet(1)">
+		  		<div class="graphWrapper">
+			  		<svg id="svggrafico2"></svg>
+			  	</div>
+		  </div>
+
+		  <div ng-show="tab.isSet(2)">
+		  		<div class="graphWrapper">
+			  		<svg id="svggrafico1"></svg>
+				</div>
+		  </div>
+
+
+		  <div ng-show="tab.isSet(3)">
+		  	<difs-directive></difs-directive>
+		  </div>
+
+		  <div ng-show="tab.isSet(4)">
+		  	<ratings-directive style="margin-left:50px;margin-right:50px;"></ratings-directive>
+		  </div>		  
+		  <div ng-show="tab.isSet(5)">
+		  	<encuestas-directive style="margin-left:50px;margin-right:50px;"></encuestas-directive>
+		  </div>
+		
+		</div>
+	</div> 
+<!--nombres-directive data="datos" ng-repeat="datos in datosTotales"></nombres-directive-->
+<d3-directive></d3-directive>
+
+<div class="footer stag">Creado por: <a href="https://twitter.com/jpdjere">Juan Pablo Djeredjian</a></div>
+
+</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="d3.min.js"></script>
+<script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="data.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-sanitize.js"></script>
+<script type="text/javascript" src="grafdifs.js"></script>
+
+</body>
+<html>
+
+<style type="text/css">
+
+	@font-face { font-family: Stag-Medium; src: url('fonts/Stag-Medium.otf'); }
+	@font-face { font-family: Stag-MediumItalic; src: url('fonts/Stag-MediumItalic.otf'); }
+	@font-face { font-family: Stag-Light; src: url('fonts/Stag-Light.otf'); }
+	@font-face { font-family: Stag-LightItalic; src: url('fonts/Stag-LightItalic.otf'); }
+	@font-face { font-family: Stag-Semibold; src: url('fonts/Stag-Semibold.otf'); }
+	@font-face { font-family: Stag-Thin; src: url('fonts/Stag-Thin.otf'); }
+	@font-face { font-family: Stag-ThinDot; src: url('fonts/Stag-ThinDot.otf'); }
+	@font-face { font-family: Stag-Book; src: url('fonts/Stag-Book.otf'); }
+	@font-face { font-family: Stag-Black; src: url('fonts/Stag-Black.otf'); }
+
+	body {
+		background-color:#fff;
+
+	}
+	.stag { 
+		font-family: Stag-Medium, sans-serif;
+		font-size:17px;
+		color:black;
+	}
+	.stag-book { 
+		font-family: Stag-Book, sans-serif;
+		color:black;
+	}	
+	.stag-light { 
+		font-family: Stag-Light, sans-serif;
+		color:black;
+	}	
+	.stag-thin { 
+		font-family: Stag-Thin, sans-serif;
+		color:black;
+	}	
+	.stag-thindot { 
+		font-family: Stag-ThinDot, sans-serif;
+		color:black;
+	}
+	.titulo { 
+		font-family: Stag-Medium, sans-serif;
+		font-size:70px;
+	}
+
+	.cuerpo{
+		width:100%;
+		height:100%;
+		vertical-align: center;
+	}
+
+	#svgtitulo {
+		margin-bottom: 25px;
+		margin-top: 10px;
+		border-top: 3px solid black;
+		border-bottom: 3px solid black;
+
+	}
+	.wrapper{
+		max-width: 990px;
+		/*background: grey;*/
+		margin: 0 auto;
+	}
+
+	.navWrapper{
+		width:550px;
+		margin: 0 auto;
+
+	}	
+	.graphWrapper{
+		width:730px;
+		margin: 0 auto;
+		margin-top:15px;
+	}
+
+	.footer{
+		width:100%;
+		margin-top:70px;
+		border-top:2px solid black;
+	}
+
+	/*-------------------CSS para Tabla de Encuestadoras ------------------*/
+	.fondoverde {
+		background:lightgreen;
+	}
+	.negrita:hover {
+		background: gray;
+		font-weight: bold;
+	}
+
+	/*-------------------CSS para D3 ------------------*/
+
+	.rectNorm{
+		fill:rgba(62, 62, 129,.8);
+		stroke:rgba(96, 96, 108, 0.94);
+		stroke-width:1;
+	}	
+
+	.rectHover{
+		fill:rgba(51, 51, 192, 0.92);
+		stroke-width:1;
+	}
+
+	.lineashor{
+		stroke:rgba(0, 0, 0, 0.92);
+		stroke-width:1;
+
+	}
+
+	dthree-directive{
+
+			width:100%;
+			height:100%;
+			display:block;
+		}
+</style>
+
+
+

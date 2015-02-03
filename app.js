@@ -2,7 +2,7 @@
 	var app = angular.module('store',['ngSanitize']);
 
 
-	app.factory('service', function(){
+	/*app.factory('service', function(){
 		var sharedService = {};
 
 		sharedService.listaCandSer1 = [{"cand":"Sergio Massa","fotos":"images/massa_bajav2.png"},
@@ -16,9 +16,9 @@
 
 		return sharedService;
 
-	});
+	});*/
 
-	app.controller('StoreController', ["service","$scope",function(sharedService,$scope,$window){
+	app.controller('StoreController', ["$scope",function($scope,$window){
 		this.ratings = ratings;
 		this.encuestas = encuestas;
 		$scope.difs = diferencias;
@@ -40,8 +40,10 @@
 		$scope.der = [true,true,true,true,true,true,true];
 		$scope.derIndex;
 		$scope.temp;
+		$scope.texto_underGraph;
 		$scope.trustedHtml;
 		$scope.ventaja = "s0";
+		$scope.text4text_underGraph;
 
 
 
@@ -474,11 +476,11 @@
 
 						function createData(mes){
 							
-							tuvieja = $scope.dataGraf.push(new Par(fechas[mes],$scope.diferenciasGraf[mes]));
-							console.log("------------------");
+							tuva = $scope.dataGraf.push(new Par(fechas[mes],$scope.diferenciasGraf[mes]));
+							/*console.log("------------------");
 							console.log($scope.dataGraf[0]);
 							console.log($scope.dataGraf[0].date);
-							console.log($scope.dataGraf[0].diferencia);
+							console.log($scope.dataGraf[0].diferencia);*/
 							
 						}
 
@@ -491,6 +493,7 @@
 							    $scope.diferenciasGraf.push(
 							   		diferencias[i][this.compDiftemp].s0
 							   	);
+							   	$scope.text4text_underGraph = " ganarle a "
 							}
 						}else if ($scope.ventaja === 's3'){				
 							for(var i = diferencias.length-1; i>=0; i--){
@@ -499,6 +502,7 @@
 							    $scope.diferenciasGraf.push(
 							   		diferencias[i][this.compDiftemp].s3
 							   	);
+							   	$scope.text4text_underGraph = " sacarle 3 puntos a "
 							}
 						}else if ($scope.ventaja === 's5'){							
 							for(var i = diferencias.length-1; i>=0; i--){
@@ -507,6 +511,7 @@
 							    $scope.diferenciasGraf.push(
 							   		diferencias[i][this.compDiftemp].s5
 							   	);
+							   	$scope.text4text_underGraph = " sacarle 5 puntos a "
 							}
 						}else if ($scope.ventaja === 's10'){						
 							for(var i = diferencias.length-1; i>=0; i--){
@@ -515,6 +520,7 @@
 							    $scope.diferenciasGraf.push(
 							   		diferencias[i][this.compDiftemp].s10
 							   	);
+							   	$scope.text4text_underGraph = " sacarle 10 puntos a "
 							}
 						}
 					
@@ -525,6 +531,8 @@
 
 						$scope.createGraph();
 
+						/*--------------------Creo el texto que va bajo el gráfico --------------------------*/
+						$scope.texto_underGraph = " "+$scope.datosTotales[$scope.izqIndex].nombComp+ " tiene "+$scope.temp+" de probabilidad de " + $scope.text4text_underGraph+ $scope.datosTotales[$scope.derIndex].nombComp + " en la elección general";
 				
 
 					} //ciera else
@@ -590,15 +598,6 @@
 	        );
 	    };
 	}])
-
-	app.directive('tablaDirective',function(){ //Para meter HTML
-		return{
-
-			restrict:'A',
-			//link:function(){alert("dddddd");},
-			templateUrl:"table-directive.html"
-		}
-	});	
 
 
 

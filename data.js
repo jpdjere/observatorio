@@ -340,21 +340,21 @@ var diferenciasFrentes = [
 /*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 var ratings = [
-{"enc":"Aragon","rating":1.156838076,"errtot":6.30145569,"errtotaj":8.119012388,"errprom":0.572859608,"errpromaj":0.738092035,"encuestasprom":11},
+{"enc":"Aragón","rating":1.156838076,"errtot":6.30145569,"errtotaj":8.119012388,"errprom":0.572859608,"errpromaj":0.738092035,"encuestasprom":11},
 {"enc":"Giaccobe","rating":1.147095539,"errtot":7.673325556,"errtotaj":8.252591661,"errprom":1.278887593,"errpromaj":1.375431944,"encuestasprom":6},
-{"enc":"Poliarquia","rating":1.1258295,"errtot":8.451777652,"errtotaj":8.817322753,"errprom":0.939086406,"errpromaj":0.979702528,"encuestasprom":9},
+{"enc":"Poliarquía","rating":1.1258295,"errtot":8.451777652,"errtotaj":8.817322753,"errprom":0.939086406,"errpromaj":0.979702528,"encuestasprom":9},
 {"enc":"MGMR/G&V","rating":1.124933847,"errtot":9.121448174,"errtotaj":9.443312432,"errprom":1.520241362,"errpromaj":1.573885405,"encuestasprom":6},
 {"enc":"M&F","rating":1.11969953,"errtot":11.98967666,"errtotaj":12.99994258,"errprom":1.712810952,"errpromaj":1.857134655,"encuestasprom":7},
 {"enc":"Equis","rating":1.094230142,"errtot":11.21915584,"errtotaj":11.94974562,"errprom":1.869859306,"errpromaj":1.991624269,"encuestasprom":6},
 {"enc":"OPSM","rating":1.094135776,"errtot":11.79559614,"errtotaj":12.72765284,"errprom":1.474449518,"errpromaj":1.590956605,"encuestasprom":8},
 {"enc":"Fara","rating":1.090367699,"errtot":12.67577399,"errtotaj":13.19397446,"errprom":2.535154799,"errpromaj":2.638794892,"encuestasprom":5},
 {"enc":"CEOP","rating":1.083850855,"errtot":12.23213043,"errtotaj":13.13942875,"errprom":2.038688405,"errpromaj":2.189904792,"encuestasprom":6},
-{"enc":"Isonomia","rating":1.07959009,"errtot":10.24032266,"errtotaj":12.8152168,"errprom":2.048064531,"errpromaj":2.563043361,"encuestasprom":5},
+{"enc":"Isonomía","rating":1.07959009,"errtot":10.24032266,"errtotaj":12.8152168,"errprom":2.048064531,"errpromaj":2.563043361,"encuestasprom":5},
 {"enc":"Haime","rating":1.197834583,"errtot":6.725209933,"errtotaj":7.101584816,"errprom":2.241736644,"errpromaj":2.367194939,"encuestasprom":3},
 {"enc":"IPSOS-Mora y Araujo","rating":1.131792629,"errtot":7.025627557,"errtotaj":7.587677761,"errprom":7.025627557,"errpromaj":7.587677761,"encuestasprom":1},
 {"enc":"Aresco","rating":1.124505402,"errtot":8.68,"errtotaj":9.504346382,"errprom":2.893333333,"errpromaj":3.168115461,"encuestasprom":3},
 {"enc":"Rouvier","rating":1.101825735,"errtot":9.727236677,"errtotaj":10.27083752,"errprom":3.242412226,"errpromaj":3.423612507,"encuestasprom":3},
-{"enc":"Analogias","rating":1.087140823,"errtot":10.62562756,"errtotaj":11.47567776,"errprom":10.62562756,"errpromaj":11.47567776,"encuestasprom":1},
+{"enc":"Analogías","rating":1.087140823,"errtot":10.62562756,"errtotaj":11.47567776,"errprom":10.62562756,"errpromaj":11.47567776,"encuestasprom":1},
 {"enc":"Opinión Autenticada","rating":1.077491732,"errtot":14.16516414,"errtotaj":15.57667124,"errprom":4.721721381,"errpromaj":5.192223746,"encuestasprom":3},
 {"enc":"Romer","rating":1.072823123,"errtot":12.16059606,"errtotaj":13.73190219,"errprom":12.16059606,"errpromaj":13.73190219,"encuestasprom":1}
 ];
@@ -381,17 +381,17 @@ var fechas = [
 
 var encuestas = 
 
-[{"nro":1,enc:"Aragon","fecha":"20/12/2013","link":"goo.gl/HdXdLV","medio":"Infobae"},
-{"nro":2,enc:"Gonzalez/Valladares - MGMR","fecha":"09/03/2014","link":"goo.gl/8qujsc","medio":"Perfil"},
-{"nro":3,enc:"Aragon","fecha":"26/03/2014","link":"goo.gl/TPybaX","medio":"Infobae"},
-{"nro":4,enc:"Poliarquia","fecha":"13/04/2014","link":"goo.gl/D6maE1","medio":"La Nacion"},
-{"nro":5,enc:"Aragon","fecha":"29/04/2014","link":"goo.gl/CKjUob","medio":"Infobae"},
-{"nro":6,enc:"Aragon","fecha":"10/06/2014","link":"goo.gl/s21wGK","medio":"Infobae"},
-{"nro":7,enc:"Poliarquia","fecha":"12/06/2014","link":"goo.gl/UqIzzg","medio":"La Nación"},
-{"nro":8,enc:"Gonzalez/Valladares - MGMR","fecha":"27/07/2014","link":"goo.gl/4kK7ps","medio":"Perfil"},
-{"nro":9,enc:"Gonzalez/Valladares - MGMR","fecha":"14/09/2014","link":"goo.gl/DZehbZ","medio":"Perfil"},
+[{"nro":1,enc:"Aragón","fecha":"20/12/2013","link":"goo.gl/HdXdLV","medio":"Infobae"},
+{"nro":2,enc:"González/Valladares - MGMR","fecha":"09/03/2014","link":"goo.gl/8qujsc","medio":"Perfil"},
+{"nro":3,enc:"Aragón","fecha":"26/03/2014","link":"goo.gl/TPybaX","medio":"Infobae"},
+{"nro":4,enc:"Poliarquía","fecha":"13/04/2014","link":"goo.gl/D6maE1","medio":"La Nacion"},
+{"nro":5,enc:"Aragón","fecha":"29/04/2014","link":"goo.gl/CKjUob","medio":"Infobae"},
+{"nro":6,enc:"Aragón","fecha":"10/06/2014","link":"goo.gl/s21wGK","medio":"Infobae"},
+{"nro":7,enc:"Poliarquía","fecha":"12/06/2014","link":"goo.gl/UqIzzg","medio":"La Nación"},
+{"nro":8,enc:"González/Valladares - MGMR","fecha":"27/07/2014","link":"goo.gl/4kK7ps","medio":"Perfil"},
+{"nro":9,enc:"González/Valladares - MGMR","fecha":"14/09/2014","link":"goo.gl/DZehbZ","medio":"Perfil"},
 {"nro":10,enc:"Giacobbe","fecha":"27/09/2014","link":"goo.gl/vkvX6P","medio":""},
-{"nro":11,enc:"Aragon","fecha":"28/09/2014","link":"Arch Word Sept 2014","medio":""},
-{"nro":12,enc:"Poliarquia","fecha":"26/10/2014","link":"goo.gl/GJbKNg","medio":"La Nacion"},
+{"nro":11,enc:"Aragón","fecha":"28/09/2014","link":"Arch Word Sept 2014","medio":""},
+{"nro":12,enc:"Poliarquía","fecha":"26/10/2014","link":"goo.gl/GJbKNg","medio":"La Nacion"},
 {"nro":13,enc:"Gonzalez/Valladares - MGMR","fecha":"26/10/2014","link":"goo.gl/t04Flk","medio":"Perfil"},
 {"nro":14,enc:"Fara","fecha":"27/11/2014","link":"goo.gl/DO4QrH","medio":""}];

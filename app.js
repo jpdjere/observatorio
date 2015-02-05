@@ -456,13 +456,13 @@
 					}
 
 					if(checkIzq === 6 || checkDer === 6){
-						//Si no estÃ¡n los dos lados seleccionados, borra temp
+						//Si no están los dos lados seleccionados, borra temp
 						$scope.temp = ' ';
 						$scope.dataGraf.length = 0;
 						$scope.diferenciasGraf.length = 0;
 
 					}else{
-						//Si estÃ¡n los dos seleccionados, carga la data para el grÃ¡fico
+						//Si están los dos seleccionados, carga la data para el gráfico
 
 						this.compDiftemp = $scope.compDif;
 						$scope.dataGraf.length = 0;
@@ -531,8 +531,8 @@
 
 						$scope.createGraph();
 
-						/*--------------------Creo el texto que va bajo el grÃ¡fico --------------------------*/
-						$scope.texto_underGraph = " "+$scope.datosTotales[$scope.izqIndex].nombComp+ " tiene "+$scope.temp+" de probabilidad de " + $scope.text4text_underGraph+ $scope.datosTotales[$scope.derIndex].nombComp + " en la elecciÃ³n general";
+						/*--------------------Creo el texto que va bajo el gráfico --------------------------*/
+						$scope.texto_underGraph = " "+$scope.datosTotales[$scope.izqIndex].nombComp+ " tiene "+$scope.temp+" de probabilidad de " + $scope.text4text_underGraph+ $scope.datosTotales[$scope.derIndex].nombComp + " en la elección general";
 				
 
 					} //ciera else
@@ -629,8 +629,8 @@
 				var barPadding = 1;
 				//var x1cuadroDer = 0;
 				var x1cuadroDer = 0.3*w;
-				var sepEntre10 = 96.6666; //SeparaciÃ³n entre lÃ­neas vert de graf en px
-				var sepEntre10 = 116.4; //SeparaciÃ³n entre lÃ­neas vert de graf en px
+				var sepEntre10 = 96.6666; //Separación entre líneas vert de graf en px
+				var sepEntre10 = 116.4; //Separación entre líneas vert de graf en px
 				var comienzoHorGraf = 120; //En px, distancia horiz del 0% del grafico
 				var comienzoVertGraf = 40; //En px, distancia vert del comienzo grafico
 				
@@ -685,18 +685,67 @@
 
 				    .classed("rectNorm",true)
 					.on("mouseover", function() {
+						var tempObj = d3.select(this);
+						console.log(tempObj);
+					  	mouseoverTooltip(tempObj);
+					  
 					  d3.select(this)
-					    //.attr('fill', '') // Un-sets the "explicit" fill (might need to be null instead of '')
-					    .classed("rectNorm", false ) // should then accept fill from CSS
-					    .classed("rectHover", true ); // should then accept fill from CSS
+					    
+					    .classed("rectNorm", false ) 
+					    .classed("rectHover", true );
 					})					
 					.on("mouseout", function() {
+					  mouseoutTooltip();
 					  d3.select(this)
-					    //.attr('fill', '') // Un-sets the "explicit" fill (might need to be null instead of '')
-					    .classed("rectNorm", true ) // should then accept fill from CSS
-					    .classed("rectHover", false ); // should then accept fill from CSS
-					});
+					   
+					    .classed("rectNorm", true ) 
+					    .classed("rectHover", false ); 
+					})
+					.on("mousemove", function(){
+						var tempObj = d3.select(this);
+						mousemoveTooltip(tempObj)
+						}
+					);
 
+
+					/*--------------RECTANGULO TOOLTIP-------------------------*/
+					var rectTooltip = container.append("g")
+
+						.append("rect")
+						.attr("class", "tooltip2")
+						.style("opacity", 1e-6);
+
+					function mouseoverTooltip() {
+						
+					  rectTooltip.transition()
+					    .duration(500)
+					    .style("opacity", 1);
+					}
+
+					function mousemoveTooltip(position) {
+
+					var positionTemp = position;
+					var posX = positionTemp.attr("x")+700;
+					var posY = positionTemp.attr("y")+300;
+
+					  rectTooltip
+					      
+					    //.attr("x", (d3.event.pageX - 1000) + "px")
+					    //.attr("y", (d3.event.pageY - 250) + "px")
+					    .attr("x", posX)     
+ 						.attr("y", posY)
+					    .attr("height", 50)
+					    .attr("width", 150);
+
+					}
+
+					function mouseoutTooltip() {
+					  rectTooltip.transition()
+					    .duration(500)
+					    .style("opacity", 1e-6);
+					}
+
+					/*-----------------------CIRCULOS PROMEDIO-------------------------*/
 					container.append("g")//.attr("transform","translate(0,-50)")
 						.selectAll("circle")
 						.data(data)
@@ -779,6 +828,8 @@
 					    .style("stroke-width",1)
 					    .style("stroke-dasharray","2,2");
 
+
+
 						//Create the SVG Viewport
 		 				var svgContainer = container;
 
@@ -805,6 +856,8 @@
 									    .style("text-anchor", "end")
 									    .attr("class", "stag")
 									    .text("Porcentaje (%)");
+
+
 
 					var fotos = [0];
 					var imgs = d3.select("#svgtitulo").attr("width",972).attr("height",90)

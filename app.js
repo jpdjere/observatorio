@@ -634,6 +634,7 @@
 				var comienzoHorGraf = 120; //En px, distancia horiz del 0% del grafico
 				var comienzoVertGraf = 40; //En px, distancia vert del comienzo grafico
 				
+				/*----------------------------------------Funciones de transformacion --------------------------------*/
 				var transTopx = function(por){
 					var res = comienzoHorGraf+por*sepEntre10/10; //regla de 3, si el 10% es sepEntre10 (96,66px) cuanto es Res
 					if(res>comienzoHorGraf){
@@ -659,6 +660,7 @@
 					};
 				};				
 				
+				/*----------------------------------------Creacion de Canvas y RECTANGULOS DE AREA --------------------------------*/
 				container.attr('width',720).attr('height',600)
 				.append("g")
 				.selectAll("rect")
@@ -676,12 +678,7 @@
 				    .attr("x", function(d){
 				    	return transTopx(d.prom-2*d.desv);
 				    })
-				    .html(function(d,i){
-				    	var arriba=d.prom+d.desv*2;arriba = arriba.toFixed(2);
-				    	var abajo=d.prom-d.desv*2;abajo =abajo.toFixed(2);
-				    	if(abajo<0){abajo=0};
-				    	return "<title>Entre "+abajo+ "% y "+ arriba+"% con un 95% de probabilidad</title>";
-				    })
+
 
 				    .classed("rectNorm",true)
 					.on("mouseover", function() {
@@ -707,44 +704,6 @@
 						}
 					);
 
-
-					/*--------------RECTANGULO TOOLTIP-------------------------*/
-					var rectTooltip = container.append("g")
-
-						.append("rect")
-						.attr("class", "tooltip2")
-						.style("opacity", 1e-6);
-
-					function mouseoverTooltip() {
-						
-					  rectTooltip.transition()
-					    .duration(500)
-					    .style("opacity", 1);
-					}
-
-					function mousemoveTooltip(position) {
-
-					var positionTemp = position;
-					var posX = positionTemp.attr("x")+700;
-					var posY = positionTemp.attr("y")+300;
-
-					  rectTooltip
-					      
-					    //.attr("x", (d3.event.pageX - 1000) + "px")
-					    //.attr("y", (d3.event.pageY - 250) + "px")
-					    .attr("x", posX)     
- 						.attr("y", posY)
-					    .attr("height", 50)
-					    .attr("width", 150);
-
-					}
-
-					function mouseoutTooltip() {
-					  rectTooltip.transition()
-					    .duration(500)
-					    .style("opacity", 1e-6);
-					}
-
 					/*-----------------------CIRCULOS PROMEDIO-------------------------*/
 					container.append("g")//.attr("transform","translate(0,-50)")
 						.selectAll("circle")
@@ -762,8 +721,9 @@
 							return comienzoVertGraf+(0.75*h/data.length)*(i+ajusteYcirc);
 						})
  					
+ 					/*----------------------------------------LINEAS HORIZONTALES --------------------------------*/	
  						var qLineasHoriz = new Array(data.length+1);
-	 				container.append("g") //Lineas Horizontales
+	 				container.append("g")
 	 					.selectAll("line")
 						.data(qLineasHoriz)	
 						.enter()
@@ -778,7 +738,8 @@
 					    })
 					    .classed("lineashor",true);
 
-					container.append("g") ///Nombre Candidatos
+					/*----------------------------------------NOMBRE DE CANDIDATOS --------------------------------*/
+					container.append("g")
 						.selectAll("text2")
 						.data(data)	
 						.enter()
@@ -793,7 +754,8 @@
 					    	return d.cand;
 					    });
 
-					container.append("g") //Fotos de candidatos
+					/*----------------------------------------FOTOS DE CANDIDATOS --------------------------------*/
+					container.append("g") 
 		            .selectAll("image").data(data)
 						.enter()
 					    .append("svg:image")
@@ -807,8 +769,8 @@
 			            .attr("width", "60")
 			            .attr("height", "60");
 
-
-			 		container.append("g") //Lineas Verticales
+			        /*----------------------------------------LINEAS VERTICALES --------------------------------*/
+			 		container.append("g") 
 			 			.selectAll("line2")
 						.data([1,2,3,4,5,6])	
 						.enter()
@@ -828,8 +790,82 @@
 					    .style("stroke-width",1)
 					    .style("stroke-dasharray","2,2");
 
+					/*--------------------------------------RECTANGULO TOOLTIP--------------------------------------*/
+					var groupTooltip = container.append("g").style("opacity", 1e-6);
+
+					var rectTooltip = groupTooltip.append("rect")
+						.attr("class", "tooltip2");
+
+					var textTooltip = groupTooltip.append("text");
+
+					function mouseoverTooltip() {
+						
+					  groupTooltip.transition()
+					    .duration(200)
+					    .style("opacity", 1);					  
+
+					}
+
+					function mousemoveTooltip(position) {
+
+					var positionTemp = position;
+					var posX = parseInt(positionTemp.attr("x"))+parseInt(positionTemp.attr("width"))+20;
+					var posY = parseInt(positionTemp.attr("y"));
+
+					  rectTooltip
+					      
+					    .attr("x", posX)     
+ 						.attr("y", posY)
+					    .attr("height", 150)
+					    .attr("width", 150);
+
+					  textTooltip
 
 
+					    .attr("height", 150)
+					    .attr("width", 50)
+					    .text("Lorem ipsum loirr otrto pusis meo losldo gilton lados iundres tiruti")
+					    .attr("class","textoTooltip")
+					    .call(wrap,150,posX+10)
+					    .attr("x", posX+20)     
+ 						.attr("y", posY+20);
+
+
+
+					}
+
+					function mouseoutTooltip() {
+					  groupTooltip.transition()
+					    .duration(200)
+					    .style("opacity", 1e-6);
+					}
+
+					function wrap(text, width, posX) {  //Al llamarla, el primer argumento (la selección) esta implicto, cuentan a partir de ahi
+					  text.each(function() {
+					    var text = d3.select(this),
+					        words = text.text().split(/\s+/).reverse(),
+					        word,
+					        line = [],
+					        lineNumber = 0,
+					        lineHeight = 1.1, // ems
+					        y = text.attr("y"),
+					        //dy = parseFloat(text.attr("dy")),
+					        dy = 0,
+					        tspan = text.text(null).append("tspan").attr("x",posX).attr("y", y).attr("dy", dy+ "em");
+					    while (word = words.pop()) {
+					      line.push(word);
+					      tspan.text(line.join(" "));
+					      if (tspan.node().getComputedTextLength() > width) {
+					        line.pop();
+					        tspan.text(line.join(" "));
+					        line = [word];
+					        tspan = text.append("tspan").attr("x", posX).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+					      }
+					    }
+					  });
+					}
+
+					    /*----------------------------------------       EJE      --------------------------------*/
 						//Create the SVG Viewport
 		 				var svgContainer = container;
 

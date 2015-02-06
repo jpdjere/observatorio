@@ -20,10 +20,10 @@
 			<center> 
 			  <ul class="nav nav-pills stag">
 			    <li ng-class="{ active:tab.isSet(1) }">
-			      <a href ng-click="tab.setTab(1)">Frentes</a>
+			      <a href ng-click="tab.setTab(1)">PASO</a>
 			    </li>	    
 			    <li ng-class="{ active:tab.isSet(2) }">
-			      <a href ng-click="tab.setTab(2)">Candidatos</a>
+			      <a href ng-click="tab.setTab(2)">Primera Vuelta</a>
 			    </li>
 			    <li ng-class="{ active:tab.isSet(3) }">
 			      <a href ng-click="tab.setTab(3)">Diferencias</a>
@@ -33,6 +33,9 @@
 			    </li>	    
 			    <li ng-class="{ active:tab.isSet(5) }">
 			      <a href ng-click="tab.setTab(5)">Encuestas</a>
+			    </li>			    
+			    <li ng-class="{ active:tab.isSet(6) }">
+			      <a href ng-click="tab.setTab(6)">Metodología</a>
 			    </li>
 			  </ul>
 			</center>
@@ -43,12 +46,35 @@
 		  <div ng-show="tab.isSet(1)">
 		  		<div class="graphWrapper">
 			  		<svg id="svggrafico2"></svg>
+			  		<div class="exp_underBarGraph">
+			  			<ul>
+			  				<li>
+			  					El gráfico muestra el rango del porcentaje de los votos que obtendrá cada frente electoral en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del domingo 9 de agosto del 2015.
+			  				</li>			  				
+			  				<li>
+			  					Las bandas marcan el mínimo y el máximo del porcentaje de votos que las encuestas indican que obtendrá cada frente, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+			  				</li>
+			  			</ul>
+			  		</div>
 			  	</div>
 		  </div>
 
 		  <div ng-show="tab.isSet(2)">
 		  		<div class="graphWrapper">
 			  		<svg id="svggrafico1"></svg>
+			  		<div class="exp_underBarGraph">
+			  			<ul>
+			  				<li>
+			  					El gráfico muestra el rango del porcentaje de los votos que cada candidato en la primera vuelta de las Elecciones Presidenciales del domingo 25 de octubre del 2015.
+			  				</li>	
+			  				<li>
+			  					El candidato de cada frente electoral fue elegido por el Observatorio de acuerdo a quien las encuestas indican que está primero en la competencia interna de cada frente.
+			  				</li>			  				
+			  				<li>
+			  					Las bandas marcan el mínimo y el máximo del porcentaje de votos que las encuestas indican que obtendrá cada candidato, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+			  				</li>
+			  			</ul>
+			  		</div>
 				</div>
 		  </div>
 
@@ -62,6 +88,9 @@
 		  </div>		  
 		  <div ng-show="tab.isSet(5)">
 		  	<encuestas-directive style="margin-left:50px;margin-right:50px;"></encuestas-directive>
+		  </div>		  
+		  <div ng-show="tab.isSet(6)">
+		  	<metodologia-directive style="margin-left:50px;margin-right:50px;"></metodologia-directive>
 		  </div>
 		
 		</div>
@@ -70,7 +99,7 @@
 <d3-directive></d3-directive>
 
 <div class="footer stag-light" style="font-size:18px">
-	<img class="imgFooter" src="images/logo.jpg" /><b style="margin-right:15px;">La Politica Online    | </b>   
+	<img class="imgFooter" src="images/logo.jpg" /><b style="margin-right:15px;">La Politica Online | </b>   
 	Creado por: <a href="https://twitter.com/jpdjere">Juan Pablo Djeredjian</a>
 
 </div>
@@ -137,7 +166,7 @@
 
 	#svgtitulo {
 		margin-bottom: 25px;
-		margin-top: 40px;
+		margin-top: 20px;
 		border-top: 3px solid black;
 		border-bottom: 3px solid black;
 
@@ -149,7 +178,7 @@
 	}
 
 	.navWrapper{
-		width:550px;
+		width:680px;
 		margin: 0 auto;
 
 	}	
@@ -171,6 +200,27 @@
 		width:auto;
 		margin-right:10px;
 
+	}
+
+	.exp_underBarGraph {
+		font-family: Stag-Light, sans-serif;
+		font-size:20px;
+		font-weight: bolder;
+
+	}
+
+	.text_underGraph { 
+		font-family: Stag-Light, sans-serif;
+		font-size:24px;
+		font-weight:bold;
+		color:black;
+	}	
+
+	.text_metod { 
+		font-family: Stag-Light, sans-serif;
+		font-size:23px;
+		color:black;
+		margin-bottom: 8px;
 	}
 
 	/*-------------------CSS para Tabla de Encuestadoras ------------------*/

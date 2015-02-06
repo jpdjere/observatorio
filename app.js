@@ -93,6 +93,14 @@
 			restrict:'E',
 			templateUrl:"encuestas.html"
 		}
+	});	
+
+	app.directive('metodologiaDirective',function(){ //Para meter HTML
+		return{
+
+			restrict:'E',
+			templateUrl:"metodologia-directive.html"
+		}
 	});
 
 
@@ -661,7 +669,7 @@
 				};				
 				
 				/*----------------------------------------Creacion de Canvas y RECTANGULOS DE AREA --------------------------------*/
-				container.attr('width',720).attr('height',600)
+				container.attr('width',720).attr('height',435)
 				.append("g")
 				.selectAll("rect")
 					.data(data)
@@ -682,9 +690,10 @@
 
 				    .classed("rectNorm",true)
 					.on("mouseover", function() {
+
 						var tempObj = d3.select(this);
 						console.log(tempObj);
-					  	mouseoverTooltip(tempObj);
+					  	mouseoverTooltip();
 					  
 					  d3.select(this)
 					    
@@ -698,9 +707,12 @@
 					    .classed("rectNorm", true ) 
 					    .classed("rectHover", false ); 
 					})
-					.on("mousemove", function(){
+					.on("mousemove", function(d,i){
+						cand_i = d.cand;
+						prom_i = d.prom;
+						desv_i = d.desv;
 						var tempObj = d3.select(this);
-						mousemoveTooltip(tempObj)
+						mousemoveTooltip(tempObj, cand_i, prom_i, desv_i);
 						}
 					);
 
@@ -719,7 +731,7 @@
 						})
 						.attr("cy",function(d,i){
 							return comienzoVertGraf+(0.75*h/data.length)*(i+ajusteYcirc);
-						})
+						});
  					
  					/*----------------------------------------LINEAS HORIZONTALES --------------------------------*/	
  						var qLineasHoriz = new Array(data.length+1);
@@ -806,17 +818,43 @@
 
 					}
 
-					function mousemoveTooltip(position) {
+					function mousemoveTooltip(position, cand_i, prom_i, desv_i) {
 
 					var positionTemp = position;
 					var posX = parseInt(positionTemp.attr("x"))+parseInt(positionTemp.attr("width"))+20;
 					var posY = parseInt(positionTemp.attr("y"));
+					
+					var lowerLimTooltip  = parseFloat(prom_i)-2*parseFloat(desv_i);
+					var upperLimTooltip  = parseFloat(prom_i)+2*parseFloat(desv_i);
+					var promTooltip = prom_i.toFixed(2);
+
+					if(lowerLimTooltip < 0){ //Correción para negativos
+
+						lowerLimTooltip = 0;
+
+					}
 
 					  rectTooltip
 					      
 					    .attr("x", posX)     
- 						.attr("y", posY)
-					    .attr("height", 150)
+ 						.attr("y", function(){
+ 							if(cand_i === 'NS/NC'){
+ 								var posYNSNC = parseFloat(posY);
+ 								return posYNSNC-70;
+ 							}else{
+ 								return posY;
+ 							}
+
+ 						})
+					    .attr("height", function(d,i){
+
+					    	if(cand_i === 'Altamira' || cand_i === 'Otros' || cand_i === 'NS/NC' || cand_i === 'FAUNEN'  ){
+					    		return 100;
+					    	}else{
+					    		return 88;
+					    	}
+
+					    })
 					    .attr("width", 150);
 
 					  textTooltip
@@ -824,13 +862,26 @@
 
 					    .attr("height", 150)
 					    .attr("width", 50)
-					    .text("Lorem ipsum loirr otrto pusis meo losldo gilton lados iundres tiruti")
+					    .text(function(){
+					    	if(cand_i === 'Otros'){
+					    		return "Otros candidatos obtendrán entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    	}else if (cand_i === 'NS/NC'){
+					    		return "Los indecisos oscilan entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    	}else{
+					    		return cand_i+" obtendrá entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    	}
+					    })
 					    .attr("class","textoTooltip")
-					    .call(wrap,150,posX+10)
+					    .call(wrap,130,posX+10)
 					    .attr("x", posX+20)     
- 						.attr("y", posY+20);
-
-
+ 						.attr("y", function(){
+ 							if(cand_i === 'NS/NC'){
+ 								var posYNSNC = parseFloat(posY);
+ 								return posYNSNC-50;
+ 							}else{
+ 								return posY+20;
+ 							} 							
+ 						});
 
 					}
 

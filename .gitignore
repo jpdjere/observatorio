@@ -4,6 +4,8 @@
 *.csv
 *.xls
 *.xlsx
+*.doc
+*.docx
 
 Encuestas/
 Excels Augusto/

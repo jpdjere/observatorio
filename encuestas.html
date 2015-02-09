@@ -3,14 +3,23 @@
 	<div>
 
 		<center>
-		<table class="table-bordered table-condensed" width="100%">	
-			<tr class="stag-book"><th>Encuesta N°</th><th>Encuesta</th><th>Fecha</th><th>Link</th><th>Medio</th></tr>
-			<tr class="stag-book" ng-repeat="datos in store.encuestas">
-					<td>{{datos.nro}}</td>
-					<td>{{datos.enc}}</td>
-					<td>{{datos.fecha}}</td>
-					<td><a ng-href="{{datos.link}}">{{datos.link}}</a></td>
-					<td>{{datos.medio}}</td>
+		<table class="table-condensed" width="100%">	
+			<tr class="stag-book borderBottomThick">
+				<th class="borderRight textoCenter">ENCUESTA N°</th>
+				<th class="textoCenter">FECHA</th>
+				<th class="textoCenter">ENCUESTADORA</th>
+				<th class="textoCenter borderLeft">DESCARGA</th>
+			</tr>
+			<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestas">
+					<td class="borderRight textoCenter">{{datos.nro}}</td>
+					<td class="textoCenter">{{datos.fecha}}</td>
+					<td class="textoCenter">{{datos.enc}}</td>
+					<td class="textoCenter borderLeft">
+						<a ng-href="{{datos.link}}">
+							<img src="images/downloadIcon.png" height="20" width="20" />
+						</a>
+					</td>
+
 						
 			</tr>
 		</table>
@@ -20,7 +29,28 @@
 </div>
 
 
+<style type="text/css">
 
+.borderBottomThick{
+	border-bottom:2px solid rgb(102, 100, 100)
+}
+.borderBottomFino{
+	border-bottom:1px solid rgba(102, 100, 100, 0.15);
+}
+.borderRight{
+	border-right:1px solid rgb(102, 100, 100)
+}
+.borderLeft{
+	border-left:1px solid rgb(102, 100, 100)
+}
+
+.textoCenter {
+	text-align:center;
+}
+
+
+
+</style>
 
 
 

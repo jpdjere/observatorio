@@ -56,7 +56,7 @@
 	}]);
 
 	app.controller('TabsController', ["$scope",function($scope,$window) {
-        this.tab = 3;
+        this.tab = 4;
 
         this.isSet = function(checkTab) {
           return this.tab === checkTab;

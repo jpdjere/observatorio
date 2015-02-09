@@ -3,14 +3,28 @@
 	<div>
 
 		<center>
-		<table class="table-bordered table-condensed" width="100%">	
-			<tr class="stag-book"><th>Encuestadora</th><th>Error Promedio</th><th>Error Promedio Ajustado</th><th>Rating</th><th>Encuestas promediadas</th></tr>
-			<tr class="stag-book negrita" ng-repeat="datos in store.ratings">
-					<td>{{datos.enc}}</td>
-					<td>{{datos.errprom | number:2}}</td>
-					<td>{{datos.errpromaj | number:2}}</td>
-					<td>{{datos.rating | number:2}}</td>
-					<td ng-class="{'fondoverde': datos.encuestasprom >= 5}">{{datos.encuestasprom}}</td>		
+		<table class="table-condensed" width="100%">	
+			<tr class="stag-book borderBottomThick">
+				<th class="borderRight">ENCUESTADORA</th>
+				<th class="textoCenter">ERROR PROMEDIO</th>
+				<th class="textoCenter">ERROR PROMEDIO AJUSTADO</th>
+				<th class="textoCenter">ENCUESTAS ANALIZADAS</th>
+				<th class="textoCenter borderLeft">RATING</th>
+			</tr>
+			<tr class="stag-book negrita borderBottomFino" ng-repeat="datos in store.ratings">
+					<td class="borderRight">{{datos.enc}}</td>
+					<td class="textoCenter">{{datos.errprom | number:2}}</td>
+					<td class="textoCenter">{{datos.errpromaj | number:2}}</td>
+					<td class="">
+						<span style="padding:25px;margin-left:73px" >
+							{{datos.encuestasprom}}
+						</span>
+						<span ng-show="datos.encuestasprom >= 5">
+							<img src="images/tick.png" height="20" width="20" />
+						</span>						
+
+					</td>		
+					<td class="textoCenter  borderLeft">{{datos.rating | number:2}}</td>
 			</tr>
 		</table>
 		</center>
@@ -19,7 +33,17 @@
 </div>
 
 
+<style type="text/css">
+	/*-------------------CSS para Tabla de Encuestadoras ------------------*/
+	
+	.fondoverde {
+		background:lightgreen;
+	}
+	.negrita:hover {
+		background: gray;
+		font-weight: bold;
+	}
 
 
-
+</style>
 

@@ -1,52 +1,59 @@
+<div class="textoMet">
+	<div class="text_metod">
+		El Observatorio de Encuestas se encarga de recopilar y procesar las encuestas a nivel nacional para hacer evaluar las posibilidades de los candidatos a las elecciones presidenciales de 2015.
+	</div>
+	<div class="text_metod">
+		Utiliza una metodología propia, inspirada en los modelos estadísticos del analista Nate Silver para las elecciones de EE.UU., pero ampliamente modificada para adaptarse a las peculiaridades del sistema electoral argentino.
+	</div>
+	<div class="text_metod">
+		El Observatorio de Encuestas de LPO recopila todas las encuestas que considera válidas y las promedia realizando una ponderación de acuerdo a tres factores:
+	</div>
+	<div class="text_metod">
+		<ul>
+			<li>Tiempo hasta la elección</li>
+			<li>Rating de la encuestadora</li>
+			<li>Tamaño de la muestra</li>
+		</ul>
+	</div>
+	<div class="text_metod factor">
+		<b>Tiempo hasta la elección:</b>
+	</div>
+	<div class="text_metod">
+		Las encuestas tienen un peso mayor cuando la distancia entre la fecha en que se publica y la fecha de la elección es menor. Esta pérdida en el peso no es lineal, sino que utilizan la fórmula del Decaimiento Exponencial.
+	</div>
+	<div class="text_metod">
+		Además, las encuestas de la misma encuestadora tienen una penalización adicional: la última no sufre la penalización, pero luego su peso es proporcional a la inversa del número que tienen en la serie.
+	</div>
+	<div class="text_metod factor">
+		<b>Rating de la encuestadora:</b>
+	</div>
+	<div class="text_metod">
+		Las encuestas también son ponderadas de acuerdo al rating que tiene la encuestadora que la elaboró. El rating de cada encuestadora es calculado por el Observatorio de Encuestas de LPO de acuerdo al performance que tuvieron las encuestas que publicó cada encuestadora en elecciones anteriores a 2015.
+	</div>
+	<div class="text_metod">
+		La pestaña Ratings explica en detalle el sistema de calificación de cada encuestadora.
+	</div>
+	<div class="text_metod factor">
+		<b>Tamaño de la muestra:</b>
+	</div>
+	<div class="text_metod">
+		El tamaño de la muestra, es decir, la cantidad de ciudadanos que fueron consultados para cada encuesta también influye en la ponderación. A mayor tamaño de muestra, mayor es el peso de la encuesta.
 
-<div class="text_metod">
-	El Observatorio de Encuestas se encarga de recopilar y procesar las encuestas a nivel nacional para hacer evaluar las posibilidades de los candidatos a las elecciones presidenciales de 2015.
-</div>
-<div class="text_metod">
-	Utiliza una metodología propia, inspirada en los modelos estadísticos del analista Nate Silver para las elecciones de EE.UU., pero ampliamente modificada para adaptarse a las peculiaridades del sistema electoral argentino.
-</div>
-<div class="text_metod">
-	El Observatorio de Encuestas de LPO recopila todas las encuestas que considera válidas y las promedia realizando una ponderación de acuerdo a tres factores:
-</div>
-<div class="text_metod">
-	<ul>
-		<li>Tiempo hasta la elección</li>
-		<li>Rating de la encuestadora</li>
-		<li>Tamaño de la muestra</li>
-	</ul>
-</div>
-<div class="text_metod factor">
-	<b>Tiempo hasta la elección:</b>
-</div>
-<div class="text_metod">
-	Las encuestas tienen un peso mayor cuando la distancia entre la fecha en que se publica y la fecha de la elección es menor. Esta pérdida en el peso no es lineal, sino que utilizan la fórmula del Decaimiento Exponencial.
-</div>
-<div class="text_metod">
-	Además, las encuestas de la misma encuestadora tienen una penalización adicional: la última no sufre la penalización, pero luego su peso es proporcional a la inversa del número que tienen en la serie.
-</div>
-<div class="text_metod factor">
-	<b>Rating de la encuestadora:</b>
-</div>
-<div class="text_metod">
-	Las encuestas también son ponderadas de acuerdo al rating que tiene la encuestadora que la elaboró. El rating de cada encuestadora es calculado por el Observatorio de Encuestas de LPO de acuerdo al performance que tuvieron las encuestas que publicó cada encuestadora en elecciones anteriores a 2015.
-</div>
-<div class="text_metod">
-	La pestaña Ratings explica en detalle el sistema de calificación de cada encuestadora.
-</div>
-<div class="text_metod factor">
-	<b>Tamaño de la muestra:</b>
-</div>
-<div class="text_metod">
-	El tamaño de la muestra, es decir, la cantidad de ciudadanos que fueron consultados para cada encuesta también influye en la ponderación. A mayor tamaño de muestra, mayor es el peso de la encuesta.
-
+	</div>
 </div>
 
 <style type="text/css">
+	
+	.textoMet{
 
- .factor{
+		padding: 20px auto;
 
- 	margin-top:30px;
- }
+	}
+
+	.factor{
+
+ 		margin-top:30px;
+	 }
 
 </style>
 

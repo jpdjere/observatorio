@@ -45,18 +45,26 @@
 		$scope.ventaja = "s0";
 		$scope.text4text_underGraph;
 
+		$scope.dataDonutVE = {};
+
 
 
 	}]);
 
 	app.filter('percentage', ['$filter', function ($filter) {
   		return function (input, decimals) {
-   			return $filter('number')(input * 100, 2) + '%';
+  			if(input > 0.9999){
+  				return $filter('number')(input * 100, 0) + '%';
+  			}else if(input > 0 && input < 0.1){
+  				return $filter('number')(input * 100, 1) + '%';
+   			}else {
+  				return $filter('number')(input * 100, 1) + '%';
+   			}
   		};
 	}]);
 
 	app.controller('TabsController', ["$scope",function($scope,$window) {
-        this.tab = 4;
+        this.tab = 1;
 
         this.isSet = function(checkTab) {
           return this.tab === checkTab;
@@ -203,6 +211,9 @@
 					var limitePorcInf=d3.min(dataTemp, function(d) { return d.close; });
 					var limitePorcSup=d3.max(dataTemp, function(d) { return d.close; });
 
+					//limiteFechaInf.setDate(limiteFechaInf.getDate());
+					console.log("Fecha Inf---------->: "+limiteFechaInf);
+					console.log("Fecha Sup---------->: "+limiteFechaSup);
 					limiteFechaInf.setDate(limiteFechaInf.getDate() - 5);
 					limiteFechaSup.setDate(limiteFechaSup.getDate() +15);
 
@@ -266,6 +277,7 @@
  				}
 
 				$scope.createCompDif = function(){
+
 
 					if($scope.izqIndex === 0 && $scope.derIndex === 1){//Massa-Scioli
 						$scope.compDif = 0;
@@ -362,9 +374,9 @@
 						$scope.compDif = 19;
 						$scope.temp = '{{difs[0][compDif].'+$scope.ventaja+' | percentage}}';
 					}					
-					/*-------------------------------OTROS Y NSNC-------------------------*/
-					/*-------------------------------OTROS Y NSNC-------------------------*/
-					/*-------------------------------OTROS Y NSNC-------------------------*/
+
+
+
 					/*-------------------------------OTROS Y NSNC-------------------------*/
 					if($scope.izqIndex === 0 && $scope.derIndex === 5) {//Massa-Otros
 						$scope.compDif = 20;
@@ -378,7 +390,7 @@
 						$scope.compDif = 21;
 						$scope.temp = "{{difs[0][compDif]."+$scope.ventaja+" | percentage}}";
 					}
-					if($scope.izqIndex === 5 && $scope.derIndex === 6){//NSNC-Massa
+					if($scope.izqIndex === 6 && $scope.derIndex === 0){//NSNC-Massa
 						$scope.compDif = 30;
 						$scope.temp = '{{difs[0][compDif].'+$scope.ventaja+' | percentage}}';
 					}
@@ -452,7 +464,7 @@
 
 					var checkIzq = 0;
 					var checkDer = 0;
-					for(var i = 0; i<6; i++){
+					for(var i = 0; i<7; i++){
 						if($scope.izq[i] === true){
 							
 							checkIzq++;
@@ -463,7 +475,7 @@
 						}
 					}
 
-					if(checkIzq === 6 || checkDer === 6){
+					if(checkIzq === 7 || checkDer === 7){
 						//Si no están los dos lados seleccionados, borra temp
 						$scope.temp = ' ';
 						$scope.dataGraf.length = 0;
@@ -641,6 +653,10 @@
 				var sepEntre10 = 116.4; //Separación entre líneas vert de graf en px
 				var comienzoHorGraf = 120; //En px, distancia horiz del 0% del grafico
 				var comienzoVertGraf = 40; //En px, distancia vert del comienzo grafico
+
+				var internaPartido = false;
+				var pieGraph = false;
+				
 				
 				/*----------------------------------------Funciones de transformacion --------------------------------*/
 				var transTopx = function(por){
@@ -669,7 +685,7 @@
 				};				
 				
 				/*----------------------------------------Creacion de Canvas y RECTANGULOS DE AREA --------------------------------*/
-				container.attr('width',720).attr('height',435)
+				container.attr('width',720).attr('height',425)
 				.append("g")
 				.selectAll("rect")
 					.data(data)
@@ -692,7 +708,7 @@
 					.on("mouseover", function() {
 
 						var tempObj = d3.select(this);
-						console.log(tempObj);
+						//console.log(tempObj);
 					  	mouseoverTooltip();
 					  
 					  d3.select(this)
@@ -716,7 +732,7 @@
 						}
 					);
 
-					/*-----------------------CIRCULOS PROMEDIO-------------------------*/
+					/*------------------------------------CIRCULOS PROMEDIO----------------------------------------*/
 					container.append("g")//.attr("transform","translate(0,-50)")
 						.selectAll("circle")
 						.data(data)
@@ -779,7 +795,40 @@
 			            	return i*0.75*h/data.length+h*ajusteYfoto;
 			            })
 			            .attr("width", "60")
-			            .attr("height", "60");
+			            .attr("height", "60")
+			            .attr("class","logosCuadros")
+			            .attr("id",function(d,i){
+			            	return d.cand;
+			            })
+			            .on("click",function(d,i){
+			            	var partido = d.cand;
+			            	var tempObjPart = d3.select(this);
+			            	if(containerSVG === frentes){
+			            	
+								if(internaPartido === false){ //Caso Inicial
+
+									showInternas(partido,tempObjPart);
+									scope.dataDonutVE = loadDataForDonut(partido);
+				            		console.log("1: " +scope.dataDonutVE[0]);
+				            		console.log("1: " +scope.dataDonutVE[1]);
+				            		console.log("1: " +scope.dataDonutVE[2]);
+				            		console.log(typeof scope.dataDonutVE);
+				            		createDonutChart(partido,tempObjPart);
+
+								}else if(internaPartido === partido){ //al volver a hacer click en el escudo del q ta seleccionado, internaPartido es FALSE 
+									
+									hideInternas(partido,tempObjPart);
+									internaPartido = false;	
+									$('#donut-chart').html('');
+
+			            		}else if(internaPartido !== partido){ //
+			            			internaPartido = partido; //pongo el partido que corresponde y cargo las funciones
+									scope.dataDonutVE = loadDataForDonut(partido);
+				            		console.log("Vino la data? VE-----> " + scope.dataDonutVE);
+				            		createDonutChart(partido,tempObjPart);
+			            		}
+			            	}
+			            });
 
 			        /*----------------------------------------LINEAS VERTICALES --------------------------------*/
 			 		container.append("g") 
@@ -803,12 +852,363 @@
 					    .style("stroke-dasharray","2,2");
 
 					/*--------------------------------------RECTANGULO TOOLTIP--------------------------------------*/
-					var groupTooltip = container.append("g").style("opacity", 1e-6);
+					var groupTooltip = container.append("g").style("opacity", 1e-6).attr("id","tooltip-rects");
 
 					var rectTooltip = groupTooltip.append("rect")
 						.attr("class", "tooltip2");
 
 					var textTooltip = groupTooltip.append("text");
+
+
+					/*--------------------------------------PANEL INTERNAS ----------------------------------------*/
+					
+					var groupInternaPanel = container.append("g").style("opacity", 1e-6).attr("id","groupInternaPanel");
+					var internaPanel = groupInternaPanel.append("rect")
+						.attr("class", "tooltip2");
+
+					var donutChart = groupInternaPanel
+						.append("g")
+						.attr("id","donut-chart")
+						.attr("width",583)
+						.attr("height",375)
+						.attr("transform", "translate(" + (810) / 2 + "," + (490) / 2 + ")");
+
+					var etiquetasInternas = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
+						.attr("class","etiquetasInternas stag")			
+						.attr("width",450)
+						.attr("height",100);
+
+					var fotosInternas = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
+						.attr("class","etiquetasInternas stag")
+						.attr("x",450)
+						.attr("y",100)				
+						.attr("width",50)
+						.attr("height",50)
+						.attr("id","divFotosInternas");
+
+						$('#divFotosInternas').html("<img id=\"fotoInt0\" style=\"height:30px;width:30px;display:none;\" src=\"images/massa_baja.png\"/><img id=\"fotoInt1\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/scioli.png\"/><img id=\"fotoInt2\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt3\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt4\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt5\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt6\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/macri_baja.png\"/><img id=\"fotoInt7\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt8\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/cobos_baja.png\"/><img id=\"fotoInt9\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/binner_baja.png\"/><img id=\"fotoInt10\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt11\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt12\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt13\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/altamira_baja.png\"/><img id=\"fotoInt14\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt15\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/nsnc_baja.png\"/>");
+
+					/*var expDonutChart = donutChart
+						.append("g").attr("id","texto")
+						.append("text")
+						.attr("class","stag")
+						.attr("x",-210)
+						.attr("y",-170)
+						.text("Colocá el mouse sobre el gráfico para ver los candidatos");*/
+
+					/*--------------------------------------  DONUT CHART ------------------------------------------*/
+					function createColorsScales(partido){
+
+					}
+
+					function showInternas(partido, objetoClick){
+						
+	
+						  groupInternaPanel.transition()
+						    .duration(350)
+						    .style("opacity", 1);
+						    internaPartido = objetoClick.attr("id");
+						    console.log("2 PASO: showInterna: -------->"+ internaPartido);
+
+					}					
+
+					function hideInternas(partido, objetoClick){
+						
+						  console.log(" PASO OPC: showInterna (segundo IF, si intPar = Par al hacer click: -------->"+ internaPartido);
+						  groupInternaPanel.transition()
+						    .duration(350)
+						    .style("opacity", 1e-6);
+						    					
+
+					}
+
+					function loadDataForDonut(partido){
+						var donutDataINT = new Array();
+						var donutDataTotal = new Array();
+						var donutDataNombres = new Array();
+
+						var donutDataFULL = new Array();
+
+						
+						console.log("3 PASO: loadDataForDonut (dsIgual): -------->"+ internaPartido);
+
+						if(partido === 'FR'){
+							for(i=0;i<1;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							console.log("Data interna ----> : " +donutDataFULL);
+							return donutDataFULL;
+						
+						}else if(partido === 'FPV'){
+							for(i=1;i<6;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							console.log("Data interna ----> : " +donutDataFULL);
+							
+							return donutDataFULL;
+						
+
+						}else if(partido === 'PRO'){
+							for(i=6;i<8;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						
+
+						}else if(partido === 'FAUNEN'){
+							for(i=8;i<12;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						
+						}else if(partido === 'PJ'){
+							for(i=12;i<13;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						
+
+						}else if(partido === 'FIT'){
+							for(i=13;i<14;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						
+						}else if(partido === 'Otros'){
+							for(i=13;i<14;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						
+						}else if(partido === 'NS/NC'){
+							for(i=13;i<14;i++){
+								donutDataINT.push(interna[0][i].interna);
+								donutDataTotal.push(interna[0][i].total);
+								donutDataNombres.push(interna[0][i].cand);
+							}
+							console.log("Data interna ----> : " +donutDataFULL);
+							donutDataFULL.push(donutDataINT);
+							donutDataFULL.push(donutDataTotal);
+							donutDataFULL.push(donutDataNombres);
+							return donutDataFULL;
+						};
+
+					}
+
+					var createDonutChart = function(partido,tempObj){
+
+						if(pieGraph !== false){
+							console.log(pieGraph);
+							$('#texto').remove();
+							pieGraph.remove();
+						}
+						
+
+						donutChart
+						.append("g").attr("id","texto")
+						.append("text")
+						.attr("class","stag")
+						.attr("x",-210)
+						.attr("y",-170)
+						.text("Colocá el mouse sobre el gráfico para ver los candidatos");
+
+
+						var radius = Math.min(500, 600) / 2;
+
+						var color = createColorsScales(partido);			
+
+						var pie = d3.layout.pie()
+						    .sort(null);
+
+						var arc = d3.svg.arc()
+						    .innerRadius(radius - 140)
+						    .outerRadius(radius - 105);
+
+						//console.log("Justo antes: "+scope.dataDonutVE);
+
+						pieGraph = donutChart.append("g").attr("id","pie-graph");			
+
+						var path = pieGraph.selectAll("path")
+						    .data(pie(scope.dataDonutVE[0]))
+						  .enter().append("path")
+						    .attr("fill", function(d, i) { return color(i); })
+						    .attr("d", arc);/*
+						    .transition()/*.delay(function(d, i) { return i * 500; }).duration(500)
+							.attrTween('d', function(d) {
+							     var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
+							     return function(t) {
+							         d.endAngle = i(t);
+							       return arc(d);
+							     }
+							});*/
+
+						path.on('mouseover', function(d,i) {
+
+							var candidatoTooltip;                          
+							var totalTooltip;                          
+
+				            /*-----------------ESCONDO TODAS LAS FOTOS INTERNAS-----------------*/
+
+
+				            switch (i) {
+							    case 0:
+							    	if(partido==='FPV'){
+							    		candidatoTooltip = '  Daniel  <br />Scioli';
+							    		totalTooltip = interna[0][1].total;
+							    		$('#fotoInt1').css("display","block");
+							    	}else if(partido==='FR'){
+							    		candidatoTooltip = 'Sergio <br /> Massa';
+							    		totalTooltip = interna[0][0].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='PRO'){
+							    		candidatoTooltip = 'Mauricio Macri';
+							    		totalTooltip = interna[0][6].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='FAUNEN'){
+							    		candidatoTooltip = 'Julio  <br />Cobos';
+							    		totalTooltip = interna[0][8].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='FIT'){
+							    		candidatoTooltip = 'Jorge Altamira';
+							    		totalTooltip = interna[0][13].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='PJ'){
+							    		candidatoTooltip = 'José M.  <br />De la Sota';
+							    		totalTooltip = interna[0][12].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='Otros'){
+							    		candidatoTooltip = 'Otros';
+							    		totalTooltip = interna[0][14].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='NS/NC'){
+							    		candidatoTooltip = 'NS/NC';
+							    		totalTooltip = interna[0][15].total;
+							    		$('#fotoInt0').css("display","block");
+							    	};
+							        
+							        break;
+							    case 1:
+							    	if(partido==='FPV'){
+							    		candidatoTooltip = 'Florencio Randazzo';
+							    		totalTooltip = interna[0][2].total;
+							    		$('#fotoInt1').css("display","block");
+							    	}else if(partido==='PRO'){
+							    		candidatoTooltip = 'Elisa <br />Carrió';
+							    		totalTooltip = interna[0][7].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='FAUNEN'){
+							    		candidatoTooltip = 'Hermes Binner';
+							    		totalTooltip = interna[0][9].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}							    	
+							        break;
+							    case 2:
+							    	if(partido==='FPV'){
+							    		candidatoTooltip = 'Sergio Urribarri';
+							    		totalTooltip = interna[0][3].total;
+							    		$('#fotoInt1').css("display","block");
+							    	}else if(partido==='FAUNEN'){
+							    		candidatoTooltip = 'Ernesto <br /> Sanz';
+							    		totalTooltip = interna[0][10].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}	
+							        
+							        break;
+							    case 3:
+							        if(partido==='FPV'){
+							    		candidatoTooltip = 'Julían Domínguez';
+							    		totalTooltip = interna[0][4].total;
+							    		$('#fotoInt1').css("display","block");
+							    	}else if(partido==='FAUNEN'){
+							    		candidatoTooltip = 'Otros FAUNEN';
+							    		totalTooltip = interna[0][11].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}	
+							        break;
+							    case 4:
+							        if(partido==='FPV'){
+							    		candidatoTooltip = 'Otros  <br />FPV';
+							    		$('#fotoInt1').css("display","block");
+							    	}
+							        break;
+							    case 5:
+							        
+							        break;
+							    case 6:
+							        
+							        break;
+							}
+
+				            etiquetasInternas.html(
+				            	
+				            	"<div style=\"font-size:25px;margin-bottom:8px\"><center>"+candidatoTooltip+"</center></div>"+
+				            	"<div style=\"font-size:17px;margin-bottom:4px\"><center>Sobre interna de "+partido+": "+(d.data*100).toFixed(2) + '%</center></div>'+
+				            	"<div style=\"font-size:17px;\"><center>Sobre el total de PASO: "+(totalTooltip*100).toFixed(2) + '%</center></div>'
+				            	
+				            	
+				            	);
+				            etiquetasInternas.style('display', 'block');                         
+				          });
+
+						path.on('mouseout', function() {
+	          				etiquetasInternas.style('display', 'none');
+	          				for(i=0;i<16;i++){
+				            	$('#fotoInt'+i).hide();
+				            }
+	         			});
+
+
+
+						/*if(partido !== internaPartido){ //al hacer click en otro, se selecciona el nuevo partido
+							internaPartido = partido;
+						}*/
+	         			
+					}
+
+
+					/*--------------------------------  FUNCIONES DE TOOLTIPS, ETC ----------------------------------*/
 
 					function mouseoverTooltip() {
 						
@@ -816,7 +1216,7 @@
 					    .duration(200)
 					    .style("opacity", 1);					  
 
-					}
+					};
 
 					function mousemoveTooltip(position, cand_i, prom_i, desv_i) {
 
@@ -827,6 +1227,8 @@
 					var lowerLimTooltip  = parseFloat(prom_i)-2*parseFloat(desv_i);
 					var upperLimTooltip  = parseFloat(prom_i)+2*parseFloat(desv_i);
 					var promTooltip = prom_i.toFixed(2);
+					var posXNSNC;
+					var posNSNCVar;
 
 					if(lowerLimTooltip < 0){ //Correción para negativos
 
@@ -836,11 +1238,19 @@
 
 					  rectTooltip
 					      
-					    .attr("x", posX)     
+					    .attr("x",function(){
+ 							if(cand_i === 'NS/NC'){
+ 								var posXNSNC = parseFloat(posX);
+ 								return posXNSNC-120;
+ 							}else{
+ 								return posX;
+ 							}
+
+ 						})     
  						.attr("y", function(){
  							if(cand_i === 'NS/NC'){
  								var posYNSNC = parseFloat(posY);
- 								return posYNSNC-70;
+ 								return posYNSNC-130;
  							}else{
  								return posY;
  							}
@@ -851,11 +1261,11 @@
 					    	if(cand_i === 'Altamira' || cand_i === 'Otros' || cand_i === 'NS/NC' || cand_i === 'FAUNEN'  ){
 					    		return 100;
 					    	}else{
-					    		return 88;
+					    		return 100;
 					    	}
 
 					    })
-					    .attr("width", 150);
+					    .attr("width", 160);
 
 					  textTooltip
 
@@ -864,20 +1274,30 @@
 					    .attr("width", 50)
 					    .text(function(){
 					    	if(cand_i === 'Otros'){
-					    		return "Otros candidatos obtendrán entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    		return "Otros candidatos obtendrán entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtienen un promedio de "+promTooltip+"% de los votos.";
 					    	}else if (cand_i === 'NS/NC'){
-					    		return "Los indecisos oscilan entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    		return "Los indecisos oscilan entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y tienen un promedio de "+promTooltip+"%.";
 					    	}else{
-					    		return cand_i+" obtendrá entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y un promedio de "+promTooltip+"%.";
+					    		return cand_i+" obtendrá entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtiene un promedio de "+promTooltip+"% de los votos.";
 					    	}
 					    })
 					    .attr("class","textoTooltip")
-					    .call(wrap,130,posX+10)
-					    .attr("x", posX+20)     
+					    .attr("x", function(){
+ 							if(cand_i === 'NS/NC'){
+ 								posXNSNC = parseFloat(posX);
+ 								posNSNCVar = true;
+ 								
+ 							}else{
+ 								var posNSNCVar = false;
+ 								return posX+20;
+ 							}
+
+ 						})     
+					    .call(wrap,145,posX+10,posXNSNC,cand_i)
  						.attr("y", function(){
  							if(cand_i === 'NS/NC'){
  								var posYNSNC = parseFloat(posY);
- 								return posYNSNC-50;
+ 								return posYNSNC-110;
  							}else{
  								return posY+20;
  							} 							
@@ -885,13 +1305,25 @@
 
 					}
 
+					internaPanel
+
+						.attr("width",583)
+						.attr("height",375)
+						.attr("x",119)
+						.attr("y",40);
+
 					function mouseoutTooltip() {
 					  groupTooltip.transition()
 					    .duration(200)
 					    .style("opacity", 1e-6);
 					}
 
-					function wrap(text, width, posX) {  //Al llamarla, el primer argumento (la selección) esta implicto, cuentan a partir de ahi
+					function wrap(text, width, posX, posXNSNC2, cand_i) {  //Al llamarla, el primer argumento (la selección) esta implicto, cuentan a partir de ahi
+					  if(cand_i === 'NS/NC'){
+					  	posicionX = posXNSNC2-110;
+					  }else{
+					  	posicionX = posX;
+					  }
 					  text.each(function() {
 					    var text = d3.select(this),
 					        words = text.text().split(/\s+/).reverse(),
@@ -902,7 +1334,7 @@
 					        y = text.attr("y"),
 					        //dy = parseFloat(text.attr("dy")),
 					        dy = 0,
-					        tspan = text.text(null).append("tspan").attr("x",posX).attr("y", y).attr("dy", dy+ "em");
+					        tspan = text.text(null).append("tspan").attr("x",posicionX).attr("y", y).attr("dy", dy+ "em");
 					    while (word = words.pop()) {
 					      line.push(word);
 					      tspan.text(line.join(" "));
@@ -910,11 +1342,59 @@
 					        line.pop();
 					        tspan.text(line.join(" "));
 					        line = [word];
-					        tspan = text.append("tspan").attr("x", posX).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+					        tspan = text.append("tspan").attr("x", posicionX).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
 					      }
 					    }
 					  });
 					}
+
+					function createColorsScales(partido){
+						switch (partido) {
+						    case 'FPV':
+								var color = d3.scale.ordinal()
+								    .domain([0,1,2,3,4])
+								    .range(["#082568","rgba(13, 49, 132,0.94)","#365BB0","#5777C0","#ADC6FF"]);/*"#ADC6FF"*/
+								return color;
+						    case 'FR':
+								var color = d3.scale.ordinal()
+								    .domain([0])
+								    .range(["rgba(237, 21, 21, 0.94)"]);
+								return color;
+						    case 'PRO':
+								var color = d3.scale.ordinal()
+								    .domain([0,1])
+								    .range(["rgb(226, 226, 36)","rgb(231, 168, 32)"]);
+								return color;
+						    case 'FAUNEN':
+								var color = d3.scale.ordinal()
+								    .domain([0,1,2,3])
+								    .range(["#540033","#720045","#A7166E","#B33983"]);
+								return color;
+						    case 'FIT':
+								var color = d3.scale.ordinal()
+								    .domain([0])
+								    .range(["rgb(173, 3, 3)"]);
+								return color;
+						    case 'PJ':
+								var color = d3.scale.ordinal()
+								    .domain([0])
+								    .range(["rgb(58, 140, 54)"]);
+								return color;
+						    case 'Otros':
+								var color = d3.scale.ordinal()
+								    .domain([0])
+								    .range(["rgb(0, 0, 0)"]);
+								return color;    
+						    case 'NS/NC':
+								var color = d3.scale.ordinal()
+								    .domain([0])
+								    .range(["rgba(0, 0, 0, 0.38)"]);
+								return color;
+						}
+
+					}
+
+
 
 					    /*----------------------------------------       EJE      --------------------------------*/
 						//Create the SVG Viewport

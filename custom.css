@@ -1,0 +1,19 @@
+
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+	color: #fff;
+	background-color: #9D9EA0;
+}
+
+.nav-pills>li>a {
+	border-radius:0px;
+	text-transform: uppercase;
+	color:black;
+	font-size: 15px;
+	font-stretch: expanded;
+
+}
+
+.navWrapper > ul > li {
+	margin-top:0px;
+}

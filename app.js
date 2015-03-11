@@ -1,5 +1,6 @@
 (function(){
-	var app = angular.module('store',['ngSanitize']);
+	//var app = angular.module('store',['ngSanitize']);
+	var app = angular.module('store',[]);
 
 
 	/*app.factory('service', function(){
@@ -20,7 +21,8 @@
 
 	app.controller('StoreController', ["$scope",function($scope,$window){
 		this.ratings = ratings;
-		this.encuestas = encuestas;
+		this.encuestasPASO = encuestasPASO;
+		this.encuestasPV = encuestasPV;
 		$scope.difs = diferencias;
 		//this.listaCand =  listaCandSer1;
 
@@ -64,7 +66,7 @@
 	}]);
 
 	app.controller('TabsController', ["$scope",function($scope,$window) {
-        this.tab = 1;
+        this.tab = 3;
 
         this.isSet = function(checkTab) {
           return this.tab === checkTab;
@@ -456,6 +458,24 @@
 					if($scope.izqIndex === 6 && $scope.derIndex === 5){//NSNC-Otros
 						$scope.compDif = 37;
 						$scope.temp = '{{difs[0][compDif].'+$scope.ventaja+' | percentage}}';
+					}					
+
+					/*-------------------------------ALTAMIRA VS OTROS Y NSNC-------------------------*/
+					if($scope.izqIndex === 4 && $scope.derIndex === 5) {//Altamira-Otros
+						$scope.compDif = 38;
+						$scope.temp = "{{difs[0][compDif]."+$scope.ventaja+" | percentage}}";
+					}
+					if($scope.izqIndex === 4 && $scope.derIndex === 6){//Altamira-NSNC
+						$scope.compDif = 39;
+						$scope.temp = '{{difs[0][compDif].'+$scope.ventaja+' | percentage}}';
+					}					
+					if($scope.izqIndex === 5 && $scope.derIndex === 4) {//Otros-Altamira
+						$scope.compDif = 40;
+						$scope.temp = "{{difs[0][compDif]."+$scope.ventaja+" | percentage}}";
+					}
+					if($scope.izqIndex === 6 && $scope.derIndex === 4){//NSNC-Altamira
+						$scope.compDif = 41;
+						$scope.temp = '{{difs[0][compDif].'+$scope.ventaja+' | percentage}}';
 					}
 
 
@@ -817,9 +837,11 @@
 
 								}else if(internaPartido === partido){ //al volver a hacer click en el escudo del q ta seleccionado, internaPartido es FALSE 
 									
-									hideInternas(partido,tempObjPart);
-									internaPartido = false;	
-									$('#donut-chart').html('');
+									//hideInternas(partido,tempObjPart);
+									//internaPartido = false;	
+									//$('#donut-chart').html('');
+
+									//FUNCIONES MUDADAS AL HACER CLICK EN LA CRUZ divCruz.on("click")
 
 			            		}else if(internaPartido !== partido){ //
 			            			internaPartido = partido; //pongo el partido que corresponde y cargo las funciones
@@ -878,15 +900,22 @@
 						.attr("width",450)
 						.attr("height",100);
 
-					var fotosInternas = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
-						.attr("class","etiquetasInternas stag")
-						.attr("x",450)
-						.attr("y",100)				
-						.attr("width",50)
-						.attr("height",50)
-						.attr("id","divFotosInternas");
+					var divCruz = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
+						.attr("class","divCruz")			
+						.attr("id","divCruz");
 
-						$('#divFotosInternas').html("<img id=\"fotoInt0\" style=\"height:30px;width:30px;display:none;\" src=\"images/massa_baja.png\"/><img id=\"fotoInt1\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/scioli.png\"/><img id=\"fotoInt2\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt3\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt4\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt5\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt6\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/macri_baja.png\"/><img id=\"fotoInt7\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt8\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/cobos_baja.png\"/><img id=\"fotoInt9\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/binner_baja.png\"/><img id=\"fotoInt10\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt11\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt12\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt13\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/altamira_baja.png\"/><img id=\"fotoInt14\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt15\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/nsnc_baja.png\"/>");
+					var iconCruz = divCruz.append("img")
+						.attr("id","icono")
+						.attr("width","30px")
+						.attr("src","images/cross.png");
+
+					divCruz.on("click", function(d,i) {
+						hideInternas();
+						internaPartido = false;
+						$('#donut-chart').html('');	
+					});
+
+					//$('#divFotosInternas').html("<img id=\"fotoInt0\" style=\"height:30px;width:30px;display:none;\" src=\"images/massa_baja.png\"/><img id=\"fotoInt1\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/scioli.png\"/><img id=\"fotoInt2\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt3\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt4\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt5\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt6\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/macri_baja.png\"/><img id=\"fotoInt7\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt8\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/cobos_baja.png\"/><img id=\"fotoInt9\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/binner_baja.png\"/><img id=\"fotoInt10\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt11\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt12\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt13\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/altamira_baja.png\"/><img id=\"fotoInt14\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt15\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/nsnc_baja.png\"/>");
 
 					/*var expDonutChart = donutChart
 						.append("g").attr("id","texto")
@@ -904,20 +933,22 @@
 					function showInternas(partido, objetoClick){
 						
 	
-						  groupInternaPanel.transition()
-						    .duration(350)
-						    .style("opacity", 1);
-						    internaPartido = objetoClick.attr("id");
-						    console.log("2 PASO: showInterna: -------->"+ internaPartido);
+						groupInternaPanel.transition()
+						  .duration(350)
+						  .style("opacity", 1);
+						  internaPartido = objetoClick.attr("id");
+						  console.log("2 PASO: showInterna: -------->"+ internaPartido);
+						$("#divCruz").css("display","block");
 
 					}					
 
 					function hideInternas(partido, objetoClick){
 						
-						  console.log(" PASO OPC: showInterna (segundo IF, si intPar = Par al hacer click: -------->"+ internaPartido);
-						  groupInternaPanel.transition()
-						    .duration(350)
-						    .style("opacity", 1e-6);
+						console.log(" PASO OPC: showInterna (segundo IF, si intPar = Par al hacer click: -------->"+ internaPartido);
+						groupInternaPanel.transition()
+						  .duration(350)
+						  .style("opacity", 1e-6);
+						$("#divCruz").css("display","none");
 						    					
 
 					}
@@ -1075,7 +1106,7 @@
 						  .enter().append("path")
 						    .attr("fill", function(d, i) { return color(i); })
 						    .attr("d", arc);/*
-						    .transition()/*.delay(function(d, i) { return i * 500; }).duration(500)
+						    .transition().duration(500)
 							.attrTween('d', function(d) {
 							     var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
 							     return function(t) {
@@ -1194,9 +1225,9 @@
 
 						path.on('mouseout', function() {
 	          				etiquetasInternas.style('display', 'none');
-	          				for(i=0;i<16;i++){
+	          				/*for(i=0;i<16;i++){
 				            	$('#fotoInt'+i).hide();
-				            }
+				            }*/
 	         			});
 
 
@@ -1408,7 +1439,8 @@
 
 						//Create the Axis
 						var xAxis = d3.svg.axis()
-		                   		.scale(axisScale);
+		                   		.scale(axisScale)
+		                   		.tickFormat(function(d) { return d + "%"; });;
 
 
 						//Create an SVG group Element for the Axis elements and call the xAxis function
@@ -1421,14 +1453,16 @@
 									    .attr("y", 6)
 									    .attr("dy", ".71em")
 									    .style("text-anchor", "end")
-									    .attr("class", "stag")
-									    .text("Porcentaje (%)");
+									    .attr("class", "stag");
+									    //.text("Porcentaje");
 
 
 
 					var fotos = [0];
-					var imgs = d3.select("#svgtitulo").attr("width",972).attr("height",90)
+					
+					var imgs = d3.select("#svgtitulo").attr("width",990).attr("height",90)
 		            .selectAll("image").data(fotos);
+					/*
 					imgs
 						.enter()
 					    .append("svg:image")
@@ -1437,7 +1471,7 @@
 			            .attr("y", "10")
 			            .attr("width", "60")
 			            .attr("height", "60");
-				
+					*/
 					}
 
 					/*-----------------Corro las dos funciones con los datos y containers que corresponden ---------------*/
@@ -1452,10 +1486,18 @@
 			        d3.select("#svgtitulo").selectAll("texto").data(fotos)
 			        	.enter()
 						.append("text")
-					    .attr("x", "90")				    
-					    .attr("y", "65")
+					    .attr("x", "23")				    
+					    .attr("y", "70")
 					    .attr("class","titulo")
-					    .text("Observatorio de Encuestas");
+					    .text("Observatorio");			        
+
+					d3.select("#svgtitulo").selectAll("texto").data(fotos)
+			        	.enter()
+						.append("text")
+					    .attr("x", "508")				    
+					    .attr("y", "70")
+					    .attr("class","titulo2")
+					    .text("de encuestas");
 
 					}
 
@@ -1467,7 +1509,7 @@
 		}
 
 	});
-
+	
 	
 })();
 

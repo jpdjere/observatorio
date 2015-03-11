@@ -5,52 +5,55 @@
 	
 	<meta http-equiv='Content-Type' content='Type=text/html; charset=iso-8859-1'>
 	<!-- meta name="viewport" content="width=device-width, user-scalable=yes"-->
-	<link rel="stylesheet" type="text/css" href="bootstrap-3.2.0-dist\css\bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="custom.css">
 	
 </head>
 
 <body ng-controller="StoreController as store" >
 
 <div class="wrapper">
+	<div class="logoTop">
+		<img src="images/LogoLPO.jpg" style="width:156px;height:63px" />
+	</div>
 	<svg id="svgtitulo"></svg>
 
 	
 	<div style="align:center" id="cuerpo" ng-controller="TabsController as tab">
+		<div class="navWrapperWrapper">
+	 		<div class="navWrapper">
 
- 		<div class="navWrapper">
-			<center> 
-			  <ul class="nav nav-pills stag">
-			    <li ng-class="{ active:tab.isSet(1) }">
-			      <a href ng-click="tab.setTab(1)">PASO</a>
-			    </li>	    
-			    <li ng-class="{ active:tab.isSet(2) }">
-			      <a href ng-click="tab.setTab(2)">Primera Vuelta</a>
-			    </li>
-			    <li ng-class="{ active:tab.isSet(3) }">
-			      <a href ng-click="tab.setTab(3)">Diferencias</a>
-			    </li>
-			    <li ng-class="{ active:tab.isSet(4) }">
-			      <a href ng-click="tab.setTab(4)">Ratings</a>
-			    </li>	    
-			    <li ng-class="{ active:tab.isSet(5) }">
-			      <a href ng-click="tab.setTab(5)">Encuestas</a>
-			    </li>			    
-			    <li ng-class="{ active:tab.isSet(6) }">
-			      <a href ng-click="tab.setTab(6)">Metodología</a>
-			    </li>
-			  </ul>
-			</center>
+				  <ul class="nav nav-pills stag">
+				    <li ng-class="{ active:tab.isSet(1) }">
+				      <a href ng-click="tab.setTab(1)">PASO</a>
+				    </li>	    
+				    <li ng-class="{ active:tab.isSet(2) }">
+				      <a href ng-click="tab.setTab(2)">Primera Vuelta</a>
+				    </li>
+				    <li ng-class="{ active:tab.isSet(3) }">
+				      <a href ng-click="tab.setTab(3)">Diferencias</a>
+				    </li>
+				    <li ng-class="{ active:tab.isSet(4) }">
+				      <a href ng-click="tab.setTab(4)">Ratings</a>
+				    </li>	    
+				    <li ng-class="{ active:tab.isSet(5) }">
+				      <a href ng-click="tab.setTab(5)">Encuestas</a>
+				    </li>			    
+				    <li ng-class="{ active:tab.isSet(6) }">
+				      <a href ng-click="tab.setTab(6)">Metodología</a>
+				    </li>
+				  </ul>
+
+			</div>
 		</div>
-
 		<div class="cuerpo">
 
 		  <div ng-show="tab.isSet(1)">
 		  		<div class="graphWrapper">
-			  		<svg id="svggrafico2"></svg>
-			  		<div class="stag-book" style="font-size: 37px;margin-bottom: 5px;">
-			  			Hacé click en los logos para ver las internas.
+		  			<div class="sectionTitle">
+			  			PASO
 			  		</div>
-			  		<div class="exp_underBarGraph">
+			  		<div class="exp_overBarGraph">
 			  			<ul>
 			  				<li>
 			  					El gráfico muestra el rango del porcentaje de los votos que obtendrá cada frente electoral en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del domingo 9 de agosto del 2015.
@@ -60,13 +63,17 @@
 			  				</li>
 			  			</ul>
 			  		</div>
+			  		<svg id="svggrafico2"></svg>
+
 			  	</div>
 		  </div>
 
 		  <div ng-show="tab.isSet(2)">
 		  		<div class="graphWrapper">
-			  		<svg id="svggrafico1"></svg>
-			  		<div class="exp_underBarGraph">
+		  			<div class="sectionTitle">
+			  			Primera Vuelta
+			  		</div>
+			  		<div class="exp_overBarGraph">
 			  			<ul>
 			  				<li>
 			  					El gráfico muestra el rango del porcentaje de los votos que cada candidato en la primera vuelta de las Elecciones Presidenciales del domingo 25 de octubre del 2015.
@@ -79,22 +86,66 @@
 			  				</li>
 			  			</ul>
 			  		</div>
+			  		<svg id="svggrafico1"></svg>
+
 				</div>
 		  </div>
 
 
 		  <div ng-show="tab.isSet(3)">
+		  		<div class="sectionTitle">
+			  			Diferencias
+			  	</div>
+			  		<div class="exp_overBarGraph">
+			  			<ul>
+			  				<li>
+			  					El cuadro permite ver la probabilidad de que un candidato le gane a otro en la Primera Vuelta de octubre, según el promedio y el desvío de cada candidato obtenidas de las encuestas de esta categoría.
+			  				</li>				  				
+			  				<li>
+			  					 Elegí un candidato de cada columna y el Observatorio te dará la posibilidad (sobre 100%) de que el candidato de la izquierda le gane o le saque una determinada diferencia de puntos al de la derecha. Un gráfico te mostrará la evolución de este margen desde el último octubre.
+			  				</li>				
+			  			</ul>
+			  		</div>
 		  	<difs-directive></difs-directive>
 		  </div>
 
 		  <div ng-show="tab.isSet(4)">
+		  		<div class="sectionTitle">
+			  			Ratings
+			  	</div>
+			  	<div class="exp_overBarGraph">
+			  		<ul>
+			  			<li>
+
+							El Observatorio de Encuestas desarrolló un sistema de ratings para las encuestadoras, que permite asignarle un peso relativo a cada encuesta en el cálculo de los promedios y desvíos estándar, de acuerdo a la performance histórica de esa consultora.
+
+						</li>			
+			  		</ul>
+			  	</div>
 		  	<ratings-directive style="margin-left:50px;margin-right:50px;"></ratings-directive>
-		  </div>		  
+		  </div>
+
 		  <div ng-show="tab.isSet(5)">
+		  		<div class="sectionTitle">
+			  			Encuestas
+			  	</div>
+			  	<div class="exp_overBarGraph">
+			  		<ul>
+			  			<li>
+
+							En este pestaña podés ver las encuestas tomadas por el Observatorio de Encuestas, ordenadas desde la última que se ingresó a la plataforma hasta la primera. Próximamente vas a poder descargar todas las encuestas utilizadas.
+
+						</li>			
+			  		</ul>
+			  	</div>
 		  	<encuestas-directive style="margin-left:50px;margin-right:50px;"></encuestas-directive>
-		  </div>		  
+		  </div>
+
 		  <div ng-show="tab.isSet(6)">
-		  	<metodologia-directive style="margin-left:50px;margin-right:50px;"></metodologia-directive>
+		  		<div class="sectionTitle">
+			  			Metodología
+			  	</div>
+		  	<metodologia-directive style=""></metodologia-directive>
 		  </div>
 		
 		</div>
@@ -102,8 +153,39 @@
 <!--nombres-directive data="datos" ng-repeat="datos in datosTotales"></nombres-directive-->
 <d3-directive></d3-directive>
 
+<div class="columnas">
+	<div class="columna">
+		<div class="titCol">
+			Bienvenidos al Observatorio de LPO
+		</div>
+		<div class="restoCol">
+			<img src="images/fidanza.jpg" class="fotoAutor">
+			<div class="autorCol">
+				Por Ignacio Fidanza
+			</div>
+			<div class="bajadaCol">
+				La nueva plataforma de La Política Online ipsum lorem ipsen flutiatios peril ortun medol Coldiop Vestibulum euismod in ex eu pretium. Integer hendrerit, turpis at scelerisque ipsum lorem ipsen flutiatios
+			</div>
+		</div>
+	</div>
+	<div class="columna">
+		<div class="titCol">
+			El desafío de cuantificar la política
+		</div>
+		<div class="restoCol">
+			<img src="images/jpdBYN.jpg" class="fotoAutor">
+			<div class="autorCol">
+				Por Juan Pablo Djeredjian
+			</div>
+			<div class="bajadaCol">
+				La nueva plataforma de La Política Online ipsum lorem ipsen flutiatios peril ortun medol Coldiop Vestibulum euismod in ex eu pretium. Integer hendrerit, turpis at scelerisque ipsum lorem ipsen flutiatios
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="footer stag-light" style="font-size:18px">
-	<img class="imgFooter" src="images/logo.jpg" /><b style="margin-right:15px;">La Politica Online | </b>   
+	<img class="imgFooter" src="images/logo.jpg" /><b style="margin-right:15px;">La Política Online | </b>   
 	<span style="float:right">Idea y desarrollo: <b><a href="https://twitter.com/jpdjere">Juan Pablo Djeredjian</a></b></span>
 
 </div>
@@ -114,8 +196,9 @@
 <script type="text/javascript" src="resources/angular.js"></script>
 <script type="text/javascript" src="data.js"></script>
 <script type="text/javascript" src="app.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-sanitize.js"></script>
+<!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-sanitize.js"></script-->
 <script type="text/javascript" src="grafdifs.js"></script>
+<script type="text/javascript"   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 </body>
 <html>
@@ -136,6 +219,19 @@
 		background-color:#fff;
 
 	}
+
+	ul
+	{
+	    list-style-type: none;
+	    margin:0;
+	    padding:0;
+	}	
+
+	li
+	{
+	    margin-top:5px;
+	}
+
 	.stag { 
 		font-family: Stag-Medium, sans-serif;
 		font-size:17px;
@@ -159,22 +255,42 @@
 	}
 	.titulo { 
 		font-family: Stag-Medium, sans-serif;
-		font-size:70px;
+		font-size:80px;
+		fill: rgb(94, 140, 192);
+		stroke: none;
+	}	
+
+	.titulo2 { 
+		font-family: Stag-Light, sans-serif;
+		font-size:80px;
+		fill: rgb(94, 140, 192);
+		stroke: none;
+	}
+
+	.sectionTitle{
+		font-family: Stag-Book, sans-serif;
+		color:black;
+		font-size: 37px;
+		width: 300px;
+		margin: 0 auto;
+		margin-bottom: 5px;
+		margin-top: 5px;
+		text-align: center;
 	}
 
 	.cuerpo{
 		width:100%;
 		height:100%;
 		vertical-align: center;
-		top: -15px;
 		position: relative;
 	}
 
 	#svgtitulo {
-		margin-bottom: 15px;
-		margin-top: 15px;
-		border-top: 3px solid black;
-		border-bottom: 3px solid black;
+
+
+		border-top: 1px solid rgb(157, 158, 160);
+		border-bottom: 1px solid rgb(157, 158, 160);
+		display:block;
 
 	}
 	.wrapper{
@@ -184,14 +300,21 @@
 	}
 
 	.navWrapper{
-		width:680px;
+		width:720px;
 		margin: 0 auto;
 
-	}	
+	}
+
+	.navWrapperWrapper{
+
+		width:100%;
+		border-bottom:3px solid #9D9EA0;
+
+	}
+
 	.graphWrapper{
 		width:730px;
 		margin: 0 auto;
-		margin-top:15px;
 	}
 
 	.footer{
@@ -207,29 +330,95 @@
 
 	}
 
-	.exp_underBarGraph {
-		font-family: Stag-Light, sans-serif;
-		font-size:20px;
-		font-weight: bolder;
+	.exp_overBarGraph {
+		font-family: Georgia,Times,sanz-serif;
+		font-size: 15px;
+		width: 620px;
+		margin: auto;
+		text-align: center;
+		color: black;
 
+	}	
+	.exp_underTable {
+		font-family: Georgia,"Times New Roman",Times,serif;
+		font-size:17px;
+		font-weight: 500;
+		width:900px;
+		margin: 0 auto;
+		margin-top:25px;
+		text-align: justify;
+    	text-justify: inter-word;
+    	color:black;
 	}
-
-
 
 	.text_metod { 
-		font-family: Stag-Light, sans-serif;
-		font-size:23px;
-		color:black;
+		font-family: Georgia,"Times New Roman",Times,serif;
+		font-size: 17px;
+		color: black;
 		margin-bottom: 8px;
+		width: 800px;
+		margin: auto;
+		margin-top: 10px;
+		margin-bottom: 15px;
+		text-align: justify;
 	}
 
+	.titulosMet{
+		font-weight:800;
+	}	
+
+	.factor{
+		font-style: italic;
+		margin-bottom:10px;
+	}
+
+	.columnas{
+		width: 100%;
+		height: 250px;
+		margin-top: 20px;
+	}
+
+	.columna{
+		border-top: 1px solid grey;
+		margin-left: 15px;
+		margin-right: 15px;
+		padding: 12px;
+		float: left;
+		width: 43%;
+		height: 100%;
+	}
+
+	.fotoAutor{
+		width:100px;
+		height:100px;
+		float:left;
+		margin-right:8px;
+	}
+
+	.titCol{
+		font-family: Stag-Book, sans-serif;
+		font-size: 24px;
+		color: black;
+	}
+
+	.autorCol{
+		font-family: Georgia, sans-serif;
+		font-size:17px;
+		color:rgb(94, 140, 192);
+	}
+
+	.bajadaCol{
+		font-family: Georgia, sans-serif;
+		font-size:17px;
+		color:black;		
+	}
 
 
 	/*-------------------CSS para D3 ------------------*/
 
 	.rectNorm{
-		fill:rgba(62, 62, 129,.8);
-		stroke:rgba(96, 96, 108, 0.94);
+		fill:rgb(135, 179, 228);
+		stroke:rgb(135, 179, 228);
 		stroke-width:1;
 	}	
 
@@ -288,12 +477,21 @@
 		height: 180px;
 		position: absolute;
 		left: 460px;
-		bottom: 330px;
+		bottom: 100px;
 		display: none;
 		border-radius: 50px;
 	}
 
-
+	.divCruz{
+		position: absolute;
+		background: transparent;
+		width: 35px;
+		height: 35px;
+		top: 210px;
+		left: 790px;
+		cursor:pointer;
+		display:none;
+	}
 
 	dthree-directive{
 

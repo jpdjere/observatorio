@@ -1,0 +1,372 @@
+
+
+	@font-face { font-family: Stag-Medium; src: url('fonts/Stag-Medium.otf'); }
+	@font-face { font-family: Stag-MediumItalic; src: url('fonts/Stag-MediumItalic.otf'); }
+	@font-face { font-family: Stag-Light; src: url('fonts/Stag-Light.otf'); }
+	@font-face { font-family: Stag-LightItalic; src: url('fonts/Stag-LightItalic.otf'); }
+	@font-face { font-family: Stag-Semibold; src: url('fonts/Stag-Semibold.otf'); }
+	@font-face { font-family: Stag-Thin; src: url('fonts/Stag-Thin.otf'); }
+	@font-face { font-family: Stag-ThinDot; src: url('fonts/Stag-ThinDot.otf'); }
+	@font-face { font-family: Stag-Book; src: url('fonts/Stag-Book.otf'); }
+	@font-face { font-family: Stag-Black; src: url('fonts/Stag-Black.otf'); }
+	/*@font-face { font-family: ArialRegular; src: url('fonts/Arial-Regular.ttf'); }*/
+
+	body {
+		background-color:#fff;
+
+	}
+
+	ul
+	{
+	    list-style-type: none;
+	    margin:0;
+	    padding:0;
+	}	
+
+	li
+	{
+	    margin-top:5px;
+	}
+
+	.stag { 
+		font-family: Stag-Medium, sans-serif;
+		font-size:17px;
+		color:black;
+	}
+	.stag-book { 
+		font-family: Stag-Book, sans-serif;
+		color:black;
+	}	
+	.stag-light { 
+		font-family: Stag-Light, sans-serif;
+		color:black;
+	}	
+	.stag-thin { 
+		font-family: Stag-Thin, sans-serif;
+		color:black;
+	}	
+	.stag-thindot { 
+		font-family: Stag-ThinDot, sans-serif;
+		color:black;
+	}	
+	.stag-thindot { 
+		font-family: Stag-ThinDot, sans-serif;
+		color:black;
+	}		
+	.georgia { 
+		font-family: Georgia, sans-serif;
+		color:black;
+	}	
+	.arialregular { 
+		font-family: ArialRegular, sans-serif;
+		color:black;
+	}
+	.titulo { 
+		font-family: Stag-Medium, sans-serif;
+		font-size:80px;
+		fill: rgb(94, 140, 192);
+		stroke: none;
+	}	
+
+	.titulo2 { 
+		font-family: Stag-Light, sans-serif;
+		font-size:80px;
+		fill: rgb(94, 140, 192);
+		stroke: none;
+	}
+
+	.sectionTitle{
+		font-family: Stag-Book, sans-serif;
+		color:black;
+		font-size: 37px;
+		width: 300px;
+		margin: 0 auto;
+		margin-bottom: 5px;
+		margin-top: 5px;
+		text-align: center;
+	}
+
+	.cuerpo{
+		width:100%;
+		height:100%;
+		vertical-align: center;
+		position: relative;
+	}
+
+	#svgtitulo {
+
+
+		border-top: 1px solid rgb(157, 158, 160);
+		border-bottom: 1px solid rgb(157, 158, 160);
+		display:block;
+
+	}
+	.wrapper{
+		max-width: 990px;
+		/*background: grey;*/
+		margin: 0 auto;
+	}
+
+	.navWrapper{
+		width:820px;
+		margin: 0 auto;
+
+	}
+
+	.navWrapperWrapper{
+
+		width:100%;
+		border-bottom:3px solid #9D9EA0;
+
+	}
+
+	.graphWrapper{
+		width:1000px;
+		margin: 0 auto;
+	}
+
+	.textWrapper{
+		border-bottom:1px solid #9D9EA0;
+		padding-bottom: 25px;
+	}
+
+	.footer{
+		width:100%;
+		border-top:2px solid black;
+		float:right;
+	}
+
+	.imgFooter{
+		height:40px;
+		width:auto;
+		margin-right:10px;
+
+	}
+
+	.exp_overBarGraph {
+		/*font-family: Georgia,Times,sanz-serif;*/
+		font: Arial, Helvetica, sans-serif;
+		font-size: 14px;
+		width: 670px;
+		margin: auto;
+		text-align: center;
+		color: black;
+		
+
+	}	
+	.exp_underTable {
+		font-family: Arial,"Times New Roman",Times,serif;
+		font-size:14px;
+		font-weight: 500;
+		width:900px;
+		margin: 0 auto;
+		margin-top:25px;
+		text-align: justify;
+    	text-justify: inter-word;
+    	color:black;
+	}
+
+	.text_metod { 
+		font-family: Arial,"Times New Roman",Times,serif;
+		font-size: 14px;
+		color: black;
+		margin-bottom: 8px;
+		width: 800px;
+		margin: auto;
+		margin-top: 10px;
+		margin-bottom: 15px;
+		text-align: justify;
+	}
+
+	.titulosMet{
+		font-weight:800;
+	}	
+
+	.factor{
+		font-style: italic;
+		margin-bottom:10px;
+	}
+
+	.columnas{
+		width: 100%;
+		height: 250px;
+		margin-top: 20px;
+	}
+
+	.columna{
+		border-top: 1px solid grey;
+		margin-left: 15px;
+		margin-right: 15px;
+		padding: 12px;
+		float: left;
+		width: 43%;
+		height: 100%;
+	}
+
+	.fotoAutor{
+		width:100px;
+		height:100px;
+		float:left;
+		margin-right:8px;
+	}
+
+	.titCol{
+		font-family: Stag-Book, sans-serif;
+		font-size: 24px;
+		color: black;
+	}
+
+	.autorCol{
+		font-family: Georgia, sans-serif;
+		font-size:17px;
+		color:rgb(94, 140, 192);
+	}
+
+	.bajadaCol{
+		font-family: Georgia, sans-serif;
+		font-size:17px;
+		color:black;		
+	}
+
+	.shareButton {
+	  width: 35px;
+	  height: 35px;
+	  float: right;
+	  margin-top: 18px;
+	  margin-left: 8px;
+	}
+
+	.mesSlider{
+
+	  width: 30px;
+	  font-size: 35px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+
+	}	
+
+	.mesSliderFrentes{
+
+	  width: 250px;
+	  font-size: 35px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+
+	}
+
+	.ultEncuestas{
+		float: left;
+		font-size: 13px;
+		padding-top: 10px;
+		width: 260px;
+	}
+
+	.sliderYmes{
+	  width: 70%;
+	  float: left;
+	}
+
+	.explicSlider{
+	  width: 30%;
+	  float: left;
+	  padding-left: 30px;
+	  padding-right: 10px;
+	  text-align: justify;
+	  font-size: 13px;
+	}
+
+	.wrapperSlider{
+	  margin-top: 20px;
+	  width: 1000px;
+	  height: 100px;
+
+	}
+
+	mlabeledtr > mtd:first-child { display: table-cell; }
+
+
+	/*-------------------CSS para D3 ------------------*/
+
+	.rectNorm{
+		fill:rgb(135, 179, 228);
+		stroke:rgb(135, 179, 228);
+		stroke-width:1;
+	}	
+
+	.rectHover{
+		fill:rgba(51, 51, 192, 0.92);
+		stroke-width:1;
+	}
+
+	.lineashor{
+		stroke:rgba(0, 0, 0, 0.92);
+		stroke-width:1;
+
+	}
+
+	.tooltip2 {
+
+		fill:white;
+		stroke:grey;
+		stroke-width:1;
+		ry:1;
+		rx:1;
+
+		text-align: center;
+		width: 60px;
+		height: 50px;
+		padding: 8px;
+
+		pointer-events: none;
+
+	}
+
+	.textoTooltip{
+
+		font-family: Stag-Medium, sans-serif;
+		font-size:13px;
+		color:black;
+	}
+
+	.logosCuadros{
+		cursor:pointer;
+	}
+
+	/*.etiquetasInternas{
+		background: none;
+		width: 200px;
+		height: 200px;
+		position: absolute;
+		left: 690px;
+		bottom: -130px;
+		display: none;
+	}*/
+
+	.etiquetasInternas{
+		background: none;
+		width: 150px;
+		height: 180px;
+		position: absolute;
+		left: 460px;
+		bottom: 100px;
+		display: none;
+		border-radius: 50px;
+	}
+
+	.divCruz{
+		position: absolute;
+		background: transparent;
+		width: 35px;
+		height: 35px;
+		top: 845px;
+		left: 790px;
+		cursor:pointer;
+		display:none;
+	}
+
+	dthree-directive{
+
+			width:100%;
+			height:100%;
+			display:block;
+		}

@@ -22,6 +22,7 @@
 	app.controller('StoreController', ["$scope",function($scope,$window){
 		this.ratings = ratings;
 		this.encuestasPASO = encuestasPASO;
+		this.encuestasPasoCABA = encuestasPasoCABA;
 		this.encuestasPV = encuestasPV;
 		$scope.difs = diferencias;
 		//this.listaCand =  listaCandSer1;
@@ -34,8 +35,13 @@
 
 		$scope.datosTotalesFrentes = pydFrentes[0];
 		
+		$scope.datosCandPaso = pydCandPaso[0];
+		
+		$scope.datosPasoCABA = promydesvPasoCABA[0];
 
 		$scope.data = promydesvs[0];
+
+
 		$scope.compDif;
 		$scope.izq = [true,true,true,true,true,true,true];
 		$scope.izqIndex;
@@ -46,9 +52,28 @@
 		$scope.trustedHtml;
 		$scope.ventaja = "s0";
 		$scope.text4text_underGraph;
+		$scope.emptyEncuestas = false;
 
 		$scope.dataDonutVE = {};
 
+		//Contenedores de graficos
+		$scope.frentes = d3.select("#svggrafico2");
+		$scope.candPaso = d3.select("#svggraficoCandPASO");
+		$scope.candidatos = d3.select("#svggrafico1");
+		$scope.pasoCABA = d3.select("#svggraficoPasoCABA");
+		
+		//Data del Slider
+		$scope.mesSliderPASO;
+		$scope.mesSliderPV;
+		$scope.mesSliderFrentes;
+		$scope.mesSliderPasoCABA;
+
+		$scope.numeroSlider = {mesPASO:0,mesPV:0,mesFrentes:0,mesPasoCABA:0};
+
+		//Data de encuestas
+		$scope.dataPASO = dataPASO;
+		$scope.dataPV = dataPV;
+		$scope.dataPasoCABA = dataPasoCABA;
 
 
 	}]);
@@ -63,10 +88,10 @@
   				return $filter('number')(input * 100, 1) + '%';
    			}
   		};
-	}]);
+	}]);	
 
 	app.controller('TabsController', ["$scope",function($scope,$window) {
-        this.tab = 3;
+        this.tab = 1;
 
         this.isSet = function(checkTab) {
           return this.tab === checkTab;
@@ -75,6 +100,8 @@
         this.setTab = function(activeTab) {
           this.tab = activeTab;
         };
+
+        $scope.numeroSlider.mes = 0;
 
       }]);
 
@@ -180,7 +207,7 @@
 					    .orient("left")
 					    .tickFormat(function(d) { 
 					    	var prob = d*100; 
-					    	var prob2=prob.toFixed(2); 
+					    	var prob2=prob.toFixed(1); 
 					    	return prob2 + "%"; 
 					    });
 
@@ -498,6 +525,7 @@
 					if(checkIzq === 7 || checkDer === 7){
 						//Si no están los dos lados seleccionados, borra temp
 						$scope.temp = ' ';
+						$scope.texto_underGraph = '';
 						$scope.dataGraf.length = 0;
 						$scope.diferenciasGraf.length = 0;
 
@@ -650,22 +678,69 @@
 
 				var data = datos;
 				var container = containerSVG;
+				var w;
+				var h;
+				var canvasW; //size of canvas al crear "g"
+				var canvasH;
+
 				if(containerSVG === frentes){
-					ajusteYtexto = 0.14;
-					ajusteYfoto = 0.065;
+					ajusteYtexto = 0.15;
+					ajusteYfoto = 0.09;
 					ajusteYrect = 0.22;
 					ajusteYcirc = 0.55;
 					ajusteRcirc = 5;
-				}else{
+					ajusteXtexto = 48;
+					w = 1000;
+					h = 500;
+					canvasW = 730;
+					canvasH = 425;
+					ajusteHFotos = 45;
+					ajusteWFotos = 45;
+					tamTexto = 17;
+				}else if(containerSVG === candidatos){
 					ajusteYtexto = 0.15;
-					ajusteYfoto = 0.075;
+					ajusteYfoto = 0.089;
 					ajusteYrect = 0.25;
 					ajusteYcirc = 0.53;
 					ajusteRcirc = 6;
+					ajusteXtexto = 48;
+					w = 1000;
+					h = 500;
+					canvasW = 730;
+					canvasH = 425;
+					ajusteHFotos = 45;
+					ajusteWFotos = 45;
+					tamTexto = 17;
+				}else if(containerSVG === candPaso){
+					w = 1000;
+					h = 700;
+					ajusteYtexto = 0.1;
+					ajusteYfoto = 0.063;
+					ajusteYrect = 0.16;
+					ajusteYcirc = 0.50;
+					ajusteRcirc = 5;
+					ajusteXtexto = 42;
+					canvasW = 730;
+					canvasH = 600;
+					tamTexto = 15;
+					ajusteHFotos = 38;
+					ajusteWFotos = 38;
+				}else if(containerSVG === pasoCABA){
+					w = 1000;
+					h = 700;
+					ajusteYtexto = 0.095;
+					ajusteYfoto = 0.063;
+					ajusteYrect = 0.10;
+					ajusteYcirc = 0.53;
+					ajusteRcirc = 5;
+					ajusteXtexto = 42;
+					canvasW = 730;
+					canvasH = 600;
+					tamTexto = 15;
+					ajusteHFotos = 32;
+					ajusteWFotos = 32;
 				}
 
-				var w = 1000;
-				var h = 500;
 				var barPadding = 1;
 				//var x1cuadroDer = 0;
 				var x1cuadroDer = 0.3*w;
@@ -705,7 +780,7 @@
 				};				
 				
 				/*----------------------------------------Creacion de Canvas y RECTANGULOS DE AREA --------------------------------*/
-				container.attr('width',720).attr('height',425)
+				container.attr('width',canvasW).attr('height',canvasH)
 				.append("g")
 				.selectAll("rect")
 					.data(data)
@@ -792,17 +867,18 @@
 						.data(data)	
 						.enter()
 					    .append("text")
-					    .attr("x", 48)				    
+					    .attr("x", ajusteXtexto)				    
 					    .attr("y", function(d,i){
 					    	return i*0.75*h/data.length+h*ajusteYtexto; //1er: Comienzo de cuadro; 2do: 75% de h dividido la cant de datos, por ; 3er: ajuste
 					    })
 					    .attr("class","stag-book")
-					    .attr("style","font-size:17px")
+					    .attr("style","font-size:"+tamTexto+"px;")
 					    .text(function(d){
 					    	return d.cand;
 					    });
 
 					/*----------------------------------------FOTOS DE CANDIDATOS --------------------------------*/
+				
 					container.append("g") 
 		            .selectAll("image").data(data)
 						.enter()
@@ -810,12 +886,12 @@
 			            .attr("xlink:href", function(d,i){
 			            	return ""+d.fotos+"";
 			            })
-			            .attr("x", -8)
+			            .attr("x", 0)
 			            .attr("y", function(d,i){
 			            	return i*0.75*h/data.length+h*ajusteYfoto;
 			            })
-			            .attr("width", "60")
-			            .attr("height", "60")
+			            .attr("width", ajusteWFotos)
+			            .attr("height", ajusteHFotos)
 			            .attr("class","logosCuadros")
 			            .attr("id",function(d,i){
 			            	return d.cand;
@@ -850,8 +926,8 @@
 				            		createDonutChart(partido,tempObjPart);
 			            		}
 			            	}
-			            });
-
+			            })
+					
 			        /*----------------------------------------LINEAS VERTICALES --------------------------------*/
 			 		container.append("g") 
 			 			.selectAll("line2")
@@ -883,47 +959,185 @@
 
 
 					/*--------------------------------------PANEL INTERNAS ----------------------------------------*/
-					
-					var groupInternaPanel = container.append("g").style("opacity", 1e-6).attr("id","groupInternaPanel");
-					var internaPanel = groupInternaPanel.append("rect")
-						.attr("class", "tooltip2");
+					if(container===frentes){
+						var groupInternaPanel = container.append("g").style("opacity", 1e-6).attr("id","groupInternaPanel");
+						var internaPanel = groupInternaPanel.append("rect")
+							.attr("class", "tooltip2");
 
-					var donutChart = groupInternaPanel
-						.append("g")
-						.attr("id","donut-chart")
+						internaPanel
+
 						.attr("width",583)
 						.attr("height",375)
-						.attr("transform", "translate(" + (810) / 2 + "," + (490) / 2 + ")");
+						.attr("x",119)
+						.attr("y",40);
 
-					var etiquetasInternas = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
-						.attr("class","etiquetasInternas stag")			
-						.attr("width",450)
-						.attr("height",100);
+						var donutChart = groupInternaPanel
+							.append("g")
+							.attr("id","donut-chart")
+							.attr("width",583)
+							.attr("height",375)
+							.attr("transform", "translate(" + (810) / 2 + "," + (490) / 2 + ")");
 
-					var divCruz = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
-						.attr("class","divCruz")			
-						.attr("id","divCruz");
+						var etiquetasInternas = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
+							.attr("class","etiquetasInternas stag")			
+							.attr("width",450)
+							.attr("height",100);
 
-					var iconCruz = divCruz.append("img")
-						.attr("id","icono")
-						.attr("width","30px")
-						.attr("src","images/cross.png");
+						var divCruz = d3.select('.graphWrapper').insert('div','.exp_underBarGraph')
+							.attr("class","divCruz")			
+							.attr("id","divCruz");
 
-					divCruz.on("click", function(d,i) {
-						hideInternas();
-						internaPartido = false;
-						$('#donut-chart').html('');	
+						var iconCruz = divCruz.append("img")
+							.attr("id","icono")
+							.attr("width","30px")
+							.attr("src","images/cross.png");
+
+						divCruz.on("click", function(d,i) {
+							hideInternas();
+							internaPartido = false;
+							$('#donut-chart').html('');	
+						});
+					}
+
+					/*--------------------------------------  CREO 3 SLIDERS ------------------------------------------*/
+
+					var sliderCandPASO = new dhtmlXSlider({parent: "sliderCandPASO", size: 700, min:-6, max:0,step:1});
+					var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-6, max:0,step:1});
+					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-6, max:0,step:1});
+					var sliderPasoCABA = new dhtmlXSlider({parent: "sliderPasoCABA", size: 700, min:-1, max:0,step:1});
+
+					var updateSlider = function(slider){
+
+						scope.$apply(function(){
+							if(slider === sliderCandPASO){
+								scope.numeroSlider.mesPASO = -slider.getValue();
+							}else if(slider === sliderCandidatos) {
+								scope.numeroSlider.mesPV = -slider.getValue();								
+							}else if(slider === sliderFrentes) {
+								scope.numeroSlider.mesFrentes = -slider.getValue();								
+							}else if(slider === sliderPasoCABA) {
+								scope.numeroSlider.mesPasoCABA = -slider.getValue();								
+							}
+						});
+						
+
+						switch(scope.numeroSlider.mesPASO){
+					    	case 0:
+					    		scope.mesSliderPASO = "Abril";
+					    		break;
+					    	case 1:
+					    		scope.mesSliderPASO = "Marzo";
+					    		break;
+					    	case 2:
+					    		scope.mesSliderPASO = "Febrero";
+					    		break;
+					    	case 3:
+					    		scope.mesSliderPASO = "Enero";
+					    		break;
+					    	case 4:
+					    		scope.mesSliderPASO = "Diciembre";
+					    		break;
+					    	case 5:
+					    		scope.mesSliderPASO = "Noviembre";
+					    		break;					    	
+					    	case 6:
+					    		scope.mesSliderPASO = "Octubre";
+					    		break;
+					    	default:
+					    		scope.mesSliderPASO = "Nada";
+					    		break;
+						}						
+
+						switch(scope.numeroSlider.mesPV){
+					    	case 0:
+					    		scope.mesSliderPV = "Abril";
+					    		break;
+					    	case 1:
+					    		scope.mesSliderPV = "Marzo";
+					    		break;
+					    	case 2:
+					    		scope.mesSliderPV = "Febrero";
+					    		break;
+					    	case 3:
+					    		scope.mesSliderPV = "Enero";
+					    		break;
+					    	case 4:
+					    		scope.mesSliderPV = "Diciembre";
+					    		break;
+					    	case 5:
+					    		scope.mesSliderPV = "Noviembre";
+					    		break;					    	
+					    	case 6:
+					    		scope.mesSliderPV = "Octubre";
+					    		break;
+					    	default:
+					    		scope.mesSliderPV = "Nada";
+					    		break;
+						}						
+
+						switch(scope.numeroSlider.mesFrentes){
+					    	case 0:
+					    		scope.mesSliderFrentes = "Abril";
+					    		break;
+					    	case 1:
+					    		scope.mesSliderFrentes = "Marzo";
+					    		break;
+					    	case 2:
+					    		scope.mesSliderFrentes = "Febrero";
+					    		break;
+					    	case 3:
+					    		scope.mesSliderFrentes = "Enero";
+					    		break;
+					    	case 4:
+					    		scope.mesSliderFrentes = "Diciembre";
+					    		break;
+					    	case 5:
+					    		scope.mesSliderFrentes = "Noviembre";
+					    		break;						    	
+					    	case 6:
+					    		scope.mesSliderFrentes = "Octubre";
+					    		break;
+					    	default:
+					    		scope.mesSliderFrentes = "Nada";
+					    		break;
+						}						
+
+						switch(scope.numeroSlider.mesPasoCABA){
+					    	case 0:
+					    		scope.mesSliderPasoCABA = "Abril";
+					    		break;					    	
+					    	case 1:
+					    		scope.mesSliderPasoCABA = "Marzo";
+					    		break;
+					    	default:
+					    		scope.mesSliderFrentes = "Nada";
+					    		break;
+						}
+
+					}
+					
+					sliderCandPASO.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoCandPASO').html(scope.mesSliderPASO);
+						scope.updateGraph(pydCandPaso,scope.candPaso)
+						
+					});					
+					sliderFrentes.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoFrentes').html(scope.mesSliderFrentes);
+						scope.updateGraph(pydFrentes,scope.frentes)
+					});					
+					sliderCandidatos.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoCandidatos').html(scope.mesSliderPV);
+						scope.updateGraph(promydesvs,scope.candidatos)
+					});					
+					sliderPasoCABA.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoPasoCABA').html(scope.mesSliderPasoCABA);
+						scope.updateGraph(promydesvPasoCABA,scope.pasoCABA)
 					});
 
-					//$('#divFotosInternas').html("<img id=\"fotoInt0\" style=\"height:30px;width:30px;display:none;\" src=\"images/massa_baja.png\"/><img id=\"fotoInt1\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/scioli.png\"/><img id=\"fotoInt2\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt3\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt4\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt5\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt6\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/macri_baja.png\"/><img id=\"fotoInt7\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt8\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/cobos_baja.png\"/><img id=\"fotoInt9\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/binner_baja.png\"/><img id=\"fotoInt10\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt11\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt12\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/massa_baja.png\"/><img id=\"fotoInt13\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/altamira_baja.png\"/><img id=\"fotoInt14\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/otros_baja.png\"/><img id=\"fotoInt15\" style=\"height:30px;width:30px;display:none;height:20px;width:auto\" src=\"images/nsnc_baja.png\"/>");
-
-					/*var expDonutChart = donutChart
-						.append("g").attr("id","texto")
-						.append("text")
-						.attr("class","stag")
-						.attr("x",-210)
-						.attr("y",-170)
-						.text("Colocá el mouse sobre el gráfico para ver los candidatos");*/
 
 					/*--------------------------------------  DONUT CHART ------------------------------------------*/
 					function createColorsScales(partido){
@@ -951,6 +1165,197 @@
 						$("#divCruz").css("display","none");
 						    					
 
+					}
+
+					scope.updateGraph = function(datos,containerSVG){
+
+						//alert(scope.mesGraph.mes);
+						var data = datos;
+						var container = containerSVG;
+						var numMes;
+						console.log(scope.mesSlider);
+
+						if(containerSVG === scope.frentes){
+							ajusteYtexto = 0.14;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.22;
+							ajusteYcirc = 54;
+							ajusteRcirc = 5;
+							ajusteXtexto = 48;
+							w = 1000;
+							h = 500;
+							canvasW = 720;
+							canvasH = 425;
+							comienzoVertGraf = 67;
+							mesCorresponde = scope.numeroSlider.mesFrentes;
+						}else if(containerSVG === scope.candidatos){
+							ajusteYtexto = 0.15;
+							ajusteYfoto = 0.075;
+							ajusteYrect = 0.25;
+							ajusteYcirc = 54;
+							ajusteRcirc = 6;
+							ajusteXtexto = 48;
+							w = 1000;
+							h = 500;
+							canvasW = 720;
+							canvasH = 425;
+							comienzoVertGraf = 68;
+							mesCorresponde = scope.numeroSlider.mesPV;
+						}else if(containerSVG === scope.candPaso){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesPASO;
+						}else if(containerSVG === scope.pasoCABA){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesPasoCABA;
+						}
+
+
+						container.selectAll("rect")
+							.data(data[mesCorresponde])
+							.transition()
+					  		.attr("width", function(d){
+								return transTopxAncho(4*d.desv,d.prom-2*d.desv); //Tiene un ancho de 4 DSTD, ajuste de funcion resto 390
+							})			    									// Si el limite inferior es menor a 0 hay que restar lo q esta por debajo de 0 arriba
+							.attr("x", function(d){
+								return transTopx(d.prom-2*d.desv);
+							})
+							.duration(1000);
+
+						container.selectAll("circle")
+							.data(data[mesCorresponde])
+							.transition()
+							.attr("cx",function(d){
+								return transTopxAnchoCirculos(d.prom,d.prom-2*d.desv);
+							})
+							.duration(1000);
+
+					};
+
+					scope.createCirculosEncuestas = function(containerSVG, index){
+
+						var container = containerSVG;
+						var data;
+						var caba = false;
+						if(containerSVG === scope.frentes){
+
+							ajusteYcirc = 54;
+							ajusteRcirc = 5;
+							comienzoVertGraf = 67;
+							data = scope.dataPASO;
+						}else if(containerSVG === scope.candidatos){
+
+							ajusteYcirc = 54;
+							ajusteRcirc = 6;
+							comienzoVertGraf = 68;
+							data = scope.dataPV;
+						}else if(containerSVG === scope.candPaso){
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 63.5;
+							data = scope.dataPASO;
+							console.log("Data es: " + data);
+						}else if(containerSVG === scope.pasoCABA){
+							ajusteYcirc = 37.5;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 60;
+							data = scope.dataPasoCABA;
+							console.log("Data es: " + data);
+							caba = true;
+						}
+
+						console.log(index);
+
+						container.append("g")//.attr("transform","translate(0,-50)")
+							.selectAll("circle")
+							.data(data[index])
+							.enter()
+							.append("circle")
+							.attr("r", ajusteRcirc)
+							.attr("stroke",function(d,i){
+								if(caba === true && index === 0){
+									return "red";
+								}else{
+									return "none";
+								}
+							})
+							.attr("stroke-width","2")
+							.attr("fill",function(d,i){
+								if(caba === true && index === 0){
+									return "red";
+								}else{
+									return "none";
+								}
+							})
+							.attr("class","circProm")
+							.attr("cx",function(d){
+								return transTopxAnchoCirculos(d);
+							})
+							.attr("cy",function(d,i){
+								return comienzoVertGraf+i*ajusteYcirc;
+							});
+
+						container.selectAll(".circProm")
+							.transition()
+							.attr("stroke",function(d,i){
+								if(caba === true && index === 0){
+									return "red";
+								}else{
+									return "grey";
+								}
+							})
+							.attr("stroke-width","2")
+							.attr("fill",function(d,i){
+								if(caba === true && index === 0){
+									return "red";
+								}else{
+									return "black";
+
+								}
+							})
+							.duration(300);
+
+							console.log("Data1: "+data[0][0]);
+							console.log("Data2: "+data[0][1]);
+							if(data[index][0] === 0 && data[index][1] === 0){
+								scope.emptyEncuestas = true;
+							}else{
+								scope.emptyEncuestas = false;
+							}
+
+
+					}
+
+					scope.removeCirculosEncuestas = function(containerSVG){
+						var container = containerSVG;
+
+						container.selectAll(".circProm")
+							.transition()
+							.style("opacity",0)
+							.duration(300);
+
+						container.selectAll(".circProm").remove();
+
+						scope.emptyEncuestas = false;
 					}
 
 					function loadDataForDonut(partido){
@@ -992,7 +1397,7 @@
 						
 
 						}else if(partido === 'PRO'){
-							for(i=6;i<8;i++){
+							for(i=6;i<9;i++){
 								donutDataINT.push(interna[0][i].interna);
 								donutDataTotal.push(interna[0][i].total);
 								donutDataNombres.push(interna[0][i].cand);
@@ -1005,7 +1410,7 @@
 						
 
 						}else if(partido === 'FAUNEN'){
-							for(i=8;i<12;i++){
+							for(i=9;i<12;i++){
 								donutDataINT.push(interna[0][i].interna);
 								donutDataTotal.push(interna[0][i].total);
 								donutDataNombres.push(interna[0][i].cand);
@@ -1042,7 +1447,7 @@
 							return donutDataFULL;
 						
 						}else if(partido === 'Otros'){
-							for(i=13;i<14;i++){
+							for(i=14;i<15;i++){
 								donutDataINT.push(interna[0][i].interna);
 								donutDataTotal.push(interna[0][i].total);
 								donutDataNombres.push(interna[0][i].cand);
@@ -1054,7 +1459,7 @@
 							return donutDataFULL;
 						
 						}else if(partido === 'NS/NC'){
-							for(i=13;i<14;i++){
+							for(i=15;i<16;i++){
 								donutDataINT.push(interna[0][i].interna);
 								donutDataTotal.push(interna[0][i].total);
 								donutDataNombres.push(interna[0][i].cand);
@@ -1128,7 +1533,7 @@
 							    	if(partido==='FPV'){
 							    		candidatoTooltip = '  Daniel  <br />Scioli';
 							    		totalTooltip = interna[0][1].total;
-							    		$('#fotoInt1').css("display","block");
+							    		
 							    	}else if(partido==='FR'){
 							    		candidatoTooltip = 'Sergio <br /> Massa';
 							    		totalTooltip = interna[0][0].total;
@@ -1139,7 +1544,7 @@
 							    		$('#fotoInt0').css("display","block");
 							    	}else if(partido==='FAUNEN'){
 							    		candidatoTooltip = 'Julio  <br />Cobos';
-							    		totalTooltip = interna[0][8].total;
+							    		totalTooltip = interna[0][10].total;
 							    		$('#fotoInt0').css("display","block");
 							    	}else if(partido==='FIT'){
 							    		candidatoTooltip = 'Jorge Altamira';
@@ -1171,7 +1576,7 @@
 							    		$('#fotoInt0').css("display","block");
 							    	}else if(partido==='FAUNEN'){
 							    		candidatoTooltip = 'Hermes Binner';
-							    		totalTooltip = interna[0][9].total;
+							    		totalTooltip = interna[0][11].total;
 							    		$('#fotoInt0').css("display","block");
 							    	}							    	
 							        break;
@@ -1181,8 +1586,12 @@
 							    		totalTooltip = interna[0][3].total;
 							    		$('#fotoInt1').css("display","block");
 							    	}else if(partido==='FAUNEN'){
+							    		candidatoTooltip = 'Otros <br /> FAUNEN';
+							    		totalTooltip = interna[0][12].total;
+							    		$('#fotoInt0').css("display","block");
+							    	}else if(partido==='PRO'){
 							    		candidatoTooltip = 'Ernesto <br /> Sanz';
-							    		totalTooltip = interna[0][10].total;
+							    		totalTooltip = interna[0][9].total;
 							    		$('#fotoInt0').css("display","block");
 							    	}	
 							        
@@ -1192,11 +1601,7 @@
 							    		candidatoTooltip = 'Julían Domínguez';
 							    		totalTooltip = interna[0][4].total;
 							    		$('#fotoInt1').css("display","block");
-							    	}else if(partido==='FAUNEN'){
-							    		candidatoTooltip = 'Otros FAUNEN';
-							    		totalTooltip = interna[0][11].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}	
+							    	}
 							        break;
 							    case 4:
 							        if(partido==='FPV'){
@@ -1251,21 +1656,21 @@
 
 					function mousemoveTooltip(position, cand_i, prom_i, desv_i) {
 
-					var positionTemp = position;
-					var posX = parseInt(positionTemp.attr("x"))+parseInt(positionTemp.attr("width"))+20;
-					var posY = parseInt(positionTemp.attr("y"));
-					
-					var lowerLimTooltip  = parseFloat(prom_i)-2*parseFloat(desv_i);
-					var upperLimTooltip  = parseFloat(prom_i)+2*parseFloat(desv_i);
-					var promTooltip = prom_i.toFixed(2);
-					var posXNSNC;
-					var posNSNCVar;
+						var positionTemp = position;
+						var posX = parseInt(positionTemp.attr("x"))+parseInt(positionTemp.attr("width"))+20;
+						var posY = parseInt(positionTemp.attr("y"));
+						
+						var lowerLimTooltip  = parseFloat(prom_i)-2*parseFloat(desv_i);
+						var upperLimTooltip  = parseFloat(prom_i)+2*parseFloat(desv_i);
+						var promTooltip = prom_i.toFixed(2);
+						var posXNSNC;
+						var posNSNCVar;
 
-					if(lowerLimTooltip < 0){ //Correción para negativos
+						if(lowerLimTooltip < 0){ //Correción para negativos
 
-						lowerLimTooltip = 0;
+							lowerLimTooltip = 0;
 
-					}
+						}
 
 					  rectTooltip
 					      
@@ -1274,7 +1679,7 @@
  								var posXNSNC = parseFloat(posX);
  								return posXNSNC-120;
  							}else{
- 								return posX;
+ 								return posX-10;
  							}
 
  						})     
@@ -1317,15 +1722,21 @@
  							if(cand_i === 'NS/NC'){
  								posXNSNC = parseFloat(posX);
  								posNSNCVar = true;
+ 								return posXNSNC;
  								
  							}else{
- 								var posNSNCVar = false;
- 								return posX+20;
+ 								/*var posNSNCVar = false;
+ 								var posX2= posX-20;
+ 								return posX2;*/ 								
+ 								posX2 = parseFloat(posX);
+ 								posNSNCVar = false;
+ 								return posX2-30;
+
  							}
 
  						})     
-					    .call(wrap,145,posX+10,posXNSNC,cand_i)
- 						.attr("y", function(){
+					    .call(wrap,145,posX,posXNSNC,cand_i)
+					    .attr("y", function(){
  							if(cand_i === 'NS/NC'){
  								var posYNSNC = parseFloat(posY);
  								return posYNSNC-110;
@@ -1336,12 +1747,7 @@
 
 					}
 
-					internaPanel
 
-						.attr("width",583)
-						.attr("height",375)
-						.attr("x",119)
-						.attr("y",40);
 
 					function mouseoutTooltip() {
 					  groupTooltip.transition()
@@ -1394,7 +1800,7 @@
 						    case 'PRO':
 								var color = d3.scale.ordinal()
 								    .domain([0,1])
-								    .range(["rgb(226, 226, 36)","rgb(231, 168, 32)"]);
+								    .range(["rgb(226, 226, 36)","rgb(231, 168, 32)","#C4B633"]);
 								return color;
 						    case 'FAUNEN':
 								var color = d3.scale.ordinal()
@@ -1444,17 +1850,33 @@
 
 
 						//Create an SVG group Element for the Axis elements and call the xAxis function
+						if(container===frentes)
 						var xAxisGroup = svgContainer.append("g")
 									.attr("transform", "translate(120,15)")
 									.attr("class", "stag-light")
 		                            .call(xAxis)
 		                            .append("text")
 									    .attr("transform", "translate(-10,-5)")
-									    .attr("y", 6)
+										.attr("y", 6)
+									    .attr("dy", ".71em")
+									    //.style("text-anchor", "end")
+									    .attr("class", "stag")
+									    .style("font-size", "12px");
+									    //.text("Hacé click en los logos para ver las internas");
+						else{
+						var xAxisGroup = svgContainer.append("g")
+									.attr("transform", "translate(120,15)")
+									.attr("class", "stag-light")
+		                            .call(xAxis)
+		                            .append("text")
+									    .attr("transform", "translate(-10,-5)")
+										.attr("y", 6)
 									    .attr("dy", ".71em")
 									    .style("text-anchor", "end")
 									    .attr("class", "stag");
-									    //.text("Porcentaje");
+									    //.text("Hacé click en los logos para ver las internas")
+									    //.call(wrap,145,150,150);							
+						}
 
 
 
@@ -1476,10 +1898,16 @@
 
 					/*-----------------Corro las dos funciones con los datos y containers que corresponden ---------------*/
 					var frentes = d3.select("#svggrafico2");
-					createGraphFunction(scope.datosTotalesFrentes,frentes);
+					createGraphFunction(scope.datosTotalesFrentes,frentes);					
+
+					var candPaso = d3.select("#svggraficoCandPASO");
+					createGraphFunction(scope.datosCandPaso,candPaso);
 
 					var candidatos = d3.select("#svggrafico1");
-					createGraphFunction(scope.datosTotales,candidatos);
+					createGraphFunction(scope.datosTotales,candidatos);					
+
+					var pasoCABA = d3.select("#svggraficoPasoCABA");
+					createGraphFunction(scope.datosPasoCABA,pasoCABA);
 			        
 			        /*-----------------Creo titulo-------------------------------------------------------- ---------------*/
 			        var fotos = [0];

@@ -6,7 +6,25 @@
 	<meta http-equiv='Content-Type' content='Type=text/html; charset=iso-8859-1'>
 	<!-- meta name="viewport" content="width=device-width, user-scalable=yes"-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" type="text/css" href="custom.css">
+	<link rel="stylesheet" type="text/css" href="resources/dhtmlxslider.css">
+	<!-- Facebook Conversion Code for Observatorio -->
+	<script>(function() {
+	  var _fbq = window._fbq || (window._fbq = []);
+	  if (!_fbq.loaded) {
+	    var fbds = document.createElement('script');
+	    fbds.async = true;
+	    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(fbds, s);
+	    _fbq.loaded = true;
+	  }
+	})();
+	window._fbq = window._fbq || [];
+	window._fbq.push(['track', '6025919536284', {'value':'0.00','currency':'ARS'}]);
+	</script>
+	<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6025919536284&amp;cd[value]=0.00&amp;cd[currency]=ARS&amp;noscript=1" /></noscript>
 	
 </head>
 
@@ -14,7 +32,22 @@
 
 <div class="wrapper">
 	<div class="logoTop">
-		<img src="images/LogoLPO.jpg" style="width:156px;height:63px" />
+		<a href="http://www.lapoliticaonline.com/" target="_blank"><img src="images/LogoLPO.png" style="width:156px;height:63px" /></a>
+		
+		<a
+				href="http://twitter.com/intent/tweet?status=Observatorio de Encuestas 2015: la nueva plataforma para seguir la carrera electoral, via @l_p_o+http://www.observatorio.lapoliticaonline.com"
+				target="_blank"
+		>
+			<img class="shareButton" src="images/tweet.png" />
+		</a>	
+
+		<a
+				
+				href="http://www.facebook.com/sharer/sharer.php?u=http://www.observatorio.lapoliticaonline.com&title=Descubrí el Observatorio de Encuesta de LPO, la plataforma que evalúa la probabilidad de los candidatos de ganar las carrera presidencial"
+				target="_blank"
+		>
+		<img class="shareButton" src="images/facebook.png" />
+		</a>
 	</div>
 	<svg id="svgtitulo"></svg>
 
@@ -32,15 +65,18 @@
 				    </li>
 				    <li ng-class="{ active:tab.isSet(3) }">
 				      <a href ng-click="tab.setTab(3)">Diferencias</a>
-				    </li>
+				    </li>				    
 				    <li ng-class="{ active:tab.isSet(4) }">
-				      <a href ng-click="tab.setTab(4)">Ratings</a>
-				    </li>	    
+				      <a href ng-click="tab.setTab(4)">CABA</a>
+				    </li>
 				    <li ng-class="{ active:tab.isSet(5) }">
-				      <a href ng-click="tab.setTab(5)">Encuestas</a>
-				    </li>			    
+				      <a href ng-click="tab.setTab(5)">Ratings</a>
+				    </li>	    
 				    <li ng-class="{ active:tab.isSet(6) }">
-				      <a href ng-click="tab.setTab(6)">Metodología</a>
+				      <a href ng-click="tab.setTab(6)">Encuestas</a>
+				    </li>			    
+				    <li ng-class="{ active:tab.isSet(7) }">
+				      <a href ng-click="tab.setTab(7)">Metodología</a>
 				    </li>
 				  </ul>
 
@@ -48,84 +84,247 @@
 		</div>
 		<div class="cuerpo">
 
-		  <div ng-show="tab.isSet(1)">
-		  		<div class="graphWrapper">
-		  			<div class="sectionTitle">
-			  			PASO
-			  		</div>
-			  		<div class="exp_overBarGraph">
-			  			<ul>
-			  				<li>
-			  					El gráfico muestra el rango del porcentaje de los votos que obtendrá cada frente electoral en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del domingo 9 de agosto del 2015.
-			  				</li>			  				
-			  				<li>
-			  					Las bandas marcan el mínimo y el máximo del porcentaje de votos que las encuestas indican que obtendrá cada frente, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
-			  				</li>
-			  			</ul>
-			  		</div>
-			  		<svg id="svggrafico2"></svg>
+		  <div ng-show="tab.isSet(1)" id="paso">
+		  		
+		  			<div class="textWrapper">
+			  			<div class="sectionTitle">
+				  			PASO
+				  		</div>
+				  		<div class="exp_overBarGraph">
+				  			<ul>
+				  				<li>
+									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos y los frentes electorales en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del 9 de agosto de 2015. 
 
-			  	</div>
+									Las bandas marcan el mínimo y el máximo del porcentaje de votos, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+
+				  				</li>
+				  			</ul>
+				  		</div>
+				  	</div>
+
+				  	<div class="graphWrapper">
+				  		<div class="wrapperSlider">
+				  			<div class="sliderYmes">
+					  			<div id="sliderCandPASO" style="float:left">
+					  				<!--aca se va a crear el slider -->
+						  			
+						  		</div>
+						  		<div id="textoCandPASO" class="stag mesSlider">Abril</div>
+						  	</div>
+					  		<div class="explicSlider">Usá el slider para cambiar el mes. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los resultados que dio cada una.</div>
+					  	</div>
+				  		<div>
+				  			<svg id="svggraficoCandPASO" style="float:left"></svg>
+				  			<table class="table-condensed ultEncuestas">
+								<tr class="stag-book borderBottomThick">
+									<th class="textoCenter">FECHA</th>
+									<th class="textoCenter">ENCUESTADORA</th>
+									<th class="textoCenter">PESO</th>
+								</tr>
+								<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPASO" ng-show="datos.mes === numeroSlider.mesPASO" ng-mouseenter="createCirculosEncuestas(candPaso,$index)" ng-mouseleave="removeCirculosEncuestas(candPaso)">
+										<td class="textoCenter">{{datos.fecha}}</td>
+										<td class="textoCenter">{{datos.enc}}</td>
+										<td class="textoCenter">
+												<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+													<img src="images/bat0.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+													<img src="images/bat1.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+													<img src="images/bat2.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+													<img src="images/bat3.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+													<img src="images/bat4.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.30">
+													<img src="images/bat5.png" height="20" width="20" />
+												</span>	
+										</td>
+								</tr>
+				  			</table>
+				  			<div class="stag" ng-show="emptyEncuestas === true">Esta encuesta midió sólo frentes electorales.</div>
+				  		</div>
+
+				  		<div id="sliderFrentes"></div>
+				  		<div id="textoFrentes" class="stag mesSliderFrentes">Abril</div>
+				  		<svg id="svggrafico2"></svg>
+			  		</div>
+			  	
 		  </div>
 
-		  <div ng-show="tab.isSet(2)">
-		  		<div class="graphWrapper">
-		  			<div class="sectionTitle">
-			  			Primera Vuelta
-			  		</div>
-			  		<div class="exp_overBarGraph">
-			  			<ul>
-			  				<li>
-			  					El gráfico muestra el rango del porcentaje de los votos que cada candidato en la primera vuelta de las Elecciones Presidenciales del domingo 25 de octubre del 2015.
-			  				</li>	
-			  				<li>
-			  					El candidato de cada frente electoral fue elegido por el Observatorio de acuerdo a quien las encuestas indican que está primero en la competencia interna de cada frente.
-			  				</li>			  				
-			  				<li>
-			  					Las bandas marcan el mínimo y el máximo del porcentaje de votos que las encuestas indican que obtendrá cada candidato, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
-			  				</li>
-			  			</ul>
-			  		</div>
-			  		<svg id="svggrafico1"></svg>
+		  <div ng-show="tab.isSet(2)"  id="pv">
+		  		
+		  		<div class="textWrapper">
+			  		<div class="sectionTitle">
+						Primera Vuelta
+					</div>
+					<div class="exp_overBarGraph">
+						<ul>
+							<li>
+								El gráfico muestra el rango del porcentaje de votos que según las encuestas analizadas, cada candidato obtendrá en la primera vuelta de las Elecciones Presidenciales del domingo 25 de octubre del 2015.
+								El candidato de cada frente electoral fue elegido tomando a los ubicados primeros en cada frente.  Las bandas marcan el mínimo y el máximo del porcentaje de votos que podrían obtener, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderCandidatos" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoCandidatos" class="stag mesSlider">Abril</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+			  		<svg id="svggrafico1" style="float:left"></svg>
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPV" ng-show="datos.mes === numeroSlider.mesPV" ng-mouseenter="createCirculosEncuestas(candidatos,$index)" ng-mouseleave="removeCirculosEncuestas(candidatos)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	
 
 				</div>
 		  </div>
 
 
-		  <div ng-show="tab.isSet(3)">
-		  		<div class="sectionTitle">
-			  			Diferencias
-			  	</div>
-			  		<div class="exp_overBarGraph">
-			  			<ul>
-			  				<li>
-			  					El cuadro permite ver la probabilidad de que un candidato le gane a otro en la Primera Vuelta de octubre, según el promedio y el desvío de cada candidato obtenidas de las encuestas de esta categoría.
-			  				</li>				  				
-			  				<li>
-			  					 Elegí un candidato de cada columna y el Observatorio te dará la posibilidad (sobre 100%) de que el candidato de la izquierda le gane o le saque una determinada diferencia de puntos al de la derecha. Un gráfico te mostrará la evolución de este margen desde el último octubre.
-			  				</li>				
-			  			</ul>
-			  		</div>
+		  <div ng-show="tab.isSet(3)"  id="dif">
+		  		<div class="textWrapper">
+			  		<div class="sectionTitle">
+				  			Diferencias
+				  	</div>
+				  	<div class="exp_overBarGraph">
+				  		<ul>
+				  			<li>
+								El cuadro permite ver que probabilidad tiene un candidato frente a otro en la primera vuelta de las elecciones presidenciales de octubre.
+								Elegí un candidato de cada columna y el Observatorio te dará la posibilidad (sobre 100%) de que el candidato de la izquierda le gane o le saque una determinada diferencia de puntos al de la derecha. Un gráfico te mostrará la evolución de este margen desde octubre del 2014.
+
+				  			</li>				
+				  		</ul>
+				  		</div>
+				  </div>
 		  	<difs-directive></difs-directive>
-		  </div>
+		  </div>		  
 
 		  <div ng-show="tab.isSet(4)">
-		  		<div class="sectionTitle">
-			  			Ratings
-			  	</div>
-			  	<div class="exp_overBarGraph">
-			  		<ul>
-			  			<li>
+		  		<div class="textWrapper">
+			  		<div class="sectionTitle">
+				  			Ciudad de Buenos Aires: PASO
+				  	</div>
+				  	<div class="exp_overBarGraph">
+				  		<ul>
+				  			<li>
+									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos  en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) de la Ciudad de Buenos Aires, del 26 de abril de 2015. 
 
-							El Observatorio de Encuestas desarrolló un sistema de ratings para las encuestadoras, que permite asignarle un peso relativo a cada encuesta en el cálculo de los promedios y desvíos estándar, de acuerdo a la performance histórica de esa consultora.
+									Las bandas marcan el mínimo y el máximo del porcentaje de votos, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
 
-						</li>			
-			  		</ul>
-			  	</div>
-		  	<ratings-directive style="margin-left:50px;margin-right:50px;"></ratings-directive>
+				  			</li>				
+				  		</ul>
+				  	</div>
+				</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderPasoCABA" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoPasoCABA" class="stag mesSlider">Abril</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+			  		<svg id="svggraficoPasoCABA" style="float:left"></svg>
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPasoCABA" ng-show="datos.mes === numeroSlider.mesPasoCABA" ng-mouseenter="createCirculosEncuestas(pasoCABA,$index)" ng-mouseleave="removeCirculosEncuestas(pasoCABA)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	
+
+				</div>
+
 		  </div>
 
 		  <div ng-show="tab.isSet(5)">
+		  		<div class="textWrapper">
+			  		<div class="sectionTitle">
+				  			Ratings
+				  	</div>
+				  	<div class="exp_overBarGraph">
+				  		<ul>
+				  			<li>
+
+								El Observatorio de Encuestas desarrolló un sistema de ratings para las encuestadoras, que permite asignarle un peso relativo a cada sondeo en el cálculo de los promedios y desvíos estándar, de acuerdo a la performance histórica de esa consultora.
+
+							</li>			
+				  		</ul>
+				  	</div>
+				</div>
+		  	<ratings-directive style="margin-left:50px;margin-right:50px;"></ratings-directive>
+		  </div>
+
+		  <div ng-show="tab.isSet(6)">
+		  	<div class="textWrapper">
 		  		<div class="sectionTitle">
 			  			Encuestas
 			  	</div>
@@ -133,15 +332,15 @@
 			  		<ul>
 			  			<li>
 
-							En este pestaña podés ver las encuestas tomadas por el Observatorio de Encuestas, ordenadas desde la última que se ingresó a la plataforma hasta la primera. Próximamente vas a poder descargar todas las encuestas utilizadas.
-
+							En este pestaña podés ver las encuestas tomadas por el Observatorio de Encuestas, ordenadas desde la última que se ingresó a la plataforma hasta la primera.
 						</li>			
 			  		</ul>
 			  	</div>
+			 </div>
 		  	<encuestas-directive style="margin-left:50px;margin-right:50px;"></encuestas-directive>
 		  </div>
 
-		  <div ng-show="tab.isSet(6)">
+		  <div ng-show="tab.isSet(7)">
 		  		<div class="sectionTitle">
 			  			Metodología
 			  	</div>
@@ -154,9 +353,10 @@
 <d3-directive></d3-directive>
 
 <div class="columnas">
+	<a href="http://www.lapoliticaonline.com/nota/87698/" target="_blank">
 	<div class="columna">
 		<div class="titCol">
-			Bienvenidos al Observatorio de LPO
+			El nervio óptico de la democracias
 		</div>
 		<div class="restoCol">
 			<img src="images/fidanza.jpg" class="fotoAutor">
@@ -164,342 +364,86 @@
 				Por Ignacio Fidanza
 			</div>
 			<div class="bajadaCol">
-				La nueva plataforma de La Política Online ipsum lorem ipsen flutiatios peril ortun medol Coldiop Vestibulum euismod in ex eu pretium. Integer hendrerit, turpis at scelerisque ipsum lorem ipsen flutiatios
+				Las encuestas, aún cuestionadas, constituyen la herramienta central de la política actual. De ahí la necesidad de profesionalizar y aumentar el rigor en el análisis de sus resultados. 
 			</div>
 		</div>
 	</div>
+	</a>
+
+	<a href="http://www.lapoliticaonline.com/nota/88659/" target="_blank">
 	<div class="columna">
 		<div class="titCol">
-			El desafío de cuantificar la política
+			Un exitoso bautismo de fuego para el Observatorio de Encuestas
 		</div>
 		<div class="restoCol">
-			<img src="images/jpdBYN.jpg" class="fotoAutor">
+			<img src="images/jpd2.png" class="fotoAutor">
 			<div class="autorCol">
 				Por Juan Pablo Djeredjian
 			</div>
 			<div class="bajadaCol">
-				La nueva plataforma de La Política Online ipsum lorem ipsen flutiatios peril ortun medol Coldiop Vestibulum euismod in ex eu pretium. Integer hendrerit, turpis at scelerisque ipsum lorem ipsen flutiatios
+				LPO pronosticó la victoria de Larreta en la interna del PRO, así como las posiciones finales de todos los candidatos a jefe de Gobierno de la Ciudad.
 			</div>
 		</div>
 	</div>
+	</a>
 </div>
 
-<div class="footer stag-light" style="font-size:18px">
-	<img class="imgFooter" src="images/logo.jpg" /><b style="margin-right:15px;">La Política Online | </b>   
-	<span style="float:right">Idea y desarrollo: <b><a href="https://twitter.com/jpdjere">Juan Pablo Djeredjian</a></b></span>
+<div class="footer stag-light" style="font-size:15px">
+	<a href="http://www.lapoliticaonline.com/" target="_blank"><img class="imgFooter" src="images/logoBYN.png" /></a>
+	<b style="margin-right:15px;">&copy; La Política Online SRL 2015&nbsp;&nbsp;&nbsp;|</b>Todos los derechos reservados &nbsp;   
+	Diseño: <b><a href="http://www.bernardocelis.com/">Bernardo + Celis </a></b>&nbsp;
+	Idea y desarrollo: <b><a href="https://twitter.com/jpdjere">Juan Pablo Djeredjian</a></b>
 
 </div>
 
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
 <script type="text/javascript" src="resources/d3.min.js"></script>
-<script type="text/javascript" src="resources/angular.js"></script>
-<script type="text/javascript" src="data.js"></script>
-<script type="text/javascript" src="app.js"></script>
+<!--script type="text/javascript" src="resources/angular.js"></script-->
+<script type="text/javascript" src="data.js" ></script>
+<script type="text/javascript" src="app/app.js"></script>
+
+<script type="text/javascript" src="app/controllers/store.controller.js"></script>
+<script type="text/javascript" src="app/controllers/tabs.controller.js"></script>
+
+<script type="text/javascript" src="app/directives/compile.directive.js"></script>
+<script type="text/javascript" src="app/directives/d3.directive.js"></script>
+<script type="text/javascript" src="app/directives/difs.directive.js"></script>
+<script type="text/javascript" src="app/directives/encuestas.directive.js"></script>
+<script type="text/javascript" src="app/directives/hoverCand.directive.js"></script>
+<script type="text/javascript" src="app/directives/metodologia.directive.js"></script>
+<script type="text/javascript" src="app/directives/ratings.directive.js"></script>
+
+<script type="text/javascript" src="app/filters/perc.filter.js"></script>
+
 <!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular-sanitize.js"></script-->
-<script type="text/javascript" src="grafdifs.js"></script>
-<script type="text/javascript"   src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!--script type="text/javascript" src="grafdifs.js" async></script-->
+<script src="resources/dhtmlxslider.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-6780819-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-13006119-8', 'auto');
+  ga('send', 'pageview');
+
+</script>
 
 </body>
 <html>
-
-<style type="text/css">
-
-	@font-face { font-family: Stag-Medium; src: url('fonts/Stag-Medium.otf'); }
-	@font-face { font-family: Stag-MediumItalic; src: url('fonts/Stag-MediumItalic.otf'); }
-	@font-face { font-family: Stag-Light; src: url('fonts/Stag-Light.otf'); }
-	@font-face { font-family: Stag-LightItalic; src: url('fonts/Stag-LightItalic.otf'); }
-	@font-face { font-family: Stag-Semibold; src: url('fonts/Stag-Semibold.otf'); }
-	@font-face { font-family: Stag-Thin; src: url('fonts/Stag-Thin.otf'); }
-	@font-face { font-family: Stag-ThinDot; src: url('fonts/Stag-ThinDot.otf'); }
-	@font-face { font-family: Stag-Book; src: url('fonts/Stag-Book.otf'); }
-	@font-face { font-family: Stag-Black; src: url('fonts/Stag-Black.otf'); }
-
-	body {
-		background-color:#fff;
-
-	}
-
-	ul
-	{
-	    list-style-type: none;
-	    margin:0;
-	    padding:0;
-	}	
-
-	li
-	{
-	    margin-top:5px;
-	}
-
-	.stag { 
-		font-family: Stag-Medium, sans-serif;
-		font-size:17px;
-		color:black;
-	}
-	.stag-book { 
-		font-family: Stag-Book, sans-serif;
-		color:black;
-	}	
-	.stag-light { 
-		font-family: Stag-Light, sans-serif;
-		color:black;
-	}	
-	.stag-thin { 
-		font-family: Stag-Thin, sans-serif;
-		color:black;
-	}	
-	.stag-thindot { 
-		font-family: Stag-ThinDot, sans-serif;
-		color:black;
-	}
-	.titulo { 
-		font-family: Stag-Medium, sans-serif;
-		font-size:80px;
-		fill: rgb(94, 140, 192);
-		stroke: none;
-	}	
-
-	.titulo2 { 
-		font-family: Stag-Light, sans-serif;
-		font-size:80px;
-		fill: rgb(94, 140, 192);
-		stroke: none;
-	}
-
-	.sectionTitle{
-		font-family: Stag-Book, sans-serif;
-		color:black;
-		font-size: 37px;
-		width: 300px;
-		margin: 0 auto;
-		margin-bottom: 5px;
-		margin-top: 5px;
-		text-align: center;
-	}
-
-	.cuerpo{
-		width:100%;
-		height:100%;
-		vertical-align: center;
-		position: relative;
-	}
-
-	#svgtitulo {
-
-
-		border-top: 1px solid rgb(157, 158, 160);
-		border-bottom: 1px solid rgb(157, 158, 160);
-		display:block;
-
-	}
-	.wrapper{
-		max-width: 990px;
-		/*background: grey;*/
-		margin: 0 auto;
-	}
-
-	.navWrapper{
-		width:720px;
-		margin: 0 auto;
-
-	}
-
-	.navWrapperWrapper{
-
-		width:100%;
-		border-bottom:3px solid #9D9EA0;
-
-	}
-
-	.graphWrapper{
-		width:730px;
-		margin: 0 auto;
-	}
-
-	.footer{
-		width:100%;
-		border-top:2px solid black;
-		float:right;
-	}
-
-	.imgFooter{
-		height:20px;
-		width:auto;
-		margin-right:10px;
-
-	}
-
-	.exp_overBarGraph {
-		font-family: Georgia,Times,sanz-serif;
-		font-size: 15px;
-		width: 620px;
-		margin: auto;
-		text-align: center;
-		color: black;
-
-	}	
-	.exp_underTable {
-		font-family: Georgia,"Times New Roman",Times,serif;
-		font-size:17px;
-		font-weight: 500;
-		width:900px;
-		margin: 0 auto;
-		margin-top:25px;
-		text-align: justify;
-    	text-justify: inter-word;
-    	color:black;
-	}
-
-	.text_metod { 
-		font-family: Georgia,"Times New Roman",Times,serif;
-		font-size: 17px;
-		color: black;
-		margin-bottom: 8px;
-		width: 800px;
-		margin: auto;
-		margin-top: 10px;
-		margin-bottom: 15px;
-		text-align: justify;
-	}
-
-	.titulosMet{
-		font-weight:800;
-	}	
-
-	.factor{
-		font-style: italic;
-		margin-bottom:10px;
-	}
-
-	.columnas{
-		width: 100%;
-		height: 250px;
-		margin-top: 20px;
-	}
-
-	.columna{
-		border-top: 1px solid grey;
-		margin-left: 15px;
-		margin-right: 15px;
-		padding: 12px;
-		float: left;
-		width: 43%;
-		height: 100%;
-	}
-
-	.fotoAutor{
-		width:100px;
-		height:100px;
-		float:left;
-		margin-right:8px;
-	}
-
-	.titCol{
-		font-family: Stag-Book, sans-serif;
-		font-size: 24px;
-		color: black;
-	}
-
-	.autorCol{
-		font-family: Georgia, sans-serif;
-		font-size:17px;
-		color:rgb(94, 140, 192);
-	}
-
-	.bajadaCol{
-		font-family: Georgia, sans-serif;
-		font-size:17px;
-		color:black;		
-	}
-
-
-	/*-------------------CSS para D3 ------------------*/
-
-	.rectNorm{
-		fill:rgb(135, 179, 228);
-		stroke:rgb(135, 179, 228);
-		stroke-width:1;
-	}	
-
-	.rectHover{
-		fill:rgba(51, 51, 192, 0.92);
-		stroke-width:1;
-	}
-
-	.lineashor{
-		stroke:rgba(0, 0, 0, 0.92);
-		stroke-width:1;
-
-	}
-
-	.tooltip2 {
-
-		fill:white;
-		stroke:grey;
-		stroke-width:1;
-		ry:1;
-		rx:1;
-
-		text-align: center;
-		width: 60px;
-		height: 50px;
-		padding: 8px;
-
-		pointer-events: none;
-
-	}
-
-	.textoTooltip{
-
-		font-family: Stag-Medium, sans-serif;
-		font-size:13px;
-		color:black;
-	}
-
-	.logosCuadros{
-		cursor:pointer;
-	}
-
-	/*.etiquetasInternas{
-		background: none;
-		width: 200px;
-		height: 200px;
-		position: absolute;
-		left: 690px;
-		bottom: -130px;
-		display: none;
-	}*/
-
-	.etiquetasInternas{
-		background: none;
-		width: 150px;
-		height: 180px;
-		position: absolute;
-		left: 460px;
-		bottom: 100px;
-		display: none;
-		border-radius: 50px;
-	}
-
-	.divCruz{
-		position: absolute;
-		background: transparent;
-		width: 35px;
-		height: 35px;
-		top: 210px;
-		left: 790px;
-		cursor:pointer;
-		display:none;
-	}
-
-	dthree-directive{
-
-			width:100%;
-			height:100%;
-			display:block;
-		}
-</style>
 
 
 

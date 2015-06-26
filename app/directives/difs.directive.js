@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 
 		return{
@@ -55,7 +57,7 @@ app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 					    //.tickFormat(myFormatters.timeFormat("%e-%b"))
 					    .tickFormat(myFormatters.timeFormat("%b"))
 					    //.ticks(fechas.length)
-					    .ticks(5)
+					    .ticks(7)
 					    //.tickFormat(d3.time.format("%e-%B"));
 
 					var yAxis = d3.svg.axis()
@@ -83,11 +85,29 @@ app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 						    .interpolate("linear");
 
 					d3.select("#container").html('');
-					var svg = d3.select("#container").append("svg")
-					    .attr("width", "100%")
+					var svg;
+
+					/*---------------------------TRANSFORMACION GRAFICO PARA MOBILE--------------------------*/
+					if(screen.width<720){
+					svg = d3.select("#container").append("svg")
+						.attr("width", "100%")
 					    .attr("height", "100%")
-					  .append("g")
+					    .attr("viewBox","45 -5 230 280")
+						.attr("preserveAspectRatio","xMidYMid")
+						.append("g")
 					    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+					}else{
+					svg = d3.select("#container").append("svg")
+						.attr("width", "100%")
+					    .attr("height", "100%")
+					    .append("g")
+					    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+					}
+					/*-------------------------------------------------------------------------------------------*/	
+
+	
 
 					
 					var limiteFechaInf=d3.min(dataTemp, function(d) { return d.date; });
@@ -379,14 +399,14 @@ app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 					}
 
 					if(checkIzq === 7 || checkDer === 7){
-						//Si no estÃ¡n los dos lados seleccionados, borra temp
+						//Si no están los dos lados seleccionados, borra temp
 						$scope.temp = ' ';
 						$scope.texto_underGraph = '';
 						$scope.dataGraf.length = 0;
 						$scope.diferenciasGraf.length = 0;
 
 					}else{
-						//Si estÃ¡n los dos seleccionados, carga la data para el grÃ¡fico
+						//Si están los dos seleccionados, carga la data para el gráfico
 
 						this.compDiftemp = $scope.compDif;
 						$scope.dataGraf.length = 0;
@@ -455,8 +475,8 @@ app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 
 						$scope.createGraph();
 
-						/*--------------------Creo el texto que va bajo el grÃ¡fico --------------------------*/
-						$scope.texto_underGraph = " "+$scope.datosTotales[$scope.izqIndex].nombComp+ " tiene "+$scope.temp+" de probabilidad de " + $scope.text4text_underGraph+ $scope.datosTotales[$scope.derIndex].nombComp + " en la elecciÃ³n general";
+						/*--------------------Creo el texto que va bajo el gráfico --------------------------*/
+						$scope.texto_underGraph = " "+$scope.datosTotales[$scope.izqIndex].nombComp+ " tiene "+$scope.temp+" de probabilidad de " + $scope.text4text_underGraph+ $scope.datosTotales[$scope.derIndex].nombComp + " en la elección general";
 				
 
 					} //ciera else

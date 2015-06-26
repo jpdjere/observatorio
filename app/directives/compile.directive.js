@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 	app.directive('compile', ['$compile', function ($compile) {
 	    return function(scope, element, attrs) {
 	        scope.$watch(

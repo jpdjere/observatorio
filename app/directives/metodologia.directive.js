@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 	app.directive('metodologiaDirective',function(){ //Para meter HTML
 		return{
 

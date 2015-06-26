@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 	app.filter('percentage', ['$filter', function ($filter) {
   		return function (input, decimals) {
   			if(input > 0.9999){

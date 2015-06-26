@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="styles/styles.css">
 	<link rel="stylesheet" type="text/css" href="styles/custom.css">
 	<link rel="stylesheet" type="text/css" href="resources/dhtmlxslider.css">
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+	
 	<!-- Facebook Conversion Code for Observatorio -->
 	<script>(function() {
 	  var _fbq = window._fbq || (window._fbq = []);
@@ -49,34 +51,61 @@
 		<img class="shareButton" src="images/facebook.png" />
 		</a>
 	</div>
+
+									<!-- LOGO LPO Y LOGO MENU -->
+	<img src="images/logoMobile.png" class="logoMobile" style="display:none;"><!-- LOGO LPO MOBILE -->
+	<span class="logoMenu" style="display:none;cursor:pointer;" ng-click="menuChange();" ><img src="images/menu.png" style="width:"></span>
+									<!--.....................-->
+
+
 	<svg id="svgtitulo"></svg>
 
 	
-	<div style="align:center" id="cuerpo" ng-controller="TabsController as tab">
+	<div id="cuerpo" ng-controller="TabsController as tab">
+		
+
+		<!--...... MENU MOBIL ......-->
+		<div class="mobileNav" ng-cloak ng-show="mobMenuOn === true">
+			<ul>
+				<li ng-click="tab.setTab(1); selectMobileOption();">PASO</li>
+				<li ng-click="tab.setTab(2); selectMobileOption();">Primera Vuelta</li>
+				<li ng-click="tab.setTab(3); selectMobileOption();">Diferencias</li>
+				<li ng-click="tab.setTab(4); selectMobileOption();">CABA</li>
+				<li ng-click="tab.setTab(5); selectMobileOption();">Prov. Bs. As.</li>
+				<li ng-click="tab.setTab(6); selectMobileOption();">Ratings</li>
+				<li ng-click="tab.setTab(7); selectMobileOption();">Encuestas</li>
+				<li ng-click="tab.setTab(8); selectMobileOption();">Metodología</li>
+			</ul>
+		</div>
+		<!--....................... -->
+
 		<div class="navWrapperWrapper">
 	 		<div class="navWrapper">
 
 				  <ul class="nav nav-pills stag">
 				    <li ng-class="{ active:tab.isSet(1) }">
-				      <a href ng-click="tab.setTab(1)">PASO</a>
+				      <a href="#paso" ng-click="tab.setTab(1)">PASO</a>
 				    </li>	    
 				    <li ng-class="{ active:tab.isSet(2) }">
-				      <a href ng-click="tab.setTab(2)">Primera Vuelta</a>
+				      <a href="#pv" ng-click="tab.setTab(2)">Primera Vuelta</a>
 				    </li>
 				    <li ng-class="{ active:tab.isSet(3) }">
-				      <a href ng-click="tab.setTab(3)">Diferencias</a>
+				      <a href="#dif" ng-click="tab.setTab(3)">Diferencias</a>
 				    </li>				    
 				    <li ng-class="{ active:tab.isSet(4) }">
 				      <a href ng-click="tab.setTab(4)">CABA</a>
 				    </li>
 				    <li ng-class="{ active:tab.isSet(5) }">
-				      <a href ng-click="tab.setTab(5)">Ratings</a>
-				    </li>	    
+				      <a href="#prov" ng-click="tab.setTab(5)">Prov. Bs.As.</a>
+				    </li>	
 				    <li ng-class="{ active:tab.isSet(6) }">
-				      <a href ng-click="tab.setTab(6)">Encuestas</a>
-				    </li>			    
+				      <a href ng-click="tab.setTab(6)">Ratings</a>
+				    </li>	    
 				    <li ng-class="{ active:tab.isSet(7) }">
-				      <a href ng-click="tab.setTab(7)">Metodología</a>
+				      <a href ng-click="tab.setTab(7)">Encuestas</a>
+				    </li>			    
+				    <li ng-class="{ active:tab.isSet(8) }">
+				      <a href ng-click="tab.setTab(8)">Metodología</a>
 				    </li>
 				  </ul>
 
@@ -92,7 +121,7 @@
 				  		</div>
 				  		<div class="exp_overBarGraph">
 				  			<ul>
-				  				<li>
+				  				<li >
 									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos y los frentes electorales en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del 9 de agosto de 2015. 
 
 									Las bandas marcan el mínimo y el máximo del porcentaje de votos, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
@@ -109,12 +138,37 @@
 					  				<!--aca se va a crear el slider -->
 						  			
 						  		</div>
-						  		<div id="textoCandPASO" class="stag mesSlider">Abril</div>
+						  		<div id="textoCandPASO" class="stag mesSlider">Junio</div>
+
+
 						  	</div>
 					  		<div class="explicSlider">Usá el slider para cambiar el mes. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los resultados que dio cada una.</div>
+					  		<div class="explicMobile" style="display:none;">Elegí un mes y la tabla te mostrará las encuesats que se publicaron. Tocá un para ver los resultados que dio cada una sobre el gráfico.</div>
 					  	</div>
-				  		<div>
-				  			<svg id="svggraficoCandPASO" style="float:left"></svg>
+					  	<!--................DROPDOWN MESES.............-->
+						  	<!--div class="monthDropdown stag" style="display:none">
+						  		<select ng-model="numeroSlider.mesPASO" ng-change="updateGraph(datosCandPaso,candPaso)">
+						  			<option value="0">Junio</option>
+						  			<option value="1">Mayo</option>
+						  			<option value="2">Abril</option>
+						  			<option value="3">Marzo</option>
+						  			<option value="4">Febrero</option>
+						  			<option value="5">Enero</option>
+						  			<option value="6">Diciembre</option>
+						  			<option value="7">Noviembre</option>
+						  			<option value="8">Octubre</option>
+						  		</select>
+						  	</div>
+						<!--...........................................-->
+				  		<div class="graficoyTablaCandPASO">
+
+				  			<div class="mobileHidden"><svg id="svggraficoCandPASO" style="float:left"></svg></div>
+
+				  			<!-- ............... SVG MOBILE .........-->
+				  			<div class="mobileShow divSvgMobileCandPaso" style="display:none"><svg id="svggraficoCandPASO" viewBox="-15 0 750 570" preserveAspectRatio="xMidYMid" style="float:left"></svg></div>
+				  			<!-- ............... ........... .........-->
+
+
 				  			<table class="table-condensed ultEncuestas">
 								<tr class="stag-book borderBottomThick">
 									<th class="textoCenter">FECHA</th>
@@ -148,10 +202,12 @@
 				  			</table>
 				  			<div class="stag" ng-show="emptyEncuestas === true">Esta encuesta midió sólo frentes electorales.</div>
 				  		</div>
+				  		<div style="display:none">
+				  			<div id="sliderFrentes"></div>
+					  		<div id="textoFrentes" class="stag mesSliderFrentes">Junio</div>
+					  		<svg id="svggrafico2"></svg>
+				  		</div>
 
-				  		<div id="sliderFrentes"></div>
-				  		<div id="textoFrentes" class="stag mesSliderFrentes">Abril</div>
-				  		<svg id="svggrafico2"></svg>
 			  		</div>
 			  	
 		  </div>
@@ -180,11 +236,20 @@
 								<!--aca se va a crear el slider -->
 					  			
 					  		</div>
-					  		<div id="textoCandidatos" class="stag mesSlider">Abril</div>
+					  		<div id="textoCandidatos" class="stag mesSlider">Junio</div>
 					  	</div>
 						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
 					</div>
-			  		<svg id="svggrafico1" style="float:left"></svg>
+
+
+			  		<div class="mobileHidden"><svg id="svggrafico1" style="float:left"></svg></div>
+
+			  		<!-- ............... SVG MOBILE .........-->
+				  	<div class="mobileShow divSvgMobilePV" style="display:none"><svg id="svggrafico1" viewBox="-15 0 610 410" preserveAspectRatio="xMidYMid" style="float:left"></svg></div>
+				  	<!-- ............... ........... .........-->
+
+				  	
+
 				  	<table class="table-condensed ultEncuestas">
 						<tr class="stag-book borderBottomThick">
 							<th class="textoCenter">FECHA</th>
@@ -222,7 +287,7 @@
 		  </div>
 
 
-		  <div ng-show="tab.isSet(3)"  id="dif">
+		  <div ng-show="tab.isSet(3)" >
 		  		<div class="textWrapper">
 			  		<div class="sectionTitle">
 				  			Diferencias
@@ -243,7 +308,7 @@
 		  <div ng-show="tab.isSet(4)">
 		  		<div class="textWrapper">
 			  		<div class="sectionTitle">
-				  			Ciudad de Buenos Aires: PASO
+				  			Ciudad de Buenos Aires
 				  	</div>
 				  	<div class="exp_overBarGraph">
 				  		<ul>
@@ -256,6 +321,65 @@
 				  		</ul>
 				  	</div>
 				</div>
+				<div class="tituloEG-CABA">Elecciones Generales</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderGralCABA" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoGralCABA" class="stag mesSlider">Junio</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+			  		<div class="mobileHidden"><svg id="svggraficoGralCABA" style="float:left"></svg></div>
+
+					<!-- .......................... MOBILE SVG ..........................*/ -->
+			  		<div class="mobileShow divSvgMobileGralCABA" style="display:none">
+
+			  			<svg id="svggraficoGralCABA" viewBox="-10 100 725 150" preserveAspectRatio="xMidYMid" style="float:left"></svg>
+
+			  		</div>
+			  		<!-- .......................... ............. ..........................*/ -->
+
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasGralCABA" ng-show="datos.mes === numeroSlider.mesGralCABA" ng-mouseenter="createCirculosEncuestas(gralCABA,$index)" ng-mouseleave="removeCirculosEncuestas(gralCABA)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	
+
+				</div>
+
+
+				<div class="tituloPASO-CABA">PASO</div>
 				<div class="graphWrapper">
 				  	<div class="wrapperSlider">
 				  		<div class="sliderYmes">
@@ -267,7 +391,16 @@
 					  	</div>
 						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
 					</div>
-			  		<svg id="svggraficoPasoCABA" style="float:left"></svg>
+
+
+					<div class="mobileHidden"><svg id="svggraficoPasoCABA"></svg></div>
+					<!-- .......................... MOBILE SVG ..........................*/ -->
+			  		<div class="mobileShow divSvgMobilePasoCABA" style="display:none">
+			  			<svg id="svggraficoPasoCABA" viewBox="-10 60 740 500" preserveAspectRatio="xMidYMid" style="float:left"></svg>
+			  		</div>
+			  		<!-- .......................... ............. ..........................*/ -->
+
+
 				  	<table class="table-condensed ultEncuestas">
 						<tr class="stag-book borderBottomThick">
 							<th class="textoCenter">FECHA</th>
@@ -304,8 +437,80 @@
 				</div>
 
 		  </div>
-
 		  <div ng-show="tab.isSet(5)">
+		  		<div class="textWrapper" id="#provBA">
+			  		<div class="sectionTitle">
+				  			Provincia de Buenos Aires
+				  	</div>
+				  	<div class="exp_overBarGraph">
+				  		<ul>
+				  			<li>
+									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos  en las  en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) del 9 de agosto en la Provincia de Buenos Aires. 
+
+									Las bandas marcan el mínimo y el máximo del porcentaje de votos, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+
+				  			</li>				
+				  		</ul>
+				  	</div>
+				</div>
+				<div class="tituloPASO-Prov">PASO</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderPasoProv" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoPasoProv" class="stag mesSlider">Junio</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+
+			  		<div class="mobileHidden"><svg id="svggraficoPasoProv" style="float:left"></svg></div>
+					<!-- .......................... MOBILE SVG ..........................*/ -->
+			  		<div class="mobileShow divSvgMobilePasoProv" style="display:none">
+			  			<svg id="svggraficoPasoProv" viewBox="-10 35 740 500" preserveAspectRatio="xMidYMid" style="float:left"></svg>
+			  		</div>
+			  		<!-- .......................... ............. ..........................*/ -->
+
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPasoProv" ng-show="datos.mes === numeroSlider.mesPasoProv" ng-mouseenter="createCirculosEncuestas(pasoProv,$index)" ng-mouseleave="removeCirculosEncuestas(pasoProv)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	
+
+				</div>
+
+		  </div>				
+
+		  <div ng-show="tab.isSet(6)">
 		  		<div class="textWrapper">
 			  		<div class="sectionTitle">
 				  			Ratings
@@ -323,7 +528,7 @@
 		  	<ratings-directive style="margin-left:50px;margin-right:50px;"></ratings-directive>
 		  </div>
 
-		  <div ng-show="tab.isSet(6)">
+		  <div ng-show="tab.isSet(7)">
 		  	<div class="textWrapper">
 		  		<div class="sectionTitle">
 			  			Encuestas
@@ -340,7 +545,7 @@
 		  	<encuestas-directive style="margin-left:50px;margin-right:50px;"></encuestas-directive>
 		  </div>
 
-		  <div ng-show="tab.isSet(7)">
+		  <div ng-show="tab.isSet(8)">
 		  		<div class="sectionTitle">
 			  			Metodología
 			  	</div>
@@ -361,7 +566,7 @@
 		<div class="restoCol">
 			<img src="images/fidanza.jpg" class="fotoAutor">
 			<div class="autorCol">
-				Por Ignacio Fidanza
+				Por Ignacio Fidanza <a href="https://twitter.com/ifidanza"> (@IFidanza) </a>
 			</div>
 			<div class="bajadaCol">
 				Las encuestas, aún cuestionadas, constituyen la herramienta central de la política actual. De ahí la necesidad de profesionalizar y aumentar el rigor en el análisis de sus resultados. 
@@ -373,15 +578,15 @@
 	<a href="http://www.lapoliticaonline.com/nota/88659/" target="_blank">
 	<div class="columna">
 		<div class="titCol">
-			Un exitoso bautismo de fuego para el Observatorio de Encuestas
+			La Provincia, una competencia de arriba hacia abajo
 		</div>
 		<div class="restoCol">
 			<img src="images/jpd2.png" class="fotoAutor">
 			<div class="autorCol">
-				Por Juan Pablo Djeredjian
+				Por Juan Pablo Djeredjian <a href="https://twitter.com/jpdjere"> (@JpDjere) </a>
 			</div>
 			<div class="bajadaCol">
-				LPO pronosticó la victoria de Larreta en la interna del PRO, así como las posiciones finales de todos los candidatos a jefe de Gobierno de la Ciudad.
+				Con nombres poco competitivos y una elección pegada a la nacional, la victoria del próximo gobernador dependenderá de una buena performance de su candidato a Presidente.
 			</div>
 		</div>
 	</div>
@@ -399,6 +604,7 @@
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-touch.js"></script>
 <script type="text/javascript" src="resources/d3.min.js"></script>
 <!--script type="text/javascript" src="resources/angular.js"></script-->
 <script type="text/javascript" src="data.js" ></script>
@@ -414,6 +620,7 @@
 <script type="text/javascript" src="app/directives/hoverCand.directive.js"></script>
 <script type="text/javascript" src="app/directives/metodologia.directive.js"></script>
 <script type="text/javascript" src="app/directives/ratings.directive.js"></script>
+<script type="text/javascript" src="app/directives/basicClick.directive.js"></script>
 
 <script type="text/javascript" src="app/filters/perc.filter.js"></script>
 

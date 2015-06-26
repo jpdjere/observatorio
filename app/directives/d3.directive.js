@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 	app.directive('d3Directive',function(){ //Lineas y rectangulos
 		
 		function link(scope, element, attr){
@@ -67,13 +69,41 @@
 					tamTexto = 15;
 					ajusteHFotos = 32;
 					ajusteWFotos = 32;
+				}else if(containerSVG === gralCABA){
+					w = 1000;
+					h = 350;
+					ajusteYtexto = 0.19;
+					ajusteYfoto = 0.13;
+					ajusteYrect = 0.15;
+					ajusteYcirc = 0.53;
+					ajusteRcirc = 5;
+					ajusteXtexto = 42;
+					canvasW = 730;
+					canvasH = 350;
+					tamTexto = 16;
+					ajusteHFotos = 32;
+					ajusteWFotos = 32;
+				}else if(containerSVG === pasoProv){
+					w = 1000;
+					h = 600;
+					ajusteYtexto = 0.125;
+					ajusteYfoto = 0.08;
+					ajusteYrect = 0.25;
+					ajusteYcirc = 0.53;
+					ajusteRcirc = 5;
+					ajusteXtexto = 42;
+					canvasW = 730;
+					canvasH = 500;
+					tamTexto = 14;
+					ajusteHFotos = 38;
+					ajusteWFotos = 38;
 				}
 
 				var barPadding = 1;
 				//var x1cuadroDer = 0;
 				var x1cuadroDer = 0.3*w;
-				var sepEntre10 = 96.6666; //Separaci√≥n entre l√≠neas vert de graf en px
-				var sepEntre10 = 116.4; //Separaci√≥n entre l√≠neas vert de graf en px
+				var sepEntre10 = 96.6666; //SeparaciÛn entre lÌneas vert de graf en px
+				var sepEntre10 = 116.4; //SeparaciÛn entre lÌneas vert de graf en px
 				var comienzoHorGraf = 120; //En px, distancia horiz del 0% del grafico
 				var comienzoVertGraf = 40; //En px, distancia vert del comienzo grafico
 
@@ -81,7 +111,7 @@
 				var pieGraph = false;
 				
 				
-				/*----------------------------------------Funciones de transformacion --------------------------------*/
+				/*----------------------------------------Funciones de transformaciÛn --------------------------------*/
 				var transTopx = function(por){
 					var res = comienzoHorGraf+por*sepEntre10/10; //regla de 3, si el 10% es sepEntre10 (96,66px) cuanto es Res
 					if(res>comienzoHorGraf){
@@ -101,7 +131,8 @@
 				var transTopxAnchoCirculos = function(por,limInf){
 					//var res = comienzoHorGraf + por*sepEntre10/10;
 					if(limInf<0){
-						return comienzoHorGraf + por*sepEntre10/10 + (Math.abs(limInf)*sepEntre10/10)/2;
+						//return comienzoHorGraf + por*sepEntre10/10 + (Math.abs(limInf)*sepEntre10/10)/2;
+						return comienzoHorGraf + por*sepEntre10/10;
 					}else{
 						return comienzoHorGraf + por*sepEntre10/10;
 					};
@@ -327,12 +358,14 @@
 						});
 					}
 
-					/*--------------------------------------  CREO 3 SLIDERS ------------------------------------------*/
+					/*--------------------------------------  CREO SLIDERS ------------------------------------------*/
 
-					var sliderCandPASO = new dhtmlXSlider({parent: "sliderCandPASO", size: 700, min:-6, max:0,step:1});
-					var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-6, max:0,step:1});
-					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-6, max:0,step:1});
+					var sliderCandPASO = new dhtmlXSlider({parent: "sliderCandPASO", size: 700, min:-8, max:0,step:1});
+					/*discontinued*/var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-8, max:0,step:1});
+					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-8, max:0,step:1});
 					var sliderPasoCABA = new dhtmlXSlider({parent: "sliderPasoCABA", size: 700, min:-1, max:0,step:1});
+					var sliderGralCABA = new dhtmlXSlider({parent: "sliderGralCABA", size: 700, min:-1, max:0,step:1});
+					var sliderPasoProv = new dhtmlXSlider({parent: "sliderPasoProv", size: 700, min:-1, max:0,step:1});
 
 					var updateSlider = function(slider){
 
@@ -345,30 +378,40 @@
 								scope.numeroSlider.mesFrentes = -slider.getValue();								
 							}else if(slider === sliderPasoCABA) {
 								scope.numeroSlider.mesPasoCABA = -slider.getValue();								
+							}else if(slider === sliderGralCABA) {
+								scope.numeroSlider.mesGralCABA = -slider.getValue();								
+							}else if(slider === sliderPasoProv) {
+								scope.numeroSlider.mesPasoProv = -slider.getValue();								
 							}
 						});
 						
 
 						switch(scope.numeroSlider.mesPASO){
 					    	case 0:
-					    		scope.mesSliderPASO = "Abril";
+					    		scope.mesSliderPASO = "Junio";
 					    		break;
 					    	case 1:
-					    		scope.mesSliderPASO = "Marzo";
+					    		scope.mesSliderPASO = "Mayo";
 					    		break;
 					    	case 2:
-					    		scope.mesSliderPASO = "Febrero";
+					    		scope.mesSliderPASO = "Abril";
 					    		break;
 					    	case 3:
-					    		scope.mesSliderPASO = "Enero";
+					    		scope.mesSliderPASO = "Marzo";
 					    		break;
 					    	case 4:
-					    		scope.mesSliderPASO = "Diciembre";
+					    		scope.mesSliderPASO = "Febrero";
 					    		break;
 					    	case 5:
-					    		scope.mesSliderPASO = "Noviembre";
+					    		scope.mesSliderPASO = "Enero";
 					    		break;					    	
 					    	case 6:
+					    		scope.mesSliderPASO = "Diciembre";
+					    		break;					    	
+					    	case 7:
+					    		scope.mesSliderPASO = "Noviembre";
+					    		break;					    	
+					    	case 8:
 					    		scope.mesSliderPASO = "Octubre";
 					    		break;
 					    	default:
@@ -378,24 +421,30 @@
 
 						switch(scope.numeroSlider.mesPV){
 					    	case 0:
-					    		scope.mesSliderPV = "Abril";
+					    		scope.mesSliderPV = "Junio";
 					    		break;
 					    	case 1:
-					    		scope.mesSliderPV = "Marzo";
+					    		scope.mesSliderPV = "Mayo";
 					    		break;
 					    	case 2:
-					    		scope.mesSliderPV = "Febrero";
+					    		scope.mesSliderPV = "Abril";
 					    		break;
 					    	case 3:
-					    		scope.mesSliderPV = "Enero";
+					    		scope.mesSliderPV = "Marzo";
 					    		break;
 					    	case 4:
-					    		scope.mesSliderPV = "Diciembre";
+					    		scope.mesSliderPV = "Febrero";
 					    		break;
 					    	case 5:
-					    		scope.mesSliderPV = "Noviembre";
+					    		scope.mesSliderPV = "Enero";
 					    		break;					    	
 					    	case 6:
+					    		scope.mesSliderPV = "Diciembre";
+					    		break;					    	
+					    	case 7:
+					    		scope.mesSliderPV = "Noviembre";
+					    		break;					    	
+					    	case 8:
 					    		scope.mesSliderPV = "Octubre";
 					    		break;
 					    	default:
@@ -438,7 +487,33 @@
 					    		scope.mesSliderPasoCABA = "Marzo";
 					    		break;
 					    	default:
-					    		scope.mesSliderFrentes = "Nada";
+					    		scope.mesSliderPasoCABA = "Nada";
+					    		break;
+						}						
+
+						switch(scope.numeroSlider.mesGralCABA){
+					    	case 0:
+					    		scope.mesSliderGralCABA = "Junio";
+					    		break;						    	
+					    	case 1:
+					    		scope.mesSliderGralCABA = "Mayo";
+					    		break;							    	
+					    	case 2:
+					    		scope.mesSliderGralCABA = "Abril";
+					    		break;					    	
+					    	default:
+					    		scope.mesSliderGralCABA = "Nada";
+					    		break;
+						}
+						switch(scope.numeroSlider.mesPasoProv){
+					    	case 0:
+					    		scope.mesSliderPasoProv = "Junio";
+					    		break;
+					    	case 1:
+					    		scope.mesSliderPasoProv = "Mayo";
+					    		break;					    	
+					    	default:
+					    		scope.mesSliderPasoProv = "Nada";
 					    		break;
 						}
 
@@ -464,6 +539,18 @@
 						updateSlider(this);
 						$('#textoPasoCABA').html(scope.mesSliderPasoCABA);
 						scope.updateGraph(promydesvPasoCABA,scope.pasoCABA)
+					});					
+
+					sliderGralCABA.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoGralCABA').html(scope.mesSliderGralCABA);
+						scope.updateGraph(promydesvGralCABA,scope.gralCABA)
+					});					
+
+					sliderPasoProv.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoPasoProv').html(scope.mesSliderPasoProv);
+						scope.updateGraph(promydesvPasoProv,scope.pasoProv)
 					});
 
 
@@ -555,6 +642,32 @@
 							canvasH = 1000;
 							comienzoVertGraf = 63.5;
 							mesCorresponde = scope.numeroSlider.mesPasoCABA;
+						}else if(containerSVG === scope.gralCABA){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesGralCABA;
+						}else if(containerSVG === scope.pasoProv){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesPasoProv;
 						}
 
 
@@ -609,6 +722,20 @@
 							data = scope.dataPasoCABA;
 							console.log("Data es: " + data);
 							caba = true;
+						}else if(containerSVG === scope.gralCABA){
+							ajusteYcirc = 44;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 62.5;
+							data = scope.dataGralCABA;
+							console.log("Data es: " + data);
+							//caba = true; VARIABLE PARA AGREGAR RESULTADOS EN ROJO
+						}else if(containerSVG === scope.pasoProv){
+							ajusteYcirc = 57;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 69;
+							data = scope.dataPasoProv;
+							console.log("Data es: " + data);
+							//caba = true; VARIABLE PARA AGREGAR RESULTADOS EN ROJO
 						}
 
 						console.log(index);
@@ -686,290 +813,6 @@
 						scope.emptyEncuestas = false;
 					}
 
-					function loadDataForDonut(partido){
-						var donutDataINT = new Array();
-						var donutDataTotal = new Array();
-						var donutDataNombres = new Array();
-
-						var donutDataFULL = new Array();
-
-						
-						console.log("3 PASO: loadDataForDonut (dsIgual): -------->"+ internaPartido);
-
-						if(partido === 'FR'){
-							for(i=0;i<1;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							console.log("Data interna ----> : " +donutDataFULL);
-							return donutDataFULL;
-						
-						}else if(partido === 'FPV'){
-							for(i=1;i<6;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							console.log("Data interna ----> : " +donutDataFULL);
-							
-							return donutDataFULL;
-						
-
-						}else if(partido === 'PRO'){
-							for(i=6;i<9;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						
-
-						}else if(partido === 'FAUNEN'){
-							for(i=9;i<12;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						
-						}else if(partido === 'PJ'){
-							for(i=12;i<13;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						
-
-						}else if(partido === 'FIT'){
-							for(i=13;i<14;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						
-						}else if(partido === 'Otros'){
-							for(i=14;i<15;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						
-						}else if(partido === 'NS/NC'){
-							for(i=15;i<16;i++){
-								donutDataINT.push(interna[0][i].interna);
-								donutDataTotal.push(interna[0][i].total);
-								donutDataNombres.push(interna[0][i].cand);
-							}
-							console.log("Data interna ----> : " +donutDataFULL);
-							donutDataFULL.push(donutDataINT);
-							donutDataFULL.push(donutDataTotal);
-							donutDataFULL.push(donutDataNombres);
-							return donutDataFULL;
-						};
-
-					}
-
-					var createDonutChart = function(partido,tempObj){
-
-						if(pieGraph !== false){
-							console.log(pieGraph);
-							$('#texto').remove();
-							pieGraph.remove();
-						}
-						
-
-						donutChart
-						.append("g").attr("id","texto")
-						.append("text")
-						.attr("class","stag")
-						.attr("x",-210)
-						.attr("y",-170)
-						.text("Coloc√° el mouse sobre el gr√°fico para ver los candidatos");
-
-
-						var radius = Math.min(500, 600) / 2;
-
-						var color = createColorsScales(partido);			
-
-						var pie = d3.layout.pie()
-						    .sort(null);
-
-						var arc = d3.svg.arc()
-						    .innerRadius(radius - 140)
-						    .outerRadius(radius - 105);
-
-						//console.log("Justo antes: "+scope.dataDonutVE);
-
-						pieGraph = donutChart.append("g").attr("id","pie-graph");			
-
-						var path = pieGraph.selectAll("path")
-						    .data(pie(scope.dataDonutVE[0]))
-						  .enter().append("path")
-						    .attr("fill", function(d, i) { return color(i); })
-						    .attr("d", arc);/*
-						    .transition().duration(500)
-							.attrTween('d', function(d) {
-							     var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
-							     return function(t) {
-							         d.endAngle = i(t);
-							       return arc(d);
-							     }
-							});*/
-
-						path.on('mouseover', function(d,i) {
-
-							var candidatoTooltip;                          
-							var totalTooltip;                          
-
-				            /*-----------------ESCONDO TODAS LAS FOTOS INTERNAS-----------------*/
-
-
-				            switch (i) {
-							    case 0:
-							    	if(partido==='FPV'){
-							    		candidatoTooltip = '  Daniel  <br />Scioli';
-							    		totalTooltip = interna[0][1].total;
-							    		
-							    	}else if(partido==='FR'){
-							    		candidatoTooltip = 'Sergio <br /> Massa';
-							    		totalTooltip = interna[0][0].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='PRO'){
-							    		candidatoTooltip = 'Mauricio Macri';
-							    		totalTooltip = interna[0][6].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='FAUNEN'){
-							    		candidatoTooltip = 'Julio  <br />Cobos';
-							    		totalTooltip = interna[0][10].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='FIT'){
-							    		candidatoTooltip = 'Jorge Altamira';
-							    		totalTooltip = interna[0][13].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='PJ'){
-							    		candidatoTooltip = 'Jos√© M.  <br />De la Sota';
-							    		totalTooltip = interna[0][12].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='Otros'){
-							    		candidatoTooltip = 'Otros';
-							    		totalTooltip = interna[0][14].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='NS/NC'){
-							    		candidatoTooltip = 'NS/NC';
-							    		totalTooltip = interna[0][15].total;
-							    		$('#fotoInt0').css("display","block");
-							    	};
-							        
-							        break;
-							    case 1:
-							    	if(partido==='FPV'){
-							    		candidatoTooltip = 'Florencio Randazzo';
-							    		totalTooltip = interna[0][2].total;
-							    		$('#fotoInt1').css("display","block");
-							    	}else if(partido==='PRO'){
-							    		candidatoTooltip = 'Elisa <br />Carri√≥';
-							    		totalTooltip = interna[0][7].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='FAUNEN'){
-							    		candidatoTooltip = 'Hermes Binner';
-							    		totalTooltip = interna[0][11].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}							    	
-							        break;
-							    case 2:
-							    	if(partido==='FPV'){
-							    		candidatoTooltip = 'Sergio Urribarri';
-							    		totalTooltip = interna[0][3].total;
-							    		$('#fotoInt1').css("display","block");
-							    	}else if(partido==='FAUNEN'){
-							    		candidatoTooltip = 'Otros <br /> FAUNEN';
-							    		totalTooltip = interna[0][12].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}else if(partido==='PRO'){
-							    		candidatoTooltip = 'Ernesto <br /> Sanz';
-							    		totalTooltip = interna[0][9].total;
-							    		$('#fotoInt0').css("display","block");
-							    	}	
-							        
-							        break;
-							    case 3:
-							        if(partido==='FPV'){
-							    		candidatoTooltip = 'Jul√≠an Dom√≠nguez';
-							    		totalTooltip = interna[0][4].total;
-							    		$('#fotoInt1').css("display","block");
-							    	}
-							        break;
-							    case 4:
-							        if(partido==='FPV'){
-							    		candidatoTooltip = 'Otros  <br />FPV';
-							    		$('#fotoInt1').css("display","block");
-							    	}
-							        break;
-							    case 5:
-							        
-							        break;
-							    case 6:
-							        
-							        break;
-							}
-
-				            etiquetasInternas.html(
-				            	
-				            	"<div style=\"font-size:25px;margin-bottom:8px\"><center>"+candidatoTooltip+"</center></div>"+
-				            	"<div style=\"font-size:17px;margin-bottom:4px\"><center>Sobre interna de "+partido+": "+(d.data*100).toFixed(2) + '%</center></div>'+
-				            	"<div style=\"font-size:17px;\"><center>Sobre el total de PASO: "+(totalTooltip*100).toFixed(2) + '%</center></div>'
-				            	
-				            	
-				            	);
-				            etiquetasInternas.style('display', 'block');                         
-				          });
-
-						path.on('mouseout', function() {
-	          				etiquetasInternas.style('display', 'none');
-	          				/*for(i=0;i<16;i++){
-				            	$('#fotoInt'+i).hide();
-				            }*/
-	         			});
-
-
-
-						/*if(partido !== internaPartido){ //al hacer click en otro, se selecciona el nuevo partido
-							internaPartido = partido;
-						}*/
-	         			
-					}
 
 
 					/*--------------------------------  FUNCIONES DE TOOLTIPS, ETC ----------------------------------*/
@@ -994,7 +837,7 @@
 						var posXNSNC;
 						var posNSNCVar;
 
-						if(lowerLimTooltip < 0){ //Correci√≥n para negativos
+						if(lowerLimTooltip < 0){ //CorreciÛn para negativos
 
 							lowerLimTooltip = 0;
 
@@ -1023,13 +866,13 @@
 					    .attr("height", function(d,i){
 
 					    	if(cand_i === 'Altamira' || cand_i === 'Otros' || cand_i === 'NS/NC' || cand_i === 'FAUNEN'  ){
-					    		return 100;
+					    		return 300;
 					    	}else{
-					    		return 100;
+					    		return 300;
 					    	}
 
 					    })
-					    .attr("width", 160);
+					    .attr("width", 360);
 
 					  textTooltip
 
@@ -1038,11 +881,11 @@
 					    .attr("width", 50)
 					    .text(function(){
 					    	if(cand_i === 'Otros'){
-					    		return "Otros candidatos obtendr√°n entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtienen un promedio de "+promTooltip+"% de los votos.";
+					    		return "Otros candidatos obtendr·n entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtienen un promedio de "+promTooltip+"% de los votos.";
 					    	}else if (cand_i === 'NS/NC'){
 					    		return "Los indecisos oscilan entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y tienen un promedio de "+promTooltip+"%.";
 					    	}else{
-					    		return cand_i+" obtendr√° entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtiene un promedio de "+promTooltip+"% de los votos.";
+					    		return cand_i+" obtendr· entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtiene un promedio de "+promTooltip+"% de los votos.";
 					    	}
 					    })
 					    .attr("class","textoTooltip")
@@ -1083,7 +926,7 @@
 					    .style("opacity", 1e-6);
 					}
 
-					function wrap(text, width, posX, posXNSNC2, cand_i) {  //Al llamarla, el primer argumento (la selecci√≥n) esta implicto, cuentan a partir de ahi
+					function wrap(text, width, posX, posXNSNC2, cand_i) {  //Al llamarla, el primer argumento (la selecciÛn) esta implicto, cuentan a partir de ahi
 					  if(cand_i === 'NS/NC'){
 					  	posicionX = posXNSNC2-110;
 					  }else{
@@ -1190,7 +1033,7 @@
 									    //.style("text-anchor", "end")
 									    .attr("class", "stag")
 									    .style("font-size", "12px");
-									    //.text("Hac√© click en los logos para ver las internas");
+									    //.text("HacÈ click en los logos para ver las internas");
 						else{
 						var xAxisGroup = svgContainer.append("g")
 									.attr("transform", "translate(120,15)")
@@ -1202,7 +1045,7 @@
 									    .attr("dy", ".71em")
 									    .style("text-anchor", "end")
 									    .attr("class", "stag");
-									    //.text("Hac√© click en los logos para ver las internas")
+									    //.text("HacÈ click en los logos para ver las internas")
 									    //.call(wrap,145,150,150);							
 						}
 
@@ -1235,7 +1078,13 @@
 					createGraphFunction(scope.datosTotales,candidatos);					
 
 					var pasoCABA = d3.select("#svggraficoPasoCABA");
-					createGraphFunction(scope.datosPasoCABA,pasoCABA);
+					createGraphFunction(scope.datosPasoCABA,pasoCABA);										
+
+					var gralCABA = d3.select("#svggraficoGralCABA");
+					createGraphFunction(scope.datosGralCABA,gralCABA);
+
+					var pasoProv = d3.select("#svggraficoPasoProv");
+					createGraphFunction(scope.datosPasoProv,pasoProv);	
 			        
 			        /*-----------------Creo titulo-------------------------------------------------------- ---------------*/
 			        var fotos = [0];

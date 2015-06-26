@@ -1,3 +1,5 @@
+var app = angular.module('store');
+
 	app.controller('TabsController', ["$scope",function($scope,$window) {
         this.tab = 1;
 
@@ -10,5 +12,6 @@
         };
 
         $scope.numeroSlider.mes = 0;
+
 
       }]);

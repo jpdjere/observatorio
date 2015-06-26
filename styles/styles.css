@@ -1,14 +1,14 @@
 
 
-	@font-face { font-family: Stag-Medium; src: url('fonts/Stag-Medium.otf'); }
-	@font-face { font-family: Stag-MediumItalic; src: url('fonts/Stag-MediumItalic.otf'); }
-	@font-face { font-family: Stag-Light; src: url('fonts/Stag-Light.otf'); }
-	@font-face { font-family: Stag-LightItalic; src: url('fonts/Stag-LightItalic.otf'); }
-	@font-face { font-family: Stag-Semibold; src: url('fonts/Stag-Semibold.otf'); }
-	@font-face { font-family: Stag-Thin; src: url('fonts/Stag-Thin.otf'); }
-	@font-face { font-family: Stag-ThinDot; src: url('fonts/Stag-ThinDot.otf'); }
-	@font-face { font-family: Stag-Book; src: url('fonts/Stag-Book.otf'); }
-	@font-face { font-family: Stag-Black; src: url('fonts/Stag-Black.otf'); }
+	@font-face { font-family: Stag-Medium; src: url('../fonts/Stag-Medium.otf'); }
+	@font-face { font-family: Stag-MediumItalic; src: url('../fonts/Stag-MediumItalic.otf'); }
+	@font-face { font-family: Stag-Light; src: url('../fonts/Stag-Light.otf'); }
+	@font-face { font-family: Stag-LightItalic; src: url('../fonts/Stag-LightItalic.otf'); }
+	@font-face { font-family: Stag-Semibold; src: url('../fonts/Stag-Semibold.otf'); }
+	@font-face { font-family: Stag-Thin; src: url('../fonts/Stag-Thin.otf'); }
+	@font-face { font-family: Stag-ThinDot; src: url('../fonts/Stag-ThinDot.otf'); }
+	@font-face { font-family: Stag-Book; src: url('../fonts/Stag-Book.otf'); }
+	@font-face { font-family: Stag-Black; src: url('../fonts/Stag-Black.otf'); }
 	/*@font-face { font-family: ArialRegular; src: url('fonts/Arial-Regular.ttf'); }*/
 
 	body {
@@ -108,7 +108,7 @@
 	}
 
 	.navWrapper{
-		width:820px;
+		width:905px;
 		margin: 0 auto;
 
 	}
@@ -151,7 +151,14 @@
 		margin: auto;
 		text-align: center;
 		color: black;
-		
+	}
+	.titTablaEnc{
+		font-family: Stag-Medium, sans-serif;
+		font-size: 23px;
+		color: black;
+		margin-top: 25px;
+		margin-bottom: 20px;
+			
 
 	}	
 	.exp_underTable {
@@ -282,6 +289,39 @@
 
 	}
 
+	.mobileHidden{
+
+		float:left;
+	}
+
+	.tituloPASO-CABA {
+	  width: 205px;
+	  font-size: 55px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}	
+
+	.tituloEG-CABA {
+	  width: 535px;
+	  font-size: 55px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}	
+
+	.tituloPASO-Prov {
+	  width: 205px;
+	  font-size: 55px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}
+
+
 	mlabeledtr > mtd:first-child { display: table-cell; }
 
 
@@ -313,8 +353,8 @@
 		rx:1;
 
 		text-align: center;
-		width: 60px;
-		height: 50px;
+		width: 160px;
+		height: 100px;
 		padding: 8px;
 
 		pointer-events: none;
@@ -370,3 +410,311 @@
 			height:100%;
 			display:block;
 		}
+
+
+
+/* ----------- Galaxy S4 ----------- */
+/*                                                      */
+/* Portrait and Landscape */
+@media screen and (max-device-width: 2000px) and (max-device-height: 2000px) and (-webkit-device-pixel-ratio: 1.5)  {
+
+	.wrapper {
+		max-width: 100%;
+
+	}
+	.logoTop{
+		display:none;
+	}		
+	.logoMobile{
+		display:block !important;
+		float:left;
+		width:80%;
+		height:auto;
+		padding:30px;
+	}
+
+
+	.logoMenu{
+		display:block !important;
+		float:left;
+		width:20%;
+		height:auto;
+		padding-top:60px;
+		padding-bottom:30px;
+		padding-left:35px;
+	}
+
+	.mobileNav {
+
+		width:100%;
+		font-size:85px;
+		text-align: center;
+
+	}
+	.mobileNav>ul {
+		width:100%;
+		list-style:none;
+	}
+	.mobileNav li {
+		width:100%;
+		margin-bottom:40px;
+
+	}
+
+	.mobileShow{
+		display:block !important;
+	}	
+	.mobileHidden{
+		display:none !important;
+		float:left;
+	}
+
+	.divSvgMobileCandPaso{
+		height: 840px;
+	}
+
+	.divSvgMobilePV{
+		height: 800px;
+  		width: 97%;
+	}
+
+	.divSvgMobilePasoCABA{
+		height: 800px;
+  		width: 97%;
+	}	
+	.divSvgMobileGralCABA{
+		height: 400px;
+  		width: 97%;
+	}
+
+	.divSvgMobilePasoProv{
+		height: 700px;
+  		width: 97%;		
+	}
+
+
+	.navWrapperWrapper{
+		display:none;
+	}
+
+	#svgtitulo {
+		display:none;
+
+	}
+	.sectionTitle{
+		font-size:85px;
+	}
+	.exp_overBarGraph {
+
+		font-size: 50px;
+		color: black;
+		width: 90%;
+		margin: 0 auto;
+		text-align: justify;
+	}
+	.sliderYmes {
+		width: 100%;
+		/* float: left; */
+	}
+	.mesSlider {
+		width: 50%;
+		font-size: 75px;
+		margin: 0 auto;
+		padding-top: 25px;
+
+	}
+
+	#svggraficoCandPASO{
+		float:initial !important;
+		
+	}
+	.graficoyTablaCandPASO{
+
+		margin-bottom:80px;
+		display: inline-block;
+		width: 100%;
+	}
+	.ultEncuestas {
+	  float: initial;
+	  font-size: 40px;
+	  padding-top: 10px;
+	  margin-bottom:30px;
+	  width: 100%;
+	}
+
+	.titTablaEnc{
+		font-family: Stag-Medium, sans-serif;
+		font-size: 50px;
+		color: black;
+		margin-top: 25px;
+		margin-bottom: 20px;
+	}
+	/*------------------------METODOLOGIA TEXTO--------------------------*/
+	.text_metod { 
+		font-family: Arial,"Times New Roman",Times,serif;
+		font-size: 40px;
+		color: black;
+		margin-bottom: 8px;
+		width: 100%;
+		margin: auto;
+		margin-top: 10px;
+		margin-bottom: 15px;
+		text-align: justify;
+		padding-left:20px;
+		padding-right:20px;
+	}
+	.sectionTitle{
+		width:40%;
+	}
+
+	/*-----ELMINO LOS NOMBRES DE MES Y REEMPLAZO POR DROPDOWN -----*/
+	#textoCandPASO{
+		display:none;
+	}
+	.monthDropdown{
+		display: block !important;
+		width: 220px;
+		margin: 0 auto;
+		font-size: 60px;
+	}
+	/*---------------------ELMINO LOS SLIDERS y reemplazo EXPLICACION----------------------*/
+	#sliderCandPASO{
+		display:none;
+	}
+	.explicSlider{
+		display:none;
+	}
+	.explicMobile {
+		display:block;
+		width: 95%;
+		margin: 0 auto;
+		text-align: justify;
+		font-size: 23px;
+	}
+	.wrapperSlider {
+		display:none;
+		margin-top: 20px;
+		width: 1000px;
+		height: 100px;
+	}
+	/*--------------------CORRIJO COLUMNAS MIAS Y NACHO----------------------*/
+
+	.columna{
+		width:100% !important;
+		margin-bottom: 80px;
+	}
+
+	.titCol{
+		font-size: 45px;
+	}
+	.fotoAutor{
+	  	width: 180px;
+  		height: 180px;		
+	}
+	.autorCol{
+		font-size: 40px;
+	}
+	.bajadaCol{
+		font-size: 30px;
+	}
+
+	/*-----------------------------DROPDOWN-----------------------*/
+	.monthDropdown {
+		display:block !important;
+	}
+
+	/*--------------------CUADRO DIFERENCIAS----------------------*/
+	.comparator {
+		width: 100%;
+		margin-top: 20px;
+		height: 850px !important;
+		margin-bottom: 100px;
+	}
+
+	.compcol1 {
+		width:20%;
+		border-top: 3px solid black;
+
+		height:800px !important;
+		float:left;
+	}
+
+	.compcol2 {
+		width:20%;
+		border-top: 3px solid black;
+
+		height:800px !important;
+		float:left;
+	}
+
+	.compcentro {
+		width: 55%;
+		border-top: 3px solid black;
+		border-bottom: 1px solid black;
+		border-right: 1px solid black;
+		border-left: 1px solid black;
+		height: 800px !important;
+		float: left;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+		
+	}
+	.nombreCand {
+	  float: right;
+	  width: 40% !important;
+	  margin-top: 38px !important;
+	  text-align: left;
+	}
+
+	.graf {
+	  width: 100% !important;
+	  height: 95%;
+	  float: left;
+	}
+	.numytext {
+	  width: inherit !important;
+	  height: 95%;
+	  float: right;
+	}
+
+	.num {
+	  position: relative;
+	  padding-top: 80px;
+	  /* padding-right: 0px; */
+	  font-family: Stag-Medium, sans-serif;
+	  font-size: 80px !important;
+	  color: rgb(94, 140, 192);
+	  /* width: 27%; */
+	  /* float: right; */
+	  /* text-align: -webkit-right; */
+	}
+	.text_underGraph {
+	  font-family: Stag-Light, sans-serif;
+	  font-size: 30px !important;
+	  text-align: center !important;
+	  font-weight: bold;
+	  color: black;
+	  padding-left: 17px;
+	  padding-right: 17px;
+	  float: left;
+	  /* text-align: left; */
+	}
+
+	/*--------------------COSAS GENERALES----------------------*/
+	.tablasTexto {
+
+		font-size: 35px;
+
+	  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	  line-height: 1.42857143;
+	  color: #333;
+	}
+
+	#cuerpo{
+		float: left;
+	}
+
+
+}
+
+

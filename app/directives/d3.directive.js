@@ -50,6 +50,25 @@ var app = angular.module('store');
 					ajusteHFotos = 45;
 					ajusteWFotos = 45;
 					tamTexto = 17;
+				}else if(containerSVG === candidatosPost){
+					ajusteYtexto = 0.15;
+					ajusteYfoto = 0.089;
+					ajusteYrect = 0.25;
+					ajusteYcirc = 0.53;
+					ajusteRcirc = 6;
+					ajusteXtexto = 48;
+					w = 1000;
+					h = 500;
+					if(mobile === true){
+						canvasW = 1000;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 425;
+					}
+					ajusteHFotos = 45;
+					ajusteWFotos = 45;
+					tamTexto = 17;
 				}else if(containerSVG === candPaso){
 					w = 1000;
 					h = 700;
@@ -160,6 +179,25 @@ var app = angular.module('store');
 					}else{
 						canvasW = 730;
 						canvasH = 500;
+					}
+					tamTexto = 14;
+					ajusteHFotos = 38;
+					ajusteWFotos = 38;
+				}else if(containerSVG === pasoProvPost){
+					w = 1000;
+					h = 380;
+					ajusteYtexto = 0.18;
+					ajusteYfoto = 0.12;
+					ajusteYrect = 0.205;
+					ajusteYcirc = 0.53;
+					ajusteRcirc = 6;
+					ajusteXtexto = 44;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 380;
 					}
 					tamTexto = 14;
 					ajusteHFotos = 38;
@@ -422,10 +460,12 @@ var app = angular.module('store');
 					var sliderCandPASOpost = new dhtmlXSlider({parent: "sliderCandPASOpost", size: 700, min:-2, max:0,step:1});
 					/*discontinued*///var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-8, max:0,step:1});
 					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-9, max:0,step:1});
+					var sliderCandidatosPost = new dhtmlXSlider({parent: "sliderCandidatosPost", size: 700, min:0, max:0,step:1});
 					var sliderPasoCABA = new dhtmlXSlider({parent: "sliderPasoCABA", size: 700, min:-1, max:0,step:1});
 					var sliderGralCABA = new dhtmlXSlider({parent: "sliderGralCABA", size: 700, min:-2, max:0,step:1});
 					var sliderBallotageCABA = new dhtmlXSlider({parent: "sliderBallotageCABA", size: 700, min:0, max:0,step:1});
 					var sliderPasoProv = new dhtmlXSlider({parent: "sliderPasoProv", size: 700, min:-3, max:0,step:1});
+					//var sliderPasoProvPost = new dhtmlXSlider({parent: "sliderPasoProvPost", size: 700, min:0, max:0,step:1});
 
 					var updateSlider = function(slider){
 
@@ -435,6 +475,8 @@ var app = angular.module('store');
 							}if(slider === sliderCandPASOpost){
 								scope.numeroSlider.mesPASOpost = -slider.getValue();
 							}else if(slider === sliderCandidatos) {
+								scope.numeroSlider.mesPV = -slider.getValue();								
+							}else if(slider === sliderCandidatosPost) {
 								scope.numeroSlider.mesPV = -slider.getValue();								
 							}else /*if(slider === sliderFrentes) {
 								scope.numeroSlider.mesFrentes = -slider.getValue();								
@@ -446,7 +488,9 @@ var app = angular.module('store');
 								scope.numeroSlider.mesBallotageCABA = -slider.getValue();								
 							}else if(slider === sliderPasoProv) {
 								scope.numeroSlider.mesPasoProv = -slider.getValue();								
-							}
+							}/*else if(slider === sliderPasoProvPost) {
+								scope.numeroSlider.mesPasoProvPost = -slider.getValue();								
+							}*/
 						});
 						
 
@@ -528,6 +572,14 @@ var app = angular.module('store');
 					    		break;					    	
 					    	case 9:
 					    		scope.mesSliderPV = "Octubre";
+					    		break;
+					    	default:
+					    		scope.mesSliderPV = "Nada";
+					    		break;
+						}						
+						switch(scope.numeroSlider.mesPVpost){
+					    	case 0:
+					    		scope.mesSliderPV = "Agosto";
 					    		break;
 					    	default:
 					    		scope.mesSliderPV = "Nada";
@@ -615,7 +667,16 @@ var app = angular.module('store');
 					    	default:
 					    		scope.mesSliderPasoProv = "Nada";
 					    		break;
-						}
+						}						
+
+						/*switch(scope.numeroSlider.mesPasoProvPost){
+					    	case 0:
+					    		scope.mesSliderPasoProv = "Agosto";
+					    		break;			    	
+					    	default:
+					    		scope.mesSliderPasoProv = "Nada";
+					    		break;
+						}*/
 
 					}
 					
@@ -640,6 +701,11 @@ var app = angular.module('store');
 						updateSlider(this);
 						$('#textoCandidatos').html(scope.mesSliderPV);
 						scope.updateGraph(promydesvs,scope.candidatos)
+					});							
+					sliderCandidatosPost.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoCandidatosPost').html(scope.mesSliderPVpost);
+						scope.updateGraph(promydesvsPost,scope.candidatosPost)
 					});					
 					sliderPasoCABA.attachEvent("onChange", function(){
 						updateSlider(this);
@@ -663,7 +729,12 @@ var app = angular.module('store');
 						updateSlider(this);
 						$('#textoPasoProv').html(scope.mesSliderPasoProv);
 						scope.updateGraph(promydesvPasoProv,scope.pasoProv)
-					});
+					});					
+					/*sliderPasoProvPost.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoPasoProvPost').html(scope.mesSliderPasoProvPost);
+						scope.updateGraph(promydesvPasoProvPost,scope.pasoProvPost)
+					});*/
 
 
 					/*--------------------------------------  DONUT CHART ------------------------------------------*/
@@ -715,7 +786,8 @@ var app = angular.module('store');
 							canvasH = 425;
 							comienzoVertGraf = 67;
 							mesCorresponde = scope.numeroSlider.mesFrentes;
-						}else */if(containerSVG === scope.candidatos){
+						}else */
+						if(containerSVG === scope.candidatos){
 							ajusteYtexto = 0.15;
 							ajusteYfoto = 0.075;
 							ajusteYrect = 0.25;
@@ -728,6 +800,19 @@ var app = angular.module('store');
 							canvasH = 425;
 							comienzoVertGraf = 68;
 							mesCorresponde = scope.numeroSlider.mesPV;
+						}else if(containerSVG === scope.candidatosPost){
+							ajusteYtexto = 0.15;
+							ajusteYfoto = 0.075;
+							ajusteYrect = 0.25;
+							ajusteYcirc = 54;
+							ajusteRcirc = 6;
+							ajusteXtexto = 48;
+							w = 1000;
+							h = 500;
+							canvasW = 720;
+							canvasH = 425;
+							comienzoVertGraf = 68;
+							mesCorresponde = scope.numeroSlider.mesPVpost;
 						}else if(containerSVG === scope.candPaso){
 							w = 1000;
 							h = 700;
@@ -806,6 +891,19 @@ var app = angular.module('store');
 							canvasH = 1000;
 							comienzoVertGraf = 63.5;
 							mesCorresponde = scope.numeroSlider.mesPasoProv;
+						}else if(containerSVG === scope.pasoProvPost){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesPasoProvPost;
 						}
 
 
@@ -847,6 +945,12 @@ var app = angular.module('store');
 							ajusteRcirc = 6;
 							comienzoVertGraf = 68;
 							data = scope.dataPV;
+						}else if(containerSVG === scope.candidatosPost){
+
+							ajusteYcirc = 54;
+							ajusteRcirc = 6;
+							comienzoVertGraf = 68;
+							data = scope.dataPVpost;
 						}else if(containerSVG === scope.candPaso){
 							ajusteYcirc = 47.6;
 							ajusteRcirc = 4;
@@ -889,6 +993,13 @@ var app = angular.module('store');
 							data = scope.dataPasoProv;
 							console.log("Data es: " + data);
 							caba = true; //VARIABLE PARA AGREGAR RESULTADOS EN ROJO
+						}else if(containerSVG === scope.pasoProvPost){
+							ajusteYcirc = 57;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 69;
+							data = scope.dataPasoProvPost;
+							console.log("Data es: " + data);
+							//caba = true; //VARIABLE PARA AGREGAR RESULTADOS EN ROJO
 						}
 
 						console.log(index);
@@ -1247,6 +1358,9 @@ var app = angular.module('store');
 					var candidatos = d3.selectAll("#svggrafico1");
 					createGraphFunction(scope.datosTotales,candidatos);					
 
+					var candidatosPost = d3.selectAll("#svggraficoPVpost");
+					createGraphFunction(scope.datosTotalesPost,candidatosPost);					
+
 					var pasoCABA = d3.selectAll("#svggraficoPasoCABA");
 					createGraphFunction(scope.datosPasoCABA,pasoCABA);										
 
@@ -1257,7 +1371,10 @@ var app = angular.module('store');
 					createGraphFunction(scope.datosBallotageCABA,ballotageCABA);
 
 					var pasoProv = d3.selectAll("#svggraficoPasoProv");
-					createGraphFunction(scope.datosPasoProv,pasoProv);	
+					createGraphFunction(scope.datosPasoProv,pasoProv);						
+
+					var pasoProvPost = d3.selectAll("#svggraficoPasoProvPost");
+					createGraphFunction(scope.datosPasoProvPost,pasoProvPost);	
 			        
 			        /*-----------------Creo titulo-------------------------------------------------------- ---------------*/
 			        var fotos = [0];

@@ -149,7 +149,7 @@
 
 						  	</div>
 					  		<div class="explicSlider">Usá el slider para cambiar el mes. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los resultados que dio cada una.</div>
-					  		<div class="explicMobile" style="display:none;">Elegí un mes y la tabla te mostrará las encuesats que se publicaron. Tocá un para ver los resultados que dio cada una sobre el gráfico.</div>
+					  		<div class="explicMobile" style="display:none;">Elegí un mes y la tabla te mostrará las encuestas que se publicaron. Tocá para ver los resultados que dio cada una sobre el gráfico.</div>
 					  	</div>
 
 				  		<div class="graficoyTablaCandPASO">
@@ -201,6 +201,7 @@
 
 			  		<div class="tituloPASO" ng-click="devtestChange();">Pre cierre de listas</div>
 			  		<div class="subtituloPASO">(antes del 20/06/2015)</div>
+
 				  	<div class="graphWrapper"> <!--............................ BLOQUE PRE CIERRE ..................................-->
 				  		<div class="wrapperSlider">
 				  			<div class="sliderYmes">
@@ -275,13 +276,81 @@
 						<ul>
 							<li>
 								El gráfico muestra el rango del porcentaje de votos que según las encuestas analizadas, cada candidato obtendrá en la primera vuelta de las Elecciones Presidenciales del domingo 25 de octubre del 2015.
-								El candidato de cada frente electoral fue elegido tomando a los ubicados primeros en cada frente.  Las bandas marcan el mínimo y el máximo del porcentaje de votos que podrían obtener, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
+								Las bandas marcan el mínimo y el máximo del porcentaje de votos que podrían obtener, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
 
 							</li>
 						</ul>
 					</div>
 				</div>
+				<!--...............................................................................................................-->
+				<!--...............................................................................................................-->
+				<!--................................................PRIMERA VUELTA - POST PASO .....................................-->
+				<!--...............................................................................................................-->
+				<!--...............................................................................................................-->
+				<div class="tituloPV">Encuestas post PASO</div>
+				<div class="subtituloPV">(después del 9/8/2015)</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderCandidatosPost" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoCandidatosPost" class="stag mesSlider">Julio</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
 
+
+			  		<div class="mobileHidden"><svg id="svggraficoPVpost" style="float:left"></svg></div>
+
+			  		<!-- ............... SVG MOBILE .........-->
+				  	<div class="mobileShow divSvgMobilePV" style="display:none"><svg id="svggraficoPVpost" viewBox="-15 0 610 410" preserveAspectRatio="xMidYMid" style="float:left"></svg></div>
+				  	<!-- ............... ........... .........-->
+
+				  	
+
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPVpost" ng-show="datos.mes === numeroSlider.mesPVpost" ng-mouseenter="createCirculosEncuestas(candidatosPost,$index)" ng-mouseleave="removeCirculosEncuestas(candidatosPost)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	
+				 <div class="stag" ng-show="fichaTec === true">Casos: {{dataPVpost[fichaTecIndex][dataPVpost[fichaTecIndex].length-1]}}</div> 	
+				</div>
+				<!--...............................................................................................................-->
+				<!--...............................................................................................................-->
+				<!--................................................... primera vuelta - PRE PASO ...........................................-->
+				<!--...............................................................................................................-->
+				<!--...............................................................................................................-->
+				<div class="tituloPV">Encuestas pre PASO</div>
+				<div class="subtituloPV">(antes del 9/8/2015)</div>
 				<div class="graphWrapper">
 				  	<div class="wrapperSlider">
 				  		<div class="sliderYmes">
@@ -552,6 +621,10 @@
 				</div>
 
 		  </div>
+		  <!--.............................................................................................................-->
+		  <!--.........................................................PROVINCIA...........................................-->
+		  <!--.............................................................................................................-->
+
 		  <div ng-show="tab.isSet(5)">
 		  		<div class="textWrapper" id="#provBA">
 			  		<div class="sectionTitle">
@@ -568,6 +641,65 @@
 				  		</ul>
 				  	</div>
 				</div>
+
+				<!--.........................................................PRIMERA VUELTA PROVINCIA...........................................-->
+
+				<!--div class="tituloPASO-Prov">Primera Vuelta</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderPasoProvPost" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		<!--/div>
+					  		<div id="textoPasoProvPost" class="stag mesSlider">Agosto</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+
+			  		<div class="mobileHidden"><svg id="svggraficoPasoProvPost" style="float:left"></svg></div>
+					<!-- .......................... MOBILE SVG ..........................*/ -->
+			  		<!--div class="mobileShow divSvgMobilePasoProv" style="display:none">
+			  			<svg id="svggraficoPasoProvPost" viewBox="-10 35 740 500" preserveAspectRatio="xMidYMid" style="float:left"></svg>
+			  		</div>
+			  		<!-- .......................... ............. ..........................*/ -->
+
+				  	<!--table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPasoProvPost" ng-show="datos.mes === numeroSlider.mesPasoProvPost" ng-mouseenter="createCirculosEncuestas(pasoProvPost,$index)" ng-mouseleave="removeCirculosEncuestas(pasoProvPost)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	<div class="stag" ng-show="fichaTec === true">Casos: {{dataPasoProvPost[fichaTecIndex][dataPasoProvPost[fichaTecIndex].length-1]}}</div>
+				  	
+
+				</div-->
+				<!--.........................................................PASO PROVINCIA...........................................-->
 				<div class="tituloPASO-Prov">PASO</div>
 				<div class="graphWrapper">
 				  	<div class="wrapperSlider">
@@ -699,7 +831,7 @@
 	<a href="http://www.lapoliticaonline.com/nota/resultadopaso/" target="_blank">
 	<div class="columna">
 		<div class="titCol">
-			La batalla por el menor error
+			Resultados con sabor a redención
 		</div>
 		<div class="restoCol">
 			<img src="images/jpd2.png" class="fotoAutor">

@@ -309,6 +309,22 @@
     	margin: 0 auto;
     	font-family: Stag-Medium, sans-serif;
     	color: #757575;	
+	}	
+
+	.tituloPV {
+	  width: 600px;
+	  font-size: 40px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}
+	.subtituloPV{
+    	width: 499px;
+    	font-size: 28px;
+    	margin: 0 auto;
+    	font-family: Stag-Medium, sans-serif;
+    	color: #757575;	
 	}
 	.tituloPASO-CABA {
 	  width: 205px;
@@ -328,7 +344,15 @@
 	  color: black;
 	}		
 
+	.tituloDifPre{
+	    width: 1000px;
+	    font-size: 40px;
+	    margin: 0 auto;
+	    font-family: Stag-Medium, sans-serif;
+	    color: black;
+	    margin-left: -300px;
 
+	}
 
 	.tituloPASO-Prov {
 	  width: 205px;
@@ -428,6 +452,18 @@
 			height:100%;
 			display:block;
 		}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -574,7 +610,9 @@
 	  padding-top: 25px;
 	  font-family: Stag-Medium, sans-serif;
 	  color: black;
-	}	
+	}
+
+
 	/*------------------------METODOLOGIA TEXTO--------------------------*/
 	.text_metod { 
 		font-family: Arial,"Times New Roman",Times,serif;

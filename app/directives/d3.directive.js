@@ -3,6 +3,10 @@ var app = angular.module('store');
 	app.directive('d3Directive',function(){ //Lineas y rectangulos
 		
 		function link(scope, element, attr){
+			var mobile = false;
+			if(screen.width<720){
+				mobile = true;
+			}
 
 			var createGraphFunction = function(datos,containerSVG){
 
@@ -13,7 +17,7 @@ var app = angular.module('store');
 				var canvasW; //size of canvas al crear "g"
 				var canvasH;
 
-				if(containerSVG === frentes){
+				/*if(containerSVG === frentes){
 					ajusteYtexto = 0.15;
 					ajusteYfoto = 0.09;
 					ajusteYrect = 0.22;
@@ -27,7 +31,7 @@ var app = angular.module('store');
 					ajusteHFotos = 45;
 					ajusteWFotos = 45;
 					tamTexto = 17;
-				}else if(containerSVG === candidatos){
+				}else*/ if(containerSVG === candidatos){
 					ajusteYtexto = 0.15;
 					ajusteYfoto = 0.089;
 					ajusteYrect = 0.25;
@@ -36,8 +40,13 @@ var app = angular.module('store');
 					ajusteXtexto = 48;
 					w = 1000;
 					h = 500;
-					canvasW = 730;
-					canvasH = 425;
+					if(mobile === true){
+						canvasW = 1000;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 425;
+					}
 					ajusteHFotos = 45;
 					ajusteWFotos = 45;
 					tamTexto = 17;
@@ -50,8 +59,32 @@ var app = angular.module('store');
 					ajusteYcirc = 0.50;
 					ajusteRcirc = 5;
 					ajusteXtexto = 42;
-					canvasW = 730;
-					canvasH = 600;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 600;
+					}
+					tamTexto = 15;
+					ajusteHFotos = 38;
+					ajusteWFotos = 38;
+				}else if(containerSVG === candPasopost){
+					w = 1000;
+					h = 700;
+					ajusteYtexto = 0.1;
+					ajusteYfoto = 0.063;
+					ajusteYrect = 0.16;
+					ajusteYcirc = 0.50;
+					ajusteRcirc = 5;
+					ajusteXtexto = 42;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 600;
+					}
 					tamTexto = 15;
 					ajusteHFotos = 38;
 					ajusteWFotos = 38;
@@ -64,8 +97,13 @@ var app = angular.module('store');
 					ajusteYcirc = 0.53;
 					ajusteRcirc = 5;
 					ajusteXtexto = 42;
-					canvasW = 730;
-					canvasH = 600;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 600;
+					}
 					tamTexto = 15;
 					ajusteHFotos = 32;
 					ajusteWFotos = 32;
@@ -78,11 +116,35 @@ var app = angular.module('store');
 					ajusteYcirc = 0.53;
 					ajusteRcirc = 5;
 					ajusteXtexto = 42;
-					canvasW = 730;
-					canvasH = 350;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 350;
+					}
 					tamTexto = 16;
 					ajusteHFotos = 32;
 					ajusteWFotos = 32;
+				}else if(containerSVG === ballotageCABA){
+					w = 1000;
+					h = 350;
+					ajusteYtexto = 0.45;
+					ajusteYfoto = 0.13;
+					ajusteYrect = 0.15;
+					ajusteYcirc = 0.50;
+					ajusteRcirc = 5;
+					ajusteXtexto = 27;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 320;
+					}
+					tamTexto = 16;
+					ajusteHFotos = 85;
+					ajusteWFotos = 85;
 				}else if(containerSVG === pasoProv){
 					w = 1000;
 					h = 600;
@@ -92,8 +154,13 @@ var app = angular.module('store');
 					ajusteYcirc = 0.53;
 					ajusteRcirc = 5;
 					ajusteXtexto = 42;
-					canvasW = 730;
-					canvasH = 500;
+					if(mobile === true){
+						canvasW = 930;
+						canvasH = 700;						
+					}else{
+						canvasW = 730;
+						canvasH = 500;
+					}
 					tamTexto = 14;
 					ajusteHFotos = 38;
 					ajusteWFotos = 38;
@@ -145,7 +212,14 @@ var app = angular.module('store');
 					.data(data)
 					.enter()
 				    .append("rect")
-				    .attr("height",30)
+				    .attr("height",function(){
+			            	if(containerSVG===ballotageCABA){
+			            		return 85;
+			            	}else{
+			            		return 30;
+			            	}
+			            }
+			        )
 				    .attr("width", function(d){
 				    	return transTopxAncho(4*d.desv,d.prom-2*d.desv); //Tiene un ancho de 4 DSTD, ajuste de funcion resto 390
 				    })			    									// Si el limite inferior es menor a 0 hay que restar lo q esta por debajo de 0 arriba
@@ -231,13 +305,21 @@ var app = angular.module('store');
 					    	return i*0.75*h/data.length+h*ajusteYtexto; //1er: Comienzo de cuadro; 2do: 75% de h dividido la cant de datos, por ; 3er: ajuste
 					    })
 					    .attr("class","stag-book")
-					    .attr("style","font-size:"+tamTexto+"px;")
+					    .attr("style",function(d,i){
+
+					    	if(d.cand === "Rodríguez Saa"){
+					    		return "font-size:"+12+"px;"
+					    	}else{
+					    		return "font-size:"+tamTexto+"px;"
+					    	}
+
+						})
 					    .text(function(d){
 					    	return d.cand;
 					    });
 
 					/*----------------------------------------FOTOS DE CANDIDATOS --------------------------------*/
-				
+
 					container.append("g") 
 		            .selectAll("image").data(data)
 						.enter()
@@ -245,7 +327,13 @@ var app = angular.module('store');
 			            .attr("xlink:href", function(d,i){
 			            	return ""+d.fotos+"";
 			            })
-			            .attr("x", 0)
+			            .attr("x", function(d,i){
+			            	if(containerSVG===ballotageCABA){
+			            		return "18px";
+			            	}else{
+			            		return 0;
+			            	}
+			            })
 			            .attr("y", function(d,i){
 			            	return i*0.75*h/data.length+h*ajusteYfoto;
 			            })
@@ -255,37 +343,7 @@ var app = angular.module('store');
 			            .attr("id",function(d,i){
 			            	return d.cand;
 			            })
-			            .on("click",function(d,i){
-			            	var partido = d.cand;
-			            	var tempObjPart = d3.select(this);
-			            	if(containerSVG === frentes){
-			            	
-								if(internaPartido === false){ //Caso Inicial
 
-									showInternas(partido,tempObjPart);
-									scope.dataDonutVE = loadDataForDonut(partido);
-				            		console.log("1: " +scope.dataDonutVE[0]);
-				            		console.log("1: " +scope.dataDonutVE[1]);
-				            		console.log("1: " +scope.dataDonutVE[2]);
-				            		console.log(typeof scope.dataDonutVE);
-				            		createDonutChart(partido,tempObjPart);
-
-								}else if(internaPartido === partido){ //al volver a hacer click en el escudo del q ta seleccionado, internaPartido es FALSE 
-									
-									//hideInternas(partido,tempObjPart);
-									//internaPartido = false;	
-									//$('#donut-chart').html('');
-
-									//FUNCIONES MUDADAS AL HACER CLICK EN LA CRUZ divCruz.on("click")
-
-			            		}else if(internaPartido !== partido){ //
-			            			internaPartido = partido; //pongo el partido que corresponde y cargo las funciones
-									scope.dataDonutVE = loadDataForDonut(partido);
-				            		console.log("Vino la data? VE-----> " + scope.dataDonutVE);
-				            		createDonutChart(partido,tempObjPart);
-			            		}
-			            	}
-			            })
 					
 			        /*----------------------------------------LINEAS VERTICALES --------------------------------*/
 			 		container.append("g") 
@@ -318,7 +376,7 @@ var app = angular.module('store');
 
 
 					/*--------------------------------------PANEL INTERNAS ----------------------------------------*/
-					if(container===frentes){
+					/*if(container===frentes){
 						var groupInternaPanel = container.append("g").style("opacity", 1e-6).attr("id","groupInternaPanel");
 						var internaPanel = groupInternaPanel.append("rect")
 							.attr("class", "tooltip2");
@@ -356,30 +414,36 @@ var app = angular.module('store');
 							internaPartido = false;
 							$('#donut-chart').html('');	
 						});
-					}
+					}*/
 
 					/*--------------------------------------  CREO SLIDERS ------------------------------------------*/
 
 					var sliderCandPASO = new dhtmlXSlider({parent: "sliderCandPASO", size: 700, min:-8, max:0,step:1});
-					/*discontinued*/var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-8, max:0,step:1});
-					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-8, max:0,step:1});
+					var sliderCandPASOpost = new dhtmlXSlider({parent: "sliderCandPASOpost", size: 700, min:-2, max:0,step:1});
+					/*discontinued*///var sliderFrentes = new dhtmlXSlider({parent: "sliderFrentes", size: 700, min:-8, max:0,step:1});
+					var sliderCandidatos = new dhtmlXSlider({parent: "sliderCandidatos", size: 700, min:-9, max:0,step:1});
 					var sliderPasoCABA = new dhtmlXSlider({parent: "sliderPasoCABA", size: 700, min:-1, max:0,step:1});
-					var sliderGralCABA = new dhtmlXSlider({parent: "sliderGralCABA", size: 700, min:-1, max:0,step:1});
-					var sliderPasoProv = new dhtmlXSlider({parent: "sliderPasoProv", size: 700, min:-1, max:0,step:1});
+					var sliderGralCABA = new dhtmlXSlider({parent: "sliderGralCABA", size: 700, min:-2, max:0,step:1});
+					var sliderBallotageCABA = new dhtmlXSlider({parent: "sliderBallotageCABA", size: 700, min:0, max:0,step:1});
+					var sliderPasoProv = new dhtmlXSlider({parent: "sliderPasoProv", size: 700, min:-3, max:0,step:1});
 
 					var updateSlider = function(slider){
 
 						scope.$apply(function(){
 							if(slider === sliderCandPASO){
 								scope.numeroSlider.mesPASO = -slider.getValue();
+							}if(slider === sliderCandPASOpost){
+								scope.numeroSlider.mesPASOpost = -slider.getValue();
 							}else if(slider === sliderCandidatos) {
 								scope.numeroSlider.mesPV = -slider.getValue();								
-							}else if(slider === sliderFrentes) {
+							}else /*if(slider === sliderFrentes) {
 								scope.numeroSlider.mesFrentes = -slider.getValue();								
-							}else if(slider === sliderPasoCABA) {
+							}else */if(slider === sliderPasoCABA) {
 								scope.numeroSlider.mesPasoCABA = -slider.getValue();								
 							}else if(slider === sliderGralCABA) {
 								scope.numeroSlider.mesGralCABA = -slider.getValue();								
+							}else if(slider === sliderBallotageCABA) {
+								scope.numeroSlider.mesBallotageCABA = -slider.getValue();								
 							}else if(slider === sliderPasoProv) {
 								scope.numeroSlider.mesPasoProv = -slider.getValue();								
 							}
@@ -419,32 +483,50 @@ var app = angular.module('store');
 					    		break;
 						}						
 
+						switch(scope.numeroSlider.mesPASOpost){
+					    	case 0:
+					    		scope.mesSliderPASOpost = "Agosto";
+					    		break;					    	
+					    	case 1:
+					    		scope.mesSliderPASOpost = "Julio";
+					    		break;					    	
+					    	case 2:
+					    		scope.mesSliderPASOpost = "Junio";
+					    		break;
+					    	default:
+					    		scope.mesSliderPASOpost = "Nada";
+					    		break;
+						}						
+
 						switch(scope.numeroSlider.mesPV){
 					    	case 0:
-					    		scope.mesSliderPV = "Junio";
+					    		scope.mesSliderPV = "Julio";
 					    		break;
 					    	case 1:
-					    		scope.mesSliderPV = "Mayo";
+					    		scope.mesSliderPV = "Junio";
 					    		break;
 					    	case 2:
-					    		scope.mesSliderPV = "Abril";
+					    		scope.mesSliderPV = "Mayo";
 					    		break;
 					    	case 3:
-					    		scope.mesSliderPV = "Marzo";
+					    		scope.mesSliderPV = "Abril";
 					    		break;
 					    	case 4:
-					    		scope.mesSliderPV = "Febrero";
+					    		scope.mesSliderPV = "Marzo";
 					    		break;
 					    	case 5:
-					    		scope.mesSliderPV = "Enero";
+					    		scope.mesSliderPV = "Febrero";
 					    		break;					    	
 					    	case 6:
-					    		scope.mesSliderPV = "Diciembre";
+					    		scope.mesSliderPV = "Enero";
 					    		break;					    	
 					    	case 7:
-					    		scope.mesSliderPV = "Noviembre";
+					    		scope.mesSliderPV = "Diciembre";
 					    		break;					    	
 					    	case 8:
+					    		scope.mesSliderPV = "Noviembre";
+					    		break;					    	
+					    	case 9:
 					    		scope.mesSliderPV = "Octubre";
 					    		break;
 					    	default:
@@ -493,23 +575,41 @@ var app = angular.module('store');
 
 						switch(scope.numeroSlider.mesGralCABA){
 					    	case 0:
-					    		scope.mesSliderGralCABA = "Junio";
+					    		scope.mesSliderGralCABA = "Julio";
 					    		break;						    	
 					    	case 1:
+					    		scope.mesSliderGralCABA = "Junio";
+					    		break;						    	
+					    	case 2:
 					    		scope.mesSliderGralCABA = "Mayo";
 					    		break;							    	
-					    	case 2:
+					    	case 3:
 					    		scope.mesSliderGralCABA = "Abril";
 					    		break;					    	
+					    	default:
+					    		scope.mesSliderGralCABA = "Nada";
+					    		break;
+						}						
+
+						switch(scope.numeroSlider.mesBallotageCABA){
+					    	case 0:
+					    		scope.mesSliderGralCABA = "Julio";
+					    		break;						    					    	
 					    	default:
 					    		scope.mesSliderGralCABA = "Nada";
 					    		break;
 						}
 						switch(scope.numeroSlider.mesPasoProv){
 					    	case 0:
-					    		scope.mesSliderPasoProv = "Junio";
+					    		scope.mesSliderPasoProv = "Agosto";
 					    		break;
 					    	case 1:
+					    		scope.mesSliderPasoProv = "Julio";
+					    		break;
+					    	case 2:
+					    		scope.mesSliderPasoProv = "Junio";
+					    		break;						    	
+					    	case 3:
 					    		scope.mesSliderPasoProv = "Mayo";
 					    		break;					    	
 					    	default:
@@ -524,12 +624,18 @@ var app = angular.module('store');
 						$('#textoCandPASO').html(scope.mesSliderPASO);
 						scope.updateGraph(pydCandPaso,scope.candPaso)
 						
+					});						
+					sliderCandPASOpost.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoCandPASOpost').html(scope.mesSliderPASOpost);
+						scope.updateGraph(pydCandPasopost,scope.candPasopost)
+						
 					});					
-					sliderFrentes.attachEvent("onChange", function(){
+					/*sliderFrentes.attachEvent("onChange", function(){
 						updateSlider(this);
 						$('#textoFrentes').html(scope.mesSliderFrentes);
 						scope.updateGraph(pydFrentes,scope.frentes)
-					});					
+					});			*/		
 					sliderCandidatos.attachEvent("onChange", function(){
 						updateSlider(this);
 						$('#textoCandidatos').html(scope.mesSliderPV);
@@ -545,6 +651,12 @@ var app = angular.module('store');
 						updateSlider(this);
 						$('#textoGralCABA').html(scope.mesSliderGralCABA);
 						scope.updateGraph(promydesvGralCABA,scope.gralCABA)
+					});						
+
+					sliderBallotageCABA.attachEvent("onChange", function(){
+						updateSlider(this);
+						$('#textoBallotageCABA').html(scope.mesSliderBallotageCABA);
+						scope.updateGraph(promydesvBallotageCABA,scope.ballotageCABA)
 					});					
 
 					sliderPasoProv.attachEvent("onChange", function(){
@@ -590,7 +702,7 @@ var app = angular.module('store');
 						var numMes;
 						console.log(scope.mesSlider);
 
-						if(containerSVG === scope.frentes){
+						/*if(containerSVG === scope.frentes){
 							ajusteYtexto = 0.14;
 							ajusteYfoto = 0.065;
 							ajusteYrect = 0.22;
@@ -603,7 +715,7 @@ var app = angular.module('store');
 							canvasH = 425;
 							comienzoVertGraf = 67;
 							mesCorresponde = scope.numeroSlider.mesFrentes;
-						}else if(containerSVG === scope.candidatos){
+						}else */if(containerSVG === scope.candidatos){
 							ajusteYtexto = 0.15;
 							ajusteYfoto = 0.075;
 							ajusteYrect = 0.25;
@@ -629,6 +741,19 @@ var app = angular.module('store');
 							canvasH = 1000;
 							comienzoVertGraf = 63.5;
 							mesCorresponde = scope.numeroSlider.mesPASO;
+						}else if(containerSVG === scope.candPasopost){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 1000;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesPASOpost;
 						}else if(containerSVG === scope.pasoCABA){
 							w = 1000;
 							h = 700;
@@ -655,6 +780,19 @@ var app = angular.module('store');
 							canvasH = 1000;
 							comienzoVertGraf = 63.5;
 							mesCorresponde = scope.numeroSlider.mesGralCABA;
+						}else if(containerSVG === scope.ballotageCABA){
+							w = 1000;
+							h = 700;
+							ajusteYtexto = 0.1;
+							ajusteYfoto = 0.065;
+							ajusteYrect = 0.15;
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 5;
+							ajusteXtexto = 12;
+							canvasW = 720;
+							canvasH = 250;
+							comienzoVertGraf = 63.5;
+							mesCorresponde = scope.numeroSlider.mesBallotageCABA;
 						}else if(containerSVG === scope.pasoProv){
 							w = 1000;
 							h = 700;
@@ -715,6 +853,14 @@ var app = angular.module('store');
 							comienzoVertGraf = 63.5;
 							data = scope.dataPASO;
 							console.log("Data es: " + data);
+
+						}else if(containerSVG === scope.candPasopost){
+							ajusteYcirc = 47.6;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 63.5;
+							data = scope.dataPASOpost;
+							console.log("Data es: " + data);
+							caba = true;
 						}else if(containerSVG === scope.pasoCABA){
 							ajusteYcirc = 37.5;
 							ajusteRcirc = 4;
@@ -728,14 +874,21 @@ var app = angular.module('store');
 							comienzoVertGraf = 62.5;
 							data = scope.dataGralCABA;
 							console.log("Data es: " + data);
-							//caba = true; VARIABLE PARA AGREGAR RESULTADOS EN ROJO
+							caba = true; //VARIABLE PARA AGREGAR RESULTADOS EN ROJO
+						}else if(containerSVG === scope.ballotageCABA){
+							ajusteYcirc = 132;
+							ajusteRcirc = 4;
+							comienzoVertGraf = 103.5;
+							data = scope.dataBallotageCABA;
+							console.log("Data es: " + data);
+							caba = true; //VARIABLE PARA AGREGAR RESULTADOS EN ROJO
 						}else if(containerSVG === scope.pasoProv){
 							ajusteYcirc = 57;
 							ajusteRcirc = 4;
 							comienzoVertGraf = 69;
 							data = scope.dataPasoProv;
 							console.log("Data es: " + data);
-							//caba = true; VARIABLE PARA AGREGAR RESULTADOS EN ROJO
+							caba = true; //VARIABLE PARA AGREGAR RESULTADOS EN ROJO
 						}
 
 						console.log(index);
@@ -797,6 +950,8 @@ var app = angular.module('store');
 								scope.emptyEncuestas = false;
 							}
 
+							scope.fichaTec = true;
+							scope.fichaTecIndex = index;
 
 					}
 
@@ -811,6 +966,7 @@ var app = angular.module('store');
 						container.selectAll(".circProm").remove();
 
 						scope.emptyEncuestas = false;
+						scope.fichaTec = false;
 					}
 
 
@@ -849,6 +1005,9 @@ var app = angular.module('store');
  							if(cand_i === 'NS/NC'){
  								var posXNSNC = parseFloat(posX);
  								return posXNSNC-120;
+ 							}else if(cand_i === 'Larreta'){
+ 								var posXNSNC = parseFloat(posX);
+ 								return posXNSNC-200;
  							}else{
  								return posX-10;
  							}
@@ -858,6 +1017,9 @@ var app = angular.module('store');
  							if(cand_i === 'NS/NC'){
  								var posYNSNC = parseFloat(posY);
  								return posYNSNC-130;
+ 							}else if(cand_i === 'Larreta'){
+ 								var posYNSNC = parseFloat(posY);
+ 								return posYNSNC+50;
  							}else{
  								return posY;
  							}
@@ -884,6 +1046,8 @@ var app = angular.module('store');
 					    		return "Otros candidatos obtendrán entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtienen un promedio de "+promTooltip+"% de los votos.";
 					    	}else if (cand_i === 'NS/NC'){
 					    		return "Los indecisos oscilan entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y tienen un promedio de "+promTooltip+"%.";
+					    	}else if (containerSVG===ballotageCABA){
+					    		return cand_i+" obtendrá entre "+2*lowerLimTooltip.toFixed(2)+"% y "+2*upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtiene un promedio de "+2*promTooltip+"% de los votos.";
 					    	}else{
 					    		return cand_i+" obtendrá entre "+lowerLimTooltip.toFixed(2)+"% y "+upperLimTooltip.toFixed(2)+"% de los votos con un 95% de probabilidad y obtiene un promedio de "+promTooltip+"% de los votos.";
 					    	}
@@ -894,6 +1058,11 @@ var app = angular.module('store');
  								posXNSNC = parseFloat(posX);
  								posNSNCVar = true;
  								return posXNSNC;
+ 								
+ 							}else if(cand_i === 'Larreta'){
+ 								posXNSNC = parseFloat(posX)-200;
+ 								posNSNCVar = true;
+ 								return posXNSNC-200;
  								
  							}else{
  								/*var posNSNCVar = false;
@@ -911,6 +1080,9 @@ var app = angular.module('store');
  							if(cand_i === 'NS/NC'){
  								var posYNSNC = parseFloat(posY);
  								return posYNSNC-110;
+ 							}else if(cand_i === 'Larreta'){
+ 								var posYNSNC = parseFloat(posY);
+ 								return posYNSNC+70;
  							}else{
  								return posY+20;
  							} 							
@@ -929,6 +1101,8 @@ var app = angular.module('store');
 					function wrap(text, width, posX, posXNSNC2, cand_i) {  //Al llamarla, el primer argumento (la selección) esta implicto, cuentan a partir de ahi
 					  if(cand_i === 'NS/NC'){
 					  	posicionX = posXNSNC2-110;
+					  }else if(cand_i === 'Larreta'){
+					  	posicionX = posXNSNC2+10;
 					  }else{
 					  	posicionX = posX;
 					  }
@@ -1014,6 +1188,13 @@ var app = angular.module('store');
 							     .range([0, 0.58*w]); //58% del ancho total, orginialmente era 580px de 1000px
 							     //.attr("class","stag");
 
+						if(containerSVG === ballotageCABA){
+							axisScale = d3.scale.linear()
+						         .domain([0, 100])
+							     .range([0, 0.58*w]); //58% del ancho total, orginialmente era 580px de 1000px
+							     //.attr("class","stag");
+						}
+
 						//Create the Axis
 						var xAxis = d3.svg.axis()
 		                   		.scale(axisScale)
@@ -1021,7 +1202,7 @@ var app = angular.module('store');
 
 
 						//Create an SVG group Element for the Axis elements and call the xAxis function
-						if(container===frentes)
+
 						var xAxisGroup = svgContainer.append("g")
 									.attr("transform", "translate(120,15)")
 									.attr("class", "stag-light")
@@ -1034,20 +1215,6 @@ var app = angular.module('store');
 									    .attr("class", "stag")
 									    .style("font-size", "12px");
 									    //.text("Hacé click en los logos para ver las internas");
-						else{
-						var xAxisGroup = svgContainer.append("g")
-									.attr("transform", "translate(120,15)")
-									.attr("class", "stag-light")
-		                            .call(xAxis)
-		                            .append("text")
-									    .attr("transform", "translate(-10,-5)")
-										.attr("y", 6)
-									    .attr("dy", ".71em")
-									    .style("text-anchor", "end")
-									    .attr("class", "stag");
-									    //.text("Hacé click en los logos para ver las internas")
-									    //.call(wrap,145,150,150);							
-						}
 
 
 
@@ -1068,22 +1235,28 @@ var app = angular.module('store');
 					}
 
 					/*-----------------Corro las dos funciones con los datos y containers que corresponden ---------------*/
-					var frentes = d3.select("#svggrafico2");
-					createGraphFunction(scope.datosTotalesFrentes,frentes);					
+					//var frentes = d3.selectAll("#svggrafico2");
+					//createGraphFunction(scope.datosTotalesFrentes,frentes);					
 
-					var candPaso = d3.select("#svggraficoCandPASO");
-					createGraphFunction(scope.datosCandPaso,candPaso);
+					var candPaso = d3.selectAll("#svggraficoCandPASO");
+					createGraphFunction(scope.datosCandPaso,candPaso);					
 
-					var candidatos = d3.select("#svggrafico1");
+					var candPasopost = d3.selectAll("#svggraficoCandPASOpost");
+					createGraphFunction(scope.datosCandPasopost,candPasopost);
+
+					var candidatos = d3.selectAll("#svggrafico1");
 					createGraphFunction(scope.datosTotales,candidatos);					
 
-					var pasoCABA = d3.select("#svggraficoPasoCABA");
+					var pasoCABA = d3.selectAll("#svggraficoPasoCABA");
 					createGraphFunction(scope.datosPasoCABA,pasoCABA);										
 
-					var gralCABA = d3.select("#svggraficoGralCABA");
-					createGraphFunction(scope.datosGralCABA,gralCABA);
+					var gralCABA = d3.selectAll("#svggraficoGralCABA");
+					createGraphFunction(scope.datosGralCABA,gralCABA);					
 
-					var pasoProv = d3.select("#svggraficoPasoProv");
+					var ballotageCABA = d3.selectAll("#svggraficoBallotageCABA");
+					createGraphFunction(scope.datosBallotageCABA,ballotageCABA);
+
+					var pasoProv = d3.selectAll("#svggraficoPasoProv");
 					createGraphFunction(scope.datosPasoProv,pasoProv);	
 			        
 			        /*-----------------Creo titulo-------------------------------------------------------- ---------------*/

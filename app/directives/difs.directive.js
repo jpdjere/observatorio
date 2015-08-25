@@ -162,7 +162,7 @@ app.directive('difsDirective',['$sce',function($sce){ //Para meter HTML$
 					    .attr("class", "line")
 					    .attr("d", line(dataTemp))
 
-					var totalLength = path.node().getTotalLength()-30;
+					var totalLength = path.node().getTotalLength()-10;
 					console.log("Path Length----->" +path.node().getTotalLength());
 
 					path.attr("stroke-dasharray", totalLength + " " + totalLength)

@@ -106,6 +106,9 @@
 				    </li>			    
 				    <li ng-class="{ active:tab.isSet(8) }">
 				      <a href ng-click="tab.setTab(8)">Metodología</a>
+				    </li>				    
+				    <li ng-class="{ active:tab.isSet(9) }" ng-show="devTest === true">
+				      <a href ng-click="tab.setTab(9)">Dev Test</a>
 				    </li>
 				  </ul>
 
@@ -131,7 +134,74 @@
 				  		</div>
 				  	</div>
 
-				  	<div class="graphWrapper">
+					<div class="tituloPASO">Post cierre de listas</div>
+					<div class="subtituloPASO">(después del 20/06/2015)</div>
+
+				  	<div class="graphWrapper"> <!--............................ BLOQUE POST CIERRE ..................................-->
+				  		<div class="wrapperSlider">
+				  			<div class="sliderYmes">
+					  			<div id="sliderCandPASOpost" style="float:left">
+					  				<!--aca se va a crear el slider -->
+						  			
+						  		</div>
+						  		<div id="textoCandPASOpost" class="stag mesSlider">Agosto</div>
+
+
+						  	</div>
+					  		<div class="explicSlider">Usá el slider para cambiar el mes. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los resultados que dio cada una.</div>
+					  		<div class="explicMobile" style="display:none;">Elegí un mes y la tabla te mostrará las encuesats que se publicaron. Tocá un para ver los resultados que dio cada una sobre el gráfico.</div>
+					  	</div>
+
+				  		<div class="graficoyTablaCandPASO">
+
+				  			<div class="mobileHidden"><svg id="svggraficoCandPASOpost" style="float:left"></svg></div>
+
+				  			<!-- ............... SVG MOBILE .........-->
+				  			<div class="mobileShow divSvgMobileCandPasopost" style="display:none"><svg id="svggraficoCandPASOpost" viewBox="-15 0 750 570" preserveAspectRatio="xMidYMid" style="float:left"></svg></div>
+				  			<!-- ............... ........... .........-->
+
+
+				  			<table class="table-condensed ultEncuestas">
+								<tr class="stag-book borderBottomThick">
+									<th class="textoCenter">FECHA</th>
+									<th class="textoCenter">ENCUESTADORA</th>
+									<th class="textoCenter">PESO</th>
+								</tr>
+								<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasPASOpost" ng-show="datos.mes === numeroSlider.mesPASOpost" ng-mouseenter="createCirculosEncuestas(candPasopost,$index)" ng-mouseleave="removeCirculosEncuestas(candPasopost)">
+										<td class="textoCenter">{{datos.fecha}}</td>
+										<td class="textoCenter">{{datos.enc}}</td>
+										<td class="textoCenter">
+												<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+													<img src="images/bat0.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+													<img src="images/bat1.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+													<img src="images/bat2.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+													<img src="images/bat3.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+													<img src="images/bat4.png" height="20" width="20" />
+												</span>	
+												<span ng-if="datos.peso >= 0.30">
+													<img src="images/bat5.png" height="20" width="20" />
+												</span>	
+										</td>
+								</tr>
+				  			</table>
+				  			<div class="stag" ng-show="emptyEncuestas === true">Esta encuesta midió sólo frentes electorales.</div>
+				  			<div class="stag" ng-show="fichaTec === true">Casos: {{dataPASOpost[fichaTecIndex][dataPASOpost[fichaTecIndex].length-1]}}</div>
+				  		</div>
+
+
+			  		</div> <!--............................ FIN BLOQUE POST CIERRE ..................................-->
+
+			  		<div class="tituloPASO" ng-click="devtestChange();">Pre cierre de listas</div>
+			  		<div class="subtituloPASO">(antes del 20/06/2015)</div>
+				  	<div class="graphWrapper"> <!--............................ BLOQUE PRE CIERRE ..................................-->
 				  		<div class="wrapperSlider">
 				  			<div class="sliderYmes">
 					  			<div id="sliderCandPASO" style="float:left">
@@ -145,21 +215,7 @@
 					  		<div class="explicSlider">Usá el slider para cambiar el mes. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los resultados que dio cada una.</div>
 					  		<div class="explicMobile" style="display:none;">Elegí un mes y la tabla te mostrará las encuesats que se publicaron. Tocá un para ver los resultados que dio cada una sobre el gráfico.</div>
 					  	</div>
-					  	<!--................DROPDOWN MESES.............-->
-						  	<!--div class="monthDropdown stag" style="display:none">
-						  		<select ng-model="numeroSlider.mesPASO" ng-change="updateGraph(datosCandPaso,candPaso)">
-						  			<option value="0">Junio</option>
-						  			<option value="1">Mayo</option>
-						  			<option value="2">Abril</option>
-						  			<option value="3">Marzo</option>
-						  			<option value="4">Febrero</option>
-						  			<option value="5">Enero</option>
-						  			<option value="6">Diciembre</option>
-						  			<option value="7">Noviembre</option>
-						  			<option value="8">Octubre</option>
-						  		</select>
-						  	</div>
-						<!--...........................................-->
+
 				  		<div class="graficoyTablaCandPASO">
 
 				  			<div class="mobileHidden"><svg id="svggraficoCandPASO" style="float:left"></svg></div>
@@ -201,14 +257,11 @@
 								</tr>
 				  			</table>
 				  			<div class="stag" ng-show="emptyEncuestas === true">Esta encuesta midió sólo frentes electorales.</div>
-				  		</div>
-				  		<div style="display:none">
-				  			<div id="sliderFrentes"></div>
-					  		<div id="textoFrentes" class="stag mesSliderFrentes">Junio</div>
-					  		<svg id="svggrafico2"></svg>
+				  			<div class="stag" ng-show="fichaTec === true">Casos: {{dataPASO[fichaTecIndex][dataPASO[fichaTecIndex].length-1]}}</div>
 				  		</div>
 
-			  		</div>
+
+			  		</div><!--............................ FIN BLOQUE PRE CIERRE ..................................-->
 			  	
 		  </div>
 
@@ -236,7 +289,7 @@
 								<!--aca se va a crear el slider -->
 					  			
 					  		</div>
-					  		<div id="textoCandidatos" class="stag mesSlider">Junio</div>
+					  		<div id="textoCandidatos" class="stag mesSlider">Julio</div>
 					  	</div>
 						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
 					</div>
@@ -282,7 +335,7 @@
 						</tr>
 				  	</table>
 				  	
-
+				 <div class="stag" ng-show="fichaTec === true">Casos: {{dataPV[fichaTecIndex][dataPV[fichaTecIndex].length-1]}}</div> 	
 				</div>
 		  </div>
 
@@ -313,7 +366,7 @@
 				  	<div class="exp_overBarGraph">
 				  		<ul>
 				  			<li>
-									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos  en las PASO (Primarias Abiertas, Simultáneas y Obligatorias) de la Ciudad de Buenos Aires, del 26 de abril de 2015. 
+									El gráfico muestra el rango del porcentaje de votos que, según las encuestas analizadas obtendrán los candidatos en el ballotage, la Primera Vuelta y las PASO en la Ciudad de Buenos Aires.
 
 									Las bandas marcan el mínimo y el máximo del porcentaje de votos, con un 95% de probabilidad. El círculo marca el promedio que arrojan las encuestas.
 
@@ -321,6 +374,67 @@
 				  		</ul>
 				  	</div>
 				</div>
+
+
+
+				<div class="tituloEG-CABA">Ballotage</div>
+				<div class="graphWrapper">
+				  	<div class="wrapperSlider">
+				  		<div class="sliderYmes">
+							<div id="sliderBallotageCABA" style="float:left">
+								<!--aca se va a crear el slider -->
+					  			
+					  		</div>
+					  		<div id="textoBallotageCABA" class="stag mesSlider">Julio</div>
+					  	</div>
+						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
+					</div>
+			  		<div class="mobileHidden"><svg id="svggraficoBallotageCABA" style="float:left"></svg></div>
+
+					<!-- .......................... MOBILE SVG ..........................*/ -->
+			  		<div class="mobileShow divSvgMobileBallotageCABA" style="display:none">
+
+			  			<svg id="svggraficoBallotageCABA" viewBox="-10 100 725 150" preserveAspectRatio="xMidYMid" style="float:left"></svg>
+
+			  		</div>
+			  		<!-- .......................... ............. ..........................*/ -->
+
+				  	<table class="table-condensed ultEncuestas">
+						<tr class="stag-book borderBottomThick">
+							<th class="textoCenter">FECHA</th>
+							<th class="textoCenter">ENCUESTADORA</th>
+							<th class="textoCenter">PESO</th>
+						</tr>
+						<tr class="stag-book borderBottomFino negrita" ng-repeat="datos in store.encuestasBallotageCABA" ng-show="datos.mes === numeroSlider.mesBallotageCABA" ng-mouseenter="createCirculosEncuestas(ballotageCABA,$index)" ng-mouseleave="removeCirculosEncuestas(ballotageCABA)">
+								<td class="textoCenter">{{datos.fecha}}</td>
+								<td class="textoCenter">{{datos.enc}}</td>
+								<td class="textoCenter">
+										<span ng-if="datos.peso >= 0 && datos.peso < 0.05">
+											<img src="images/bat0.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.05 && datos.peso < 0.1">
+											<img src="images/bat1.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.1 && datos.peso < 0.15">
+											<img src="images/bat2.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.15 && datos.peso < 0.20">
+											<img src="images/bat3.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.20 && datos.peso < 0.30">
+											<img src="images/bat4.png" height="20" width="20" />
+										</span>	
+										<span ng-if="datos.peso >= 0.30">
+											<img src="images/bat5.png" height="20" width="20" />
+										</span>	
+								</td>
+						</tr>
+				  	</table>
+				  	<div class="stag" ng-show="fichaTec === true">Casos: {{dataBallotageCABA[fichaTecIndex][dataBallotageCABA[fichaTecIndex].length-1]}}</div>
+				  	
+
+				</div>				
+
 				<div class="tituloEG-CABA">Elecciones Generales</div>
 				<div class="graphWrapper">
 				  	<div class="wrapperSlider">
@@ -329,7 +443,7 @@
 								<!--aca se va a crear el slider -->
 					  			
 					  		</div>
-					  		<div id="textoGralCABA" class="stag mesSlider">Junio</div>
+					  		<div id="textoGralCABA" class="stag mesSlider">Julio</div>
 					  	</div>
 						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
 					</div>
@@ -374,6 +488,7 @@
 								</td>
 						</tr>
 				  	</table>
+				  	<div class="stag" ng-show="fichaTec === true">Casos: {{dataGralCABA[fichaTecIndex][dataGralCABA[fichaTecIndex].length-1]}}</div>
 				  	
 
 				</div>
@@ -433,7 +548,7 @@
 						</tr>
 				  	</table>
 				  	
-
+				  	<div class="stag" ng-show="fichaTec === true">Casos: {{dataPasoCABA[fichaTecIndex][dataPasoCABA[fichaTecIndex].length-1]}}</div>
 				</div>
 
 		  </div>
@@ -461,7 +576,7 @@
 								<!--aca se va a crear el slider -->
 					  			
 					  		</div>
-					  		<div id="textoPasoProv" class="stag mesSlider">Junio</div>
+					  		<div id="textoPasoProv" class="stag mesSlider">Agosto</div>
 					  	</div>
 						<div class="explicSlider">Deslizá el slider para ver la evolución. Las tabla muestra las encuestas que se agregaron cada mes. Posá el mouse sobre ellas para ver los números de cada una.</div>
 					</div>
@@ -504,6 +619,7 @@
 								</td>
 						</tr>
 				  	</table>
+				  	<div class="stag" ng-show="fichaTec === true">Casos: {{dataPasoProv[fichaTecIndex][dataPasoProv[fichaTecIndex].length-1]}}</div>
 				  	
 
 				</div>
@@ -551,6 +667,11 @@
 			  	</div>
 		  	<metodologia-directive style=""></metodologia-directive>
 		  </div>
+
+		  <div ng-show="tab.isSet(9)">
+
+
+		  </div>
 		
 		</div>
 	</div> 
@@ -575,10 +696,10 @@
 	</div>
 	</a>
 
-	<a href="http://www.lapoliticaonline.com/nota/88659/" target="_blank">
+	<a href="http://www.lapoliticaonline.com/nota/resultadopaso/" target="_blank">
 	<div class="columna">
 		<div class="titCol">
-			La Provincia, una competencia de arriba hacia abajo
+			La batalla por el menor error
 		</div>
 		<div class="restoCol">
 			<img src="images/jpd2.png" class="fotoAutor">
@@ -586,7 +707,7 @@
 				Por Juan Pablo Djeredjian <a href="https://twitter.com/jpdjere"> (@JpDjere) </a>
 			</div>
 			<div class="bajadaCol">
-				Con nombres poco competitivos y una elección pegada a la nacional, la victoria del próximo gobernador dependenderá de una buena performance de su candidato a Presidente.
+				Las previsiones por la presidencia dejaron bien parados a los encuestadores y compensaron un escenario complicado en la Provincia.
 			</div>
 		</div>
 	</div>

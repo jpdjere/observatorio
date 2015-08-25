@@ -3,9 +3,11 @@ var app = angular.module('store');
 	app.controller('StoreController', ["$scope",function($scope,$window){
 		this.ratings = ratings;
 		this.encuestasPASO = encuestasPASO;
+		this.encuestasPASOpost = encuestasPASOpost;
 		this.encuestasPV = encuestasPV;
 		this.encuestasPasoCABA = encuestasPasoCABA;
 		this.encuestasGralCABA = encuestasGralCABA;
+		this.encuestasBallotageCABA = encuestasBallotageCABA;
 		this.encuestasPasoProv = encuestasPasoProv;
 		$scope.difs = diferencias;
 		//this.listaCand =  listaCandSer1;
@@ -19,9 +21,12 @@ var app = angular.module('store');
 		$scope.datosTotalesFrentes = pydFrentes[0];
 		
 		$scope.datosCandPaso = pydCandPaso[0];
+		$scope.datosCandPasopost = pydCandPasopost[0];
 		
 		$scope.datosPasoCABA = promydesvPasoCABA[0];
 		$scope.datosGralCABA = promydesvGralCABA[0];		
+		$scope.datosBallotageCABA = promydesvBallotageCABA[0];
+
 		$scope.datosPasoProv = promydesvPasoProv[0];
 		//$scope.datosGralProv = promydesvGralProv[0];
 
@@ -39,39 +44,49 @@ var app = angular.module('store');
 		$scope.ventaja = "s0";
 		$scope.text4text_underGraph;
 		$scope.emptyEncuestas = false;
+		$scope.fichaTec = false;
+		$scope.fichaTecIndex;
 
 		$scope.dataDonutVE = {};
 
 		//Contenedores de graficos
 		$scope.frentes = d3.select("#svggrafico2");
 		$scope.candPaso = d3.select("#svggraficoCandPASO");
+		$scope.candPasopost = d3.select("#svggraficoCandPASOpost");
 		$scope.candidatos = d3.select("#svggrafico1");
 		$scope.pasoCABA = d3.select("#svggraficoPasoCABA");
 		$scope.gralCABA = d3.select("#svggraficoGralCABA");		
+		$scope.ballotageCABA = d3.select("#svggraficoBallotageCABA");		
 		$scope.pasoProv = d3.select("#svggraficoPasoProv");
 		//$scope.gralProv = d3.select("#svggraficoGralProv");
 		
 		//Data del Slider
 		$scope.mesSliderPASO;
+		$scope.mesSliderPASOpost;
 		$scope.mesSliderPV;
 		$scope.mesSliderFrentes;
 		$scope.mesSliderPasoCABA;
+		$scope.mesSliderBallotageCABA;
 		$scope.mesSliderGralCABA;
 		$scope.mesSliderPasoProv;
 		//$scope.mesSliderGralProv;
 
-		$scope.numeroSlider = {mesPASO:0,mesPV:0,mesFrentes:0,mesPasoCABA:0,mesGralCABA:0,mesPasoProv:0};
+		$scope.numeroSlider = {mesPASO:0,mesPASOpost:0,mesPV:0,mesFrentes:0,mesPasoCABA:0,mesGralCABA:0,mesBallotageCABA:0,mesPasoProv:0};
 
 		//Data de encuestas
 		$scope.dataPASO = dataPASO;
+		$scope.dataPASOpost = dataPASOpost;
 		$scope.dataPV = dataPV;
 		$scope.dataPasoCABA = dataPasoCABA;
 		$scope.dataGralCABA = dataGralCABA;
+		$scope.dataBallotageCABA = dataBallotageCABA;
 		$scope.dataPasoProv = dataPasoProv;
 
 		
 
 		$scope.mobMenuOn = false;
+
+		$scope.devTest = false;
 
         $scope.menuChange = function(){
           $scope.mobMenuOn = true;
@@ -79,6 +94,10 @@ var app = angular.module('store');
 
         $scope.selectMobileOption = function(){
         	$scope.mobMenuOn = false;
+        }        
+
+        $scope.devtestChange = function(){
+        	$scope.devTest = true;
         }
 
 	}]);

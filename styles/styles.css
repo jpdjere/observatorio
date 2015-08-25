@@ -294,6 +294,22 @@
 		float:left;
 	}
 
+
+	.tituloPASO {
+	  width: 535px;
+	  font-size: 40px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}
+	.subtituloPASO{
+    	width: 499px;
+    	font-size: 28px;
+    	margin: 0 auto;
+    	font-family: Stag-Medium, sans-serif;
+    	color: #757575;	
+	}
 	.tituloPASO-CABA {
 	  width: 205px;
 	  font-size: 55px;
@@ -310,7 +326,9 @@
 	  padding-top: 25px;
 	  font-family: Stag-Medium, sans-serif;
 	  color: black;
-	}	
+	}		
+
+
 
 	.tituloPASO-Prov {
 	  width: 205px;
@@ -416,7 +434,7 @@
 /* ----------- Galaxy S4 ----------- */
 /*                                                      */
 /* Portrait and Landscape */
-@media screen and (max-device-width: 2000px) and (max-device-height: 2000px) and (-webkit-device-pixel-ratio: 1.5)  {
+@media screen and (max-device-width: 720px) and (max-device-height: 720px){
 
 	.wrapper {
 		max-width: 100%;
@@ -549,6 +567,14 @@
 		margin-top: 25px;
 		margin-bottom: 20px;
 	}
+	.tituloPASO {
+	  width: 380px;
+	  font-size: 40px;
+	  margin: 0 auto;
+	  padding-top: 25px;
+	  font-family: Stag-Medium, sans-serif;
+	  color: black;
+	}	
 	/*------------------------METODOLOGIA TEXTO--------------------------*/
 	.text_metod { 
 		font-family: Arial,"Times New Roman",Times,serif;
